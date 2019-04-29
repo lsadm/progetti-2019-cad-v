@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_one"
+            android:icon="@mipmap/my_icon_factory"
+            app:showAsAction="always"
+            android:title="@string/action_one"/>
+    <item
+            android:id="@+id/action_two"
+            android:icon="@mipmap/my_icon_message1_round"
+            app:showAsAction="always"
+            android:title="@string/action_two"/>
+    <item
+            android:id="@+id/action_three"
+            android:icon="@mipmap/my_icon_message2_round"
+            app:showAsAction="always"
+            android:title="@string/action_three"/>
+    <item android:title="@string/menu">
+        <menu>
+            <item android:title="@string/navigation">
+                <menu>
+                    <item android:title="@string/classico">
+                        <menu>
+                            <item
+                                    android:id="@+id/action_four"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_four"/>
+                            <item
+                                    android:id="@+id/action_five"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_five"/>
+                            <item
+                                    android:id="@+id/action_nine"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_nine"/>
+                            <item
+                                    android:id="@+id/action_seven"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_seven"/>
+                            <item
+                                    android:id="@+id/action_eight"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_eight"/>
+                        </menu>
+                    </item>
+                    <item android:title="@string/plottare">
+                        <menu>
+                            <item
+                                    android:id="@+id/action_six"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_six"/>
+                            <item
+                                    android:id="@+id/action_ten"
+                                    android:icon="@drawable/ic_android_black_24dp"
+                                    android:title="@string/action_ten"/>
+                        </menu>
+                    </item>
+                </menu>
+            </item>
+            <item
+                android:id="@+id/action_history_window"
+                android:icon="@drawable/ic_android_black_24dp"
+                android:title="@string/history_window"/>
+        </menu>
+    </item>
+</menu>
+

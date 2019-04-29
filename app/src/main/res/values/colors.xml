@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5199A7</color>
+    <color name="colorPrimaryDark">#408896</color>
+    <color name="colorAccent">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="standard">#D6D7D7</color>
+    <color name="gold">#FFD700</color>
+    <color name="silver">#5199A7</color>
+    <color name="sapphire">#2A2D59</color>
+    <color name="sea_green">#2DB1A3</color>
+    <color name="blue">#0000D1</color>
+    <color name="red">#9B111E</color>
+    <color name="smeraldo">#287233</color>
+    <color name="ametista">#9966CC</color>
+</resources>
+

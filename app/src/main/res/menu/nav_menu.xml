@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+    <item
+        android:id="@+id/descriptionhome1"
+        android:title="@string/descriptionhome1"/>
+    <item
+            android:id="@+id/descriptionhome2"
+            android:title="@string/descriptionhome2"/>
+    <item
+            android:id="@+id/descriptionhome3"
+            android:title="@string/descriptionhome3"/>
+    <item
+            android:id="@+id/descriptionhome4"
+            android:title="@string/descriptionhome4"/>
+    <item
+            android:id="@+id/descriptionhome5"
+            android:title="@string/descriptionhome5"/>
+    <item
+            android:id="@+id/descriptionhome6"
+            android:title="@string/descriptionhome6"/>
+    <item
+            android:id="@+id/descriptionhome7"
+            android:title="@string/descriptionhome7"/>
+    <item
+            android:id="@+id/descriptionhome8"
+            android:title="@string/descriptionhome8"/>
+    <item
+            android:id="@+id/descriptionhome9"
+            android:title="@string/descriptionhome9"/>
+
+</menu>

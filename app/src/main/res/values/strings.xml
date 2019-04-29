@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">MathFact</string>
+    <string name="button">√x</string>
+    <string name="button2">+</string>
+    <string name="button3">-</string>
+    <string name="button4">x</string>
+    <string name="button5">:</string>
+    <string name="button6">x^2</string>
+    <string name="button7">%</string>
+    <string name="button8">sen(x)</string>
+    <string name="button9">cos(x)</string>
+    <string name="button10">tg(x)</string>
+    <string name="button11">ctg(x)</string>
+    <string name="button12">e^(x)</string>
+    <string name="button13">ln(x)</string>
+    <string name="button14">10^(x)</string>
+    <string name="button15">log10(x)</string>
+    <string name="button16">HELP</string>
+    <string name="button19">|x|</string>
+    <string name="button18">φ(x)</string>
+    <string name="button30">arcsen(x)</string>
+    <string name="button31">arccos(x)</string>
+    <string name="button32">arctg(x)</string>
+    <string name="button33">arcctg(x)</string>
+    <string name="button34">1/x</string>
+    <string name="button35">E</string>
+    <string name="button37">senh(x)</string>
+    <string name="button38">cosh(x)</string>
+    <string name="button39">tgh(x)</string>
+    <string name="button40">ctgh(x)</string>
+    <string name="button41">RAD</string>
+    <string name="button42">BIN</string>
+    <string name="button43">OCT</string>
+    <string name="button44">EXA</string>
+    <string name="button45">settsenh(x)</string>
+    <string name="button46">settcosh(x)</string>
+    <string name="button47">setttgh(x)</string>
+    <string name="button48">settctgh(x)</string>
+    <string name="b9">9</string>
+    <string name="b8">8</string>
+    <string name="b7">7</string>
+    <string name="b6">6</string>
+    <string name="b5">5</string>
+    <string name="b4">4</string>
+    <string name="b3">3</string>
+    <string name="b2">2</string>
+    <string name="b1">1</string>
+    <string name="b0">0</string>
+    <string name="punto">.</string>
+    <string name="uguale">=</string>
+    <string name="delate">C</string>
+    <string name="button36">DEL</string>
+    <string name="action_one">MatFact! version 1.0</string>
+    <string name="action_two">Enjoy with Math!</string>
+    <string name="action_three">Created by: Raffaele Maddaloni ®</string>
+    <string name="navigation">Advanced functions</string>
+    <string name="action_four">Linear Systems</string>
+    <string name="action_five">Linear Equations</string>
+    <string name="action_six">Elementary Plotting</string>
+    <string name="action_seven">Linear Differential Equations</string>
+    <string name="action_eight">Random Numbers</string>
+    <string name="action_nine">Complex Numbers</string>
+    <string name="action_ten">Signal Plotting</string>
+    <string name="history_window">History Window</string>
+    <string name="classico">Classical</string>
+    <string name="plottare">Plotting</string>
+    <string name="menu">Menù</string>
+    <string name="titolo">Information</string>
+    <string name="library">Scroll from left to right to see more...</string>
+    <string name="action_home">Home</string>
+    <string name="descriptionhome1">MathFact is a basic math workplace</string>
+    <string name="descriptionhome2">where you can solve a discrete class</string>
+    <string name="descriptionhome3">of problems such as arithmetic, algebraic</string>
+    <string name="descriptionhome4">and differential ones. The software is</string>
+    <string name="descriptionhome5">born to satisfy didactic and professional</string>
+    <string name="descriptionhome6">needs offering an interactive and</string>
+    <string name="descriptionhome7">integrated environment that supports</string>
+    <string name="descriptionhome8">your work with theory , guides and a</string>
+    <string name="descriptionhome9">funny graphic interface!</string>
+    <string name="termine_quadratico">a</string>
+    <string name="termine_lineare">b</string>
+    <string name="termine_costante">c</string>
+    <string name="calculate">Calculate!</string>
+    <string name="presentazione2">Linear Equations\nFirst Degree: bx+c=0\nSecond Degree: ax^2+bx+c=0</string>
+    <string name="presentazione4">Linear Differential Equations\nFirst Order: by\'+cy=0\nSecond Order: ay\'\'+by\'+cy=0</string>
+    <string name="presentazione5">Random Numbers Generator</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="how_many">How Many?</string>
+    <string name="generate">Generate!</string>
+    <string name="presentazione6">Complex Numbers\nz=a+ib</string>
+    <string name="forma_algebrica">Algebraic\nForm:</string>
+    <string name="coniugato">z*=</string>
+    <string name="forma_esponenziale">Exponential\nForm:</string>
+    <string name="parte_reale">Re(z)=</string>
+    <string name="coefficiente_parte_immaginaria">Im(z)=</string>
+    <string name="modulo">|z|=</string>
+    <string name="fase">arg(z)=</string>
+    <string name="quadrato_complesso">z^2</string>
+    <string name="radice_complessa">√z</string>
+    <string name="here">Input...</string>
+    <string name="costante">Interpolat\nOff</string>
+    <string name="potenza_cubo">x^3</string>
+    <string name="esp_due">2^(x)</string>
+    <string name="log_due">log2(x)</string>
+    <string name="passo">Sampling\nStep:</string>
+    <string name="minimo">Lower\nEnd:</string>
+    <string name="massimo">Upper\nEnd:</string>
+    <string name="presentazione3">Elementary Plotting</string>
+    <string name="ampiezza">Amplitude:</string>
+    <string name="frequenza">Frequency:</string>
+    <string name="fase_iniziale">Horinzontal\nOffset:</string>
+    <string name="scostamento">Vertical\nOffset:</string>
+    <string name="view">Build\nGraph 1</string>
+    <string name="view_bis">Build\nGraph 2</string>
+    <string name="plot">Plot!</string>
+
+</resources>
+
