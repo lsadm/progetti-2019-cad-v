@@ -109,5 +109,7 @@
     <string name="plot">Plot!</string>
     <string name="calculator">Calculator</string>
     <string name="Basic">Basic Functions</string>
+    <string name="copertina">MathFact version 1.0\nCreated by:\nRaffaele Maddaloni and Giuseppe Barbato\nV: Luigi Vanvitelli\nLaboratorio di Sviluppo\ndi Applicazioni per\nDispositivi Mobili\n prof. Pasquale Cantiello</string>
+    <string name="copertina2">MathFact version 1.0\nCreated by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato\nV: Luigi Vanvitelli\nLaboratorio di Sviluppo\ndi Applicazioni per\nDispositivi Mobili\n prof. Pasquale Cantiello</string>
 </resources>
 
