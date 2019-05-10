@@ -2,32 +2,52 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
+    <item android:title="@string/Basic">
+        <menu>
     <item
-        android:id="@+id/descriptionhome1"
-        android:title="@string/descriptionhome1"/>
+            android:id="@+id/calculator"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/calculator"/>
     <item
-            android:id="@+id/descriptionhome2"
-            android:title="@string/descriptionhome2"/>
+            android:id="@+id/action_history_window"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/history_window"/>
+        </menu>
+    </item>
+    <item android:title="@string/classico">
+        <menu>
     <item
-            android:id="@+id/descriptionhome3"
-            android:title="@string/descriptionhome3"/>
+            android:id="@+id/action_four"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_four"/>
     <item
-            android:id="@+id/descriptionhome4"
-            android:title="@string/descriptionhome4"/>
+            android:id="@+id/action_five"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_five"/>
     <item
-            android:id="@+id/descriptionhome5"
-            android:title="@string/descriptionhome5"/>
+            android:id="@+id/action_nine"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_nine"/>
     <item
-            android:id="@+id/descriptionhome6"
-            android:title="@string/descriptionhome6"/>
+            android:id="@+id/action_seven"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_seven"/>
     <item
-            android:id="@+id/descriptionhome7"
-            android:title="@string/descriptionhome7"/>
+            android:id="@+id/action_eight"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_eight"/>
+        </menu>
+    </item>
+    <item android:title="@string/plottare">
+        <menu>
     <item
-            android:id="@+id/descriptionhome8"
-            android:title="@string/descriptionhome8"/>
+            android:id="@+id/action_six"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_six"/>
     <item
-            android:id="@+id/descriptionhome9"
-            android:title="@string/descriptionhome9"/>
-
+            android:id="@+id/action_ten"
+            android:icon="@drawable/ic_android_black_24dp"
+            android:title="@string/action_ten"/>
+        </menu>
+    </item>
 </menu>

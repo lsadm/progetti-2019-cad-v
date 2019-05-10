@@ -62,21 +62,12 @@
     <string name="action_nine">Complex Numbers</string>
     <string name="action_ten">Signal Plotting</string>
     <string name="history_window">History Window</string>
-    <string name="classico">Classical</string>
-    <string name="plottare">Plotting</string>
+    <string name="classico">Classical Functions</string>
+    <string name="plottare">Plotting Functions</string>
     <string name="menu">Menù</string>
-    <string name="titolo">Information</string>
+    <string name="titolo">Functions</string>
     <string name="library">Scroll from left to right to see more...</string>
     <string name="action_home">Home</string>
-    <string name="descriptionhome1">MathFact is a basic math workplace</string>
-    <string name="descriptionhome2">where you can solve a discrete class</string>
-    <string name="descriptionhome3">of problems such as arithmetic, algebraic</string>
-    <string name="descriptionhome4">and differential ones. The software is</string>
-    <string name="descriptionhome5">born to satisfy didactic and professional</string>
-    <string name="descriptionhome6">needs offering an interactive and</string>
-    <string name="descriptionhome7">integrated environment that supports</string>
-    <string name="descriptionhome8">your work with theory , guides and a</string>
-    <string name="descriptionhome9">funny graphic interface!</string>
     <string name="termine_quadratico">a</string>
     <string name="termine_lineare">b</string>
     <string name="termine_costante">c</string>
@@ -117,5 +108,6 @@
     <string name="view_bis">Build\nGraph 2</string>
     <string name="plot">Plot!</string>
     <string name="calculator">Calculator</string>
+    <string name="Basic">Basic Functions</string>
 </resources>
 
