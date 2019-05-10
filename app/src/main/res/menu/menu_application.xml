@@ -63,6 +63,10 @@
                 android:id="@+id/action_history_window"
                 android:icon="@drawable/ic_android_black_24dp"
                 android:title="@string/history_window"/>
+            <item
+                    android:id="@+id/calculator"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/calculator"/>
         </menu>
     </item>
 </menu>

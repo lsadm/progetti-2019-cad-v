@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_function0.*
 import kotlin.math.*
 
-class MainActivity : AppCompatActivity()
+class Function0 : AppCompatActivity()
 {
     var risultato="Warning: bad syntax!"
     var primo=""
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_function0)
         b0.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;controllore(identificatore);counter++;controllo15=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="0";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;if(controllo7)controllo6=false;controllo8=true} }
         b1.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="1";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }
         b2.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="2";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity()
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
-        menuInflater.inflate(R.menu.menu_application, menu)
+        menuInflater.inflate(R.menu.menu_application2, menu)
         return true
     }
 
@@ -123,57 +123,9 @@ class MainActivity : AppCompatActivity()
             Toast.makeText(this,"Created by: Raffaele Maddaloni ®", Toast.LENGTH_LONG).show()
             return true
         }
-        if(id==R.id.action_four)
+        if(id==R.id.action_home)
         {
-            val next= Intent(this,Function1::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_five)
-        {
-            val next= Intent(this,Function2::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_six)
-        {
-            val next= Intent(this,Function3::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_seven)
-        {
-            val next= Intent(this,Function4::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_eight)
-        {
-            val next= Intent(this,Function5::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_nine)
-        {
-            val next= Intent(this,Function6::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_ten)
-        {
-            val next= Intent(this,Function7::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.action_history_window)
-        {
-            val next= Intent(this,Function8::class.java)
-            startActivity(next)
-            return true
-        }
-        if(id==R.id.calculator)
-        {
-            val next= Intent(this,Function0::class.java)
+            val next= Intent(this,MainActivity::class.java)
             startActivity(next)
             return true
         }
@@ -301,31 +253,31 @@ class MainActivity : AppCompatActivity()
         var ris: String
         estrai(id)
         if((primo.toDouble()==0.toDouble())&&(secondo.toDouble()!=0.toDouble())&&(id==4))
-           ris="0.0"
+            ris="0.0"
         else
-        if ((secondo == "") || (secondo == "")) {
-            ris = "Warning: bad syntax!"
-            controllo16=true;
-        } else
-            if ((secondo.toDouble() == 0.toDouble()) && (primo.toDouble() == 0.toDouble()) && (id == 4)){
-                ris = "Operation Indeterminate!"
+            if ((secondo == "") || (secondo == "")) {
+                ris = "Warning: bad syntax!"
                 controllo16=true;
-            }
-            else
-                if((secondo.toDouble()==0.toDouble())&&(primo.toDouble()!=0.toDouble())&&(id==4)){
+            } else
+                if ((secondo.toDouble() == 0.toDouble()) && (primo.toDouble() == 0.toDouble()) && (id == 4)){
+                    ris = "Operation Indeterminate!"
                     controllo16=true;
-                    ris="Operation not defined!"}
-                else
-                {
-                    when (id)
-                    {
-                        1 -> ris = somma(primo.toDouble(), secondo.toDouble()).toString()
-                        2 -> ris = differenza(primo.toDouble(), secondo.toDouble()).toString()
-                        3 -> ris = moltiplicazione(primo.toDouble(), secondo.toDouble()).toString()
-                        4 -> ris = divisione(primo.toDouble(), secondo.toDouble()).toString()
-                        else -> ris = ""
-                    }
                 }
+                else
+                    if((secondo.toDouble()==0.toDouble())&&(primo.toDouble()!=0.toDouble())&&(id==4)){
+                        controllo16=true;
+                        ris="Operation not defined!"}
+                    else
+                    {
+                        when (id)
+                        {
+                            1 -> ris = somma(primo.toDouble(), secondo.toDouble()).toString()
+                            2 -> ris = differenza(primo.toDouble(), secondo.toDouble()).toString()
+                            3 -> ris = moltiplicazione(primo.toDouble(), secondo.toDouble()).toString()
+                            4 -> ris = divisione(primo.toDouble(), secondo.toDouble()).toString()
+                            else -> ris = ""
+                        }
+                    }
         if(ris=="Infinity"){
             controllo16=true;
             ris="Error: Overflow!"}

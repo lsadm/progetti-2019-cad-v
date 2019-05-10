@@ -9,6 +9,8 @@
             android:roundIcon="@mipmap/my_icon_factory_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".Function0">
+        </activity>
         <activity android:name=".Grafici">
         </activity>
         <activity android:name=".Function8">

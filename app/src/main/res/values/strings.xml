@@ -82,7 +82,9 @@
     <string name="termine_costante">c</string>
     <string name="calculate">Calculate!</string>
     <string name="presentazione2">Linear Equations\nFirst Degree: bx+c=0\nSecond Degree: ax^2+bx+c=0</string>
-    <string name="presentazione4">Linear Differential Equations\nFirst Order: by\'+cy=0\nSecond Order: ay\'\'+by\'+cy=0</string>
+    <string name="presentazione4">Linear Differential Equations\nFirst Order: by\'+cy=0\nSecond Order:
+        ay\'\'+by\'+cy=0
+    </string>
     <string name="presentazione5">Random Numbers Generator</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
@@ -114,6 +116,6 @@
     <string name="view">Build\nGraph 1</string>
     <string name="view_bis">Build\nGraph 2</string>
     <string name="plot">Plot!</string>
-
+    <string name="calculator">Calculator</string>
 </resources>
 
