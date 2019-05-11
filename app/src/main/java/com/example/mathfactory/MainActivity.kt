@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         nav_view.setNavigationItemSelectedListener(this)
-        button21.setOnClickListener {if(controllo){ textView31.text="-Sroll from left to right\nto access to the menu\n-Version 1.0\n-Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false}else{textView31.text="";button21.text="Details";button21.setTextColor(rgb(40,114,51));controllo=true}}
+        button21.setOnClickListener {if(controllo){ textView31.text="-Sroll from left to right\nto access to the menu\n-Version 1.0\n-Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato ®";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false}else{textView31.text="";button21.text="Details";button21.setTextColor(rgb(40,114,51));controllo=true}}
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean
     {
