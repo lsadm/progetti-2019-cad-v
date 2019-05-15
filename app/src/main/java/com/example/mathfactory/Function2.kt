@@ -29,7 +29,7 @@ class Function2 : AppCompatActivity() {
         val id=item.getItemId()
         if(id==R.id.action_one)
         {
-            Toast.makeText(this,"MathFact version 1.0", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"MathView\nVersion 1.0", Toast.LENGTH_LONG).show()
             return true
         }
         if(id==R.id.action_two)
@@ -39,7 +39,7 @@ class Function2 : AppCompatActivity() {
         }
         if(id==R.id.action_three)
         {
-            Toast.makeText(this,"Created by: Raffaele Maddaloni ®", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato ®", Toast.LENGTH_LONG).show()
             return true
         }
         if(id==R.id.action_home)

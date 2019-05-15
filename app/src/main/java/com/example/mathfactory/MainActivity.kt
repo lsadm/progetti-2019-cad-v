@@ -18,7 +18,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         nav_view.setNavigationItemSelectedListener(this)
-        button21.setOnClickListener {if(controllo){ textView31.text="-Sroll from left to right\nto access to the menu\n-Version 1.0\n-Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato ®";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false}else{textView31.text="";button21.text="Details";button21.setTextColor(rgb(40,114,51));controllo=true}}
+        button21.setOnClickListener {if(controllo){ textView31.text="not implementate";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false}else{textView31.text="";button21.text="Profile";button21.setTextColor(rgb(40,114,51));controllo=true}}
+    }
+    override fun onCreateOptionsMenu(menu: Menu):Boolean
+    {
+        menuInflater.inflate(R.menu.menu_application, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.getItemId()
+        if (id == R.id.action_one) {
+            Toast.makeText(this, "MathView\nVersion 1.0", Toast.LENGTH_LONG).show()
+            return true
+        }
+        if (id == R.id.action_two) {
+            Toast.makeText(this, "Enjoy with Math!", Toast.LENGTH_LONG).show()
+            return true
+        }
+        if (id == R.id.action_three) {
+            Toast.makeText(this, "Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato ®", Toast.LENGTH_LONG).show()
+            return true
+        }
+        if (id == R.id.action_clock) {
+            Toast.makeText(this, "not implementate", Toast.LENGTH_LONG).show()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean
     {
