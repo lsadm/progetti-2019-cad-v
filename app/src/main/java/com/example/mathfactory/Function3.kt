@@ -36,7 +36,7 @@ class Function3 : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function3)
-        button8.setOnClickListener {if(!turno)identifier=18 else identifier2=18;set_color(identifier);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
+        button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=16;set_color(identifier)}else{identifier2=16;set_color(identifier2)}}
         button10.setOnClickListener {if(!turno){identifier=14;set_color(identifier)}else{identifier2=14;set_color(identifier2)}}
         button11.setOnClickListener {if(!turno){identifier=17;set_color(identifier)}else{identifier2=17;set_color(identifier2)}}
@@ -199,6 +199,7 @@ class Function3 : AppCompatActivity()
         titolo=""
         titolo2=""
         textView30.text=""
+        textView23.text=""
         button20.setTextColor(rgb(155,17,30))
         button22.setTextColor(rgb(155,17,30))
         button8.setTextColor(rgb(155,17,30))
@@ -265,6 +266,8 @@ class Function3 : AppCompatActivity()
         {
             sup=10.toDouble()
         }
+        if((identifier==13)&&(inf<=0)&&(sup>=0))
+          inf=0.1
     }
     private fun input_output_bis():Boolean
     {
@@ -365,6 +368,8 @@ class Function3 : AppCompatActivity()
         {
             sup=10.toDouble()
         }
+        if((identifier2==13)&&(inf<=0)&&(sup>=0))
+         inf=0.1
     }
 }
 
