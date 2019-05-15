@@ -3,17 +3,25 @@ package com.example.mathfactory
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.rgb
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.util.*
 import kotlin.math.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var controllo=true
+    val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
+    var data:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,7 +48,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return true
         }
         if (id == R.id.action_clock) {
-            Toast.makeText(this, "not implementate", Toast.LENGTH_LONG).show()
+            data=formato.format(Date()).toString()
+            Toast.makeText(this,"Current Time and Day:\n"+data, Toast.LENGTH_LONG).show()
             return true
         }
         return super.onOptionsItemSelected(item)
