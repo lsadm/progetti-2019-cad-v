@@ -114,5 +114,26 @@
     <string name="dettagli">Profile</string>
     <string name="nascondi">Hide</string>
     <string name="clock">Clock</string>
+    <string name="presentazione7">Signal Plotting</string>
+    <string name="f1">Frequency\n1:</string>
+    <string name="f2">Frequency\n2:</string>
+    <string name="tau1">Time Constant 1:</string>
+    <string name="tau2">Time Constant 2:</string>
+    <string name="durata">Duration:</string>
+    <string name="ritardo">Delay:</string>
+    <string name="offset">Offset:</string>
+    <string name="onda_quadra">Π(t)</string>
+    <string name="onda_triangolare">Λ(t)</string>
+    <string name="seno_cardinale">sinc(t)</string>
+    <string name="seno_cardinale_al_quadrato">sinc(t)^2</string>
+    <string name="evoluzione_primo_ordine">First Order Evolution</string>
+    <string name="evoluzione_secondo_ordine">Second Order Evolution</string>
+    <string name="evoluzione_critica">Critical Evolution</string>
+    <string name="evoluzione_armonica">Harmonic Evolution</string>
+    <string name="smorzamento">Damping:</string>
+    <string name="pulsazione_naturale">Natural Pulsation:</string>
+    <string name="modulatione_a_finestra_del_coseno">Window Modulated Cosine</string>
+    <string name="modulazione_a_rampa_del_coseno">Modulated Ramp Cosine</string>
+    <string name="modulazione_armonica_del_coseno">Cosine Harmonically Modulated</string>
     </resources>
 

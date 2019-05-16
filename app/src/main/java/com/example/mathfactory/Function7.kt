@@ -6,15 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_function1.*
-
 class Function7 : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function7)
-        prova1.setOnClickListener { prova.text="OK!" }
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
