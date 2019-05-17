@@ -36,6 +36,7 @@ class Function3 : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function3)
+        controllo_generale=1
         button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=16;set_color(identifier)}else{identifier2=16;set_color(identifier2)}}
         button10.setOnClickListener {if(!turno){identifier=14;set_color(identifier)}else{identifier2=14;set_color(identifier2)}}
@@ -300,21 +301,21 @@ class Function3 : AppCompatActivity()
             integrita2()
             when(identifier2)
             {
-                1->{textView23.text="y(x)="+A.toString()+"*sen(2π*("+f.toString()+")*x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Asen(2πfx+φ)+k"}
-                2->{textView23.text="y(x)="+A.toString()+"*cos(2π*("+f.toString()+")*x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Acos(2πfx+φ)+k"}
-                3->{textView23.text="y(x)="+A.toString()+"*arcsen(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Aarcsen(x+h)+k"}
-                4->{textView23.text="y(x)="+A.toString()+"*arccos(2π*(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Aarccos(x+h)+k"}
-                5->{textView23.text="y(x)="+A.toString()+"*exp(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Aexp(x+h)+k"}
-                6->{textView23.text="y(x)="+A.toString()+"*ln(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Aln(x+h)+k"}
-                7->{textView23.text="y(x)="+A.toString()+"*10^(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=A*10^(x+h)+k"}
-                8->{textView23.text="y(x)="+A.toString()+"*log10(x+("+p+"))+("+x.toString()+")";titolo="Model Function: y(x)=Alog10(x+h)+k"}
-                13->{textView23.text="y(x)="+A.toString()+"/(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=A/(x+h)+k"}
-                14->{textView23.text="y(x)="+A.toString()+"(x+("+p+"))^2+("+x.toString()+")";titolo2="Model Function: y(x)=A(x+h)^2+k"}
-                15->{textView23.text="y(x)="+A.toString()+"*√(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=A√(x+h)+k"}
-                16->{textView23.text="y(x)="+A.toString()+"(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=A(x+h)+k"}
-                17->{textView23.text="y(x)="+A.toString()+"(x+("+p+"))^3+("+x.toString()+")";titolo2="Model Function: y(x)=A(x+h)^3+k"}
-                19->{textView23.text="y(x)="+A.toString()+"2^(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=A*2^(x+h)+k"}
-                20->{textView23.text="y(x)="+A.toString()+"log2(x+("+p+"))+("+x.toString()+")";titolo2="Model Function: y(x)=Alog2(x+h)+k"}
+                1->{textView23.text="y(x)="+A2.toString()+"*sen(2π*("+f2.toString()+")*x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Asen(2πfx+φ)+k"}
+                2->{textView23.text="y(x)="+A2.toString()+"*cos(2π*("+f2.toString()+")*x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Acos(2πfx+φ)+k"}
+                3->{textView23.text="y(x)="+A2.toString()+"*arcsen(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Aarcsen(x+h)+k"}
+                4->{textView23.text="y(x)="+A2.toString()+"*arccos(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Aarccos(x+h)+k"}
+                5->{textView23.text="y(x)="+A2.toString()+"*exp(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Aexp(x+h)+k"}
+                6->{textView23.text="y(x)="+A2.toString()+"*ln(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Aln(x+h)+k"}
+                7->{textView23.text="y(x)="+A2.toString()+"*10^(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=A*10^(x+h)+k"}
+                8->{textView23.text="y(x)="+A2.toString()+"*log10(x+("+p2+"))+("+x2.toString()+")";titolo="Model Function: y(x)=Alog10(x+h)+k"}
+                13->{textView23.text="y(x)="+A2.toString()+"/(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=A/(x+h)+k"}
+                14->{textView23.text="y(x)="+A2.toString()+"(x+("+p2+"))^2+("+x2.toString()+")";titolo2="Model Function: y(x)=A(x+h)^2+k"}
+                15->{textView23.text="y(x)="+A2.toString()+"*√(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=A√(x+h)+k"}
+                16->{textView23.text="y(x)="+A2.toString()+"(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=A(x+h)+k"}
+                17->{textView23.text="y(x)="+A2.toString()+"(x+("+p2+"))^3+("+x2.toString()+")";titolo2="Model Function: y(x)=A(x+h)^3+k"}
+                19->{textView23.text="y(x)="+A2.toString()+"2^(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=A*2^(x+h)+k"}
+                20->{textView23.text="y(x)="+A2.toString()+"log2(x+("+p2+"))+("+x2.toString()+")";titolo2="Model Function: y(x)=Alog2(x+h)+k"}
             }
             return false
         }

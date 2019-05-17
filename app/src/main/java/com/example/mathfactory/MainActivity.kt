@@ -18,6 +18,7 @@ import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.math.*
+var controllo_generale:Int=0
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var controllo=true
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")

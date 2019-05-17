@@ -133,7 +133,7 @@
     <string name="smorzamento">Damping:</string>
     <string name="pulsazione_naturale">Natural Pulsation:</string>
     <string name="modulatione_a_finestra_del_coseno">Window Modulated Cosine</string>
-    <string name="modulazione_a_rampa_del_coseno">Modulated Ramp Cosine</string>
+    <string name="modulazione_a_rampa_del_coseno">Cosine Modulated Triangularly</string>
     <string name="modulazione_armonica_del_coseno">Cosine Harmonically Modulated</string>
     </resources>
 
