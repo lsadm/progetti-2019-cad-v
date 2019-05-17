@@ -5,13 +5,15 @@ import android.graphics.Color
 import android.graphics.Color.rgb
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function0.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
 
-class Function0 : AppCompatActivity()
+class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
     var risultato="Warning: bad syntax!"
     var primo=""
@@ -47,6 +49,7 @@ class Function0 : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function0)
+        nav_view0.setNavigationItemSelectedListener(this)
         b0.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;controllore(identificatore);counter++;controllo15=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="0";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;if(controllo7)controllo6=false;controllo8=true} }
         b1.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="1";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }
         b2.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="2";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }
@@ -130,6 +133,51 @@ class Function0 : AppCompatActivity()
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.getItemId()
+        if (id == R.id.action_four) {
+            val next = Intent(this, Function1::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_five) {
+            val next = Intent(this, Function2::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_six) {
+            val next = Intent(this, Function3::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_seven) {
+            val next = Intent(this, Function4::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_eight) {
+            val next = Intent(this, Function5::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_nine) {
+            val next = Intent(this, Function6::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_ten) {
+            val next = Intent(this, Function7::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_history_window) {
+            val next = Intent(this, Function8::class.java)
+            startActivity(next)
+            return true
+        }
+        return true
     }
     private fun controllore2()
     {

@@ -3,10 +3,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function6.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
 var real1=""
 var imm1=""
@@ -19,12 +21,13 @@ var imm_bis=""
 var id=0
 var check=false
 var check2=true;
-class Function6 : AppCompatActivity() {
+class Function6 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function6)
+        nav_view6.setNavigationItemSelectedListener(this)
         somma_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=1;setta_colore();check2=false}}
         differenza_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=2;setta_colore();check2=false}}
         moltiplicazione_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=3;setta_colore();check2=false}}
@@ -64,6 +67,51 @@ class Function6 : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.getItemId()
+        if (id == R.id.action_four) {
+            val next = Intent(this, Function1::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_five) {
+            val next = Intent(this, Function2::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_six) {
+            val next = Intent(this, Function3::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_seven) {
+            val next = Intent(this, Function4::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_eight) {
+            val next = Intent(this, Function5::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_ten) {
+            val next = Intent(this, Function7::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_history_window) {
+            val next = Intent(this, Function8::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.calculator) {
+            val next = Intent(this, Function0::class.java)
+            startActivity(next)
+            return true
+        }
+        return true
     }
     private fun input1():Boolean
     {

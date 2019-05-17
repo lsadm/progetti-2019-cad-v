@@ -4,13 +4,15 @@ import android.graphics.Color
 import android.graphics.Color.rgb
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function3.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import kotlin.math.*
-class Function3 : AppCompatActivity()
+class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
     var passo:Double=0.1
     var inf:Double=0.0
@@ -36,6 +38,7 @@ class Function3 : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function3)
+        nav_view3.setNavigationItemSelectedListener(this)
         controllo_generale=1
         button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=16;set_color(identifier)}else{identifier2=16;set_color(identifier2)}}
@@ -88,6 +91,51 @@ class Function3 : AppCompatActivity()
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.getItemId()
+        if (id == R.id.action_four) {
+            val next = Intent(this, Function1::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_five) {
+            val next = Intent(this, Function2::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_seven) {
+            val next = Intent(this, Function4::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_eight) {
+            val next = Intent(this, Function5::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_nine) {
+            val next = Intent(this, Function6::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_ten) {
+            val next = Intent(this, Function7::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_history_window) {
+            val next = Intent(this, Function8::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.calculator) {
+            val next = Intent(this, Function0::class.java)
+            startActivity(next)
+            return true
+        }
+        return true
     }
     private fun input_output():Boolean
     {

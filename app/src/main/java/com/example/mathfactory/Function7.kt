@@ -5,38 +5,40 @@ import android.graphics.Color
 import android.graphics.Color.rgb
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function7.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
-class Function7 : AppCompatActivity() {
+class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var passo:Double=0.1
     var inf:Double=0.0
     var sup:Double=0.1
-    var A:Double=0.0
-    var T:Double=0.0
+    var A:Double=0.1
+    var T:Double=0.1
     var rit:Double=0.0
     var o:Double=0.0
-    var D:Double=0.0
+    var D:Double=0.1
     var f1:Double=0.0
     var f2:Double=0.0
-    var tau1:Double=0.0
-    var tau2:Double=0.0
-    var omega:Double=0.0
+    var tau1:Double=0.1
+    var tau2:Double=0.1
+    var omega:Double=0.1
     var real:Double=0.0
     var imm:Double=0.0
     var titolo=""
-    var A2:Double=0.0
-    var T2:Double=0.0
+    var A2:Double=0.1
+    var T2:Double=0.1
     var rit2:Double=0.0
     var o2:Double=0.0
-    var D2:Double=0.0
+    var D2:Double=0.1
     var f1_2:Double=0.0
     var f2_2:Double=0.0
-    var tau1_2:Double=0.0
-    var tau2_2:Double=0.0
-    var omega2:Double=0.0
+    var tau1_2:Double=0.1
+    var tau2_2:Double=0.1
+    var omega2:Double=0.1
     var real2:Double=0.0
     var imm2:Double=0.0
     var titolo2=""
@@ -51,6 +53,7 @@ class Function7 : AppCompatActivity() {
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function7)
+        nav_view7.setNavigationItemSelectedListener(this)
         controllo_generale=2
         button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=9;set_color(identifier)}else{identifier2=9;set_color(identifier2)}}
@@ -99,6 +102,51 @@ class Function7 : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.getItemId()
+        if (id == R.id.action_four) {
+            val next = Intent(this, Function1::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_five) {
+            val next = Intent(this, Function2::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_six) {
+            val next = Intent(this, Function3::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_seven) {
+            val next = Intent(this, Function4::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_eight) {
+            val next = Intent(this, Function5::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_nine) {
+            val next = Intent(this, Function6::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.action_history_window) {
+            val next = Intent(this, Function8::class.java)
+            startActivity(next)
+            return true
+        }
+        if (id == R.id.calculator) {
+            val next = Intent(this, Function0::class.java)
+            startActivity(next)
+            return true
+        }
+        return true
     }
     private fun set_color(id:Int)
     {

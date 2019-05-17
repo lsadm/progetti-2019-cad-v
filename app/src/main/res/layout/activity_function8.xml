@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:id="@+id/drawer_layout"
         android:fitsSystemWindows="true"
-        tools:context=".MainActivity"
+        tools:context=".Function8"
         tools:openDrawer="start">
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,13 +15,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Function1">
+        tools:context=".Function8">
     <TextView
             android:layout_width="337dp"
             android:layout_height="141dp"
             android:text="Function8 works!"
             android:textSize="50dp"
-            android:id="@+id/prova" android:textColor="@color/blue"
+            android:id="@+id/prova_2" android:textColor="@color/blue"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
@@ -29,9 +29,9 @@
     <Button
             android:text="Click Me"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/prova1"
+            android:layout_height="wrap_content" android:id="@+id/prova1_2"
             android:layout_marginTop="60dp"
-            app:layout_constraintTop_toBottomOf="@+id/prova" android:textColor="@color/blue"
+            app:layout_constraintTop_toBottomOf="@+id/prova_2" android:textColor="@color/blue"
             android:textAllCaps="false" android:textSize="30sp" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:id="@+id/nav_view"
+            android:id="@+id/nav_view8"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/nav_menu"
             app:itemTextColor="@color/sea_green">
