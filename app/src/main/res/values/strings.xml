@@ -110,7 +110,7 @@
     <string name="calculator">Calculator</string>
     <string name="Basic">Basic Functions</string>
     <string name="welcome">Welcome in MathView!</string>
-    <string name="testo">MathView is a free and basic math software, born to offer you an interactive environment, in witch attempt a discrete math functions class to support your work. Scroll from left to right to access to the Collection.</string>
+    <string name="testo">MathView is a free and basic math software, born to offer you an interactive environment, in witch attempt a discrete math functions class to support your work. In all Pages of the Collection you can scroll from left to right to access to itself.</string>
     <string name="dettagli">Profile</string>
     <string name="nascondi">Hide</string>
     <string name="clock">Clock</string>
