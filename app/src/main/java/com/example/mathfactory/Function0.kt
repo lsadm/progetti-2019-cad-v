@@ -12,9 +12,10 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function0.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
-
+import android.media.MediaPlayer
 class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
+    private var mediaplayer:MediaPlayer?=null
     var risultato="Warning: bad syntax!"
     var primo=""
     var secondo=""
@@ -130,6 +131,8 @@ class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         {
             val next= Intent(this,MainActivity::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -140,41 +143,63 @@ class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if (id == R.id.action_four) {
             val next = Intent(this, Function1::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_five) {
             val next = Intent(this, Function2::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_six) {
             val next = Intent(this, Function3::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_seven) {
             val next = Intent(this, Function4::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_eight) {
             val next = Intent(this, Function5::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_nine) {
             val next = Intent(this, Function6::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_ten) {
             val next = Intent(this, Function7::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_history_window) {
             val next = Intent(this, Function8::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.calculator) {
+            Toast.makeText(this,"You are already here!", Toast.LENGTH_LONG).show()
+            mediaplayer=MediaPlayer.create(this,R.raw.error_sound)
+            mediaplayer?.start()
             return true
         }
         return true

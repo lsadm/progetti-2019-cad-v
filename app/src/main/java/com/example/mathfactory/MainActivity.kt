@@ -3,6 +3,7 @@ package com.example.mathfactory
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.rgb
+import android.media.MediaPlayer
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,7 @@ import java.util.*
 import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private var mediaplayer:MediaPlayer?=null
     var controllo=true
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
@@ -61,46 +63,64 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (id == R.id.action_four) {
             val next = Intent(this, Function1::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_five) {
             val next = Intent(this, Function2::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_six) {
             val next = Intent(this, Function3::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_seven) {
             val next = Intent(this, Function4::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_eight) {
             val next = Intent(this, Function5::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_nine) {
             val next = Intent(this, Function6::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_ten) {
             val next = Intent(this, Function7::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.action_history_window) {
             val next = Intent(this, Function8::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         if (id == R.id.calculator) {
             val next = Intent(this, Function0::class.java)
             startActivity(next)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         return true

@@ -1,6 +1,7 @@
 package com.example.mathfactory
 import android.content.Intent
 import android.graphics.Color.*
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -20,6 +21,7 @@ lateinit var series:LineGraphSeries<DataPoint>
 lateinit var series2:LineGraphSeries<DataPoint>
 class Grafici: AppCompatActivity()
 {
+    private var mediaplayer:MediaPlayer?=null
     private var min:Double=0.0
     private var max:Double=1.0
     private var min2:Double=0.0
@@ -254,6 +256,8 @@ class Grafici: AppCompatActivity()
             else
                 next = Intent(this, Function1::class.java)
             startActivity(next)
+            mediaplayer= MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer?.start()
             return true
         }
         return super.onOptionsItemSelected(item)
