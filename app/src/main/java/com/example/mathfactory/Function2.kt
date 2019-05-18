@@ -50,7 +50,7 @@ class Function2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         {
             val next= Intent(this,MainActivity::class.java)
             startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound)
             mediaplayer?.start()
             return true
         }

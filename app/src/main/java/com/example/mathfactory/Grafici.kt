@@ -256,7 +256,7 @@ class Grafici: AppCompatActivity()
             else
                 next = Intent(this, Function1::class.java)
             startActivity(next)
-            mediaplayer= MediaPlayer.create(this,R.raw.move_sound)
+            mediaplayer= MediaPlayer.create(this,R.raw.return_graph_sound)
             mediaplayer?.start()
             return true
         }
