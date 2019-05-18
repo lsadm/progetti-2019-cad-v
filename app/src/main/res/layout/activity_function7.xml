@@ -369,7 +369,7 @@
     <TextView
             android:layout_width="246dp"
             android:layout_height="47dp" android:id="@+id/textView30"
-            android:textSize="18sp" android:textAlignment="center"
+            android:textSize="14sp" android:textAlignment="center"
             android:textColor="@color/blue" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button20"
             app:layout_constraintTop_toBottomOf="@+id/button38"
@@ -377,7 +377,7 @@
     <TextView
             android:layout_width="246dp"
             android:layout_height="47dp" android:id="@+id/textView23"
-            android:textSize="18sp" android:textAlignment="center"
+            android:textSize="14sp" android:textAlignment="center"
             android:textColor="@color/blue" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button22"
             app:layout_constraintTop_toBottomOf="@+id/textView30"/>

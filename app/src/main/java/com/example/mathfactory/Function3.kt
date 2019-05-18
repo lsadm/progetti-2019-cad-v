@@ -40,7 +40,7 @@ class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         setContentView(R.layout.activity_function3)
         nav_view3.setNavigationItemSelectedListener(this)
         controllo_generale=1
-        button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
+        button8.setOnClickListener {if(!turno)identifier=0 else identifier2=0;set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=16;set_color(identifier)}else{identifier2=16;set_color(identifier2)}}
         button10.setOnClickListener {if(!turno){identifier=14;set_color(identifier)}else{identifier2=14;set_color(identifier2)}}
         button11.setOnClickListener {if(!turno){identifier=17;set_color(identifier)}else{identifier2=17;set_color(identifier2)}}

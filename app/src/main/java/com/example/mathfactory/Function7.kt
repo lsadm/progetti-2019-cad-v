@@ -16,29 +16,29 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var passo:Double=0.1
     var inf:Double=0.0
     var sup:Double=0.1
-    var A:Double=0.1
-    var T:Double=0.1
+    var A:Double=0.0
+    var T:Double=0.0
     var rit:Double=0.0
     var o:Double=0.0
-    var D:Double=0.1
+    var D:Double=0.0
     var f1:Double=0.0
     var f2:Double=0.0
-    var tau1:Double=0.1
-    var tau2:Double=0.1
-    var omega:Double=0.1
+    var tau1:Double=0.0
+    var tau2:Double=0.0
+    var omega:Double=0.0
     var real:Double=0.0
     var imm:Double=0.0
     var titolo=""
-    var A2:Double=0.1
-    var T2:Double=0.1
+    var A2:Double=0.0
+    var T2:Double=0.0
     var rit2:Double=0.0
     var o2:Double=0.0
-    var D2:Double=0.1
+    var D2:Double=0.0
     var f1_2:Double=0.0
     var f2_2:Double=0.0
-    var tau1_2:Double=0.1
-    var tau2_2:Double=0.1
-    var omega2:Double=0.1
+    var tau1_2:Double=0.0
+    var tau2_2:Double=0.0
+    var omega2:Double=0.0
     var real2:Double=0.0
     var imm2:Double=0.0
     var titolo2=""
@@ -55,7 +55,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         setContentView(R.layout.activity_function7)
         nav_view7.setNavigationItemSelectedListener(this)
         controllo_generale=2
-        button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
+        button8.setOnClickListener {if(!turno)identifier=0 else identifier2=0;set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=9;set_color(identifier)}else{identifier2=9;set_color(identifier2)}}
         button10.setOnClickListener {if(!turno){identifier=10;set_color(identifier)}else{identifier2=10;set_color(identifier2)}}
         button11.setOnClickListener {if(!turno){identifier=11;set_color(identifier)}else{identifier2=11;set_color(identifier2)}}
@@ -268,17 +268,17 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 real_imm()
             when(identifier)
             {
-                9->{textView30.text="y(t)="+A+"*Π((t-("+rit+"))/"+T+")+("+o+")";titolo="Model Function: y(t)=AΠ((t-to)/T)+k"}
-                10->{textView30.text="y(t)="+A+"*Λ((t-("+rit+"))/"+T+")+("+o+")";titolo="Model Function: y(t)=AΛ((t-to)/T)+k"}
-                11->{textView30.text="y(t)="+A+"*sinc(2π*"+f1+"*(t-("+rit+")))+("+o+")";titolo="Model Function: y(t)=Asinc(t-to)+k"}
-                12->{textView30.text="y(t)="+A+"*sinc(2π*"+f1+"*(t-("+rit+")))^2+("+o+")";titolo="Model Function: y(t)=Asinc(t-to)^2+k"}
-                21->{textView30.text="y(t)="+A+"*exp((-1/"+tau1+")*(t-("+rit+")))+("+o+")";titolo="Model Function: y(t)=Aexp((-1/τ)*(t-to))+k"}
-                22->{textView30.text="y(t)="+A+"*(exp((-1/"+tau1+")*(t-("+rit+")))+exp((-1/"+tau2+")*(t-("+rit+"))))+("+o+")";titolo="Model Function: y(t)=A(exp((-1/τ1)*(t-to))+exp((-1/τ2)*(t-to)))+k"}
-                23->{textView30.text="y(t)="+A+"*t*exp((-1/"+tau1+")*(t-("+rit+")))+("+o+")";titolo="Model Function: y(t)=Atexp((-1/τ)*(t-to))+k"}
-                24->{textView30.text="y(t)="+A+"*exp("+real+"*(t-("+rit+")))*cos("+imm+"*(t-("+rit+")))+("+o+")";titolo="Model Function: y(t)=Aexp(α*(t-to))*cos(ω(t-to))+k"}
-                25->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*Π((t-("+rit+"))/"+T+")+("+o+")";titolo="Model Function: y(t)=Acos(2πf(t-to))*Π((t-to)/T)+k"}
-                26->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*Λ((t-("+rit+"))/"+T+")+("+o+")";titolo="Model Function: y(t)=Acos(2πf(t-to))*Λ((t-to)/T)+k"}
-                27->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*cos(2π*"+f2+"*(t-("+rit+"))/"+T+")+("+o+")";titolo="Model Function: y(t)=Acos(2πf1(t-to))*cos(2πf2(t-to)/T)+k"}
+                9->{textView30.text="y(t)="+A+"*Π((t-("+rit+"))/"+T+")+("+o+")";titolo="Signal's Kind: Square wave"}
+                10->{textView30.text="y(t)="+A+"*Λ((t-("+rit+"))/"+T+")+("+o+")";titolo="Signal's Kind: Triangular wave"}
+                11->{textView30.text="y(t)="+A+"*sinc(2π*"+f1+"*(t-("+rit+")))+("+o+")";titolo="Signal's Kind: Cardinal Sinus"}
+                12->{textView30.text="y(t)="+A+"*sinc(2π*"+f1+"*(t-("+rit+")))^2+("+o+")";titolo="Signal's Kind: Squared Cardinal Sinus"}
+                21->{textView30.text="y(t)="+A+"*exp((-1/"+tau1+")*(t-("+rit+")))+("+o+")";titolo="Signal's Kind: First Order Evolution"}
+                22->{textView30.text="y(t)=("+A+"/2)*(exp((-1/"+tau1+")*(t-("+rit+")))+exp((-1/"+tau2+")*(t-("+rit+"))))+("+o+")";titolo="Signal's Kind: Second Order Evolution"}
+                23->{textView30.text="y(t)="+A+"*t*exp((-1/"+tau1+")*(t-("+rit+")))+("+o+")";titolo="Signal's Kind: Critical Evolution"}
+                24->{textView30.text="y(t)="+A+"*exp("+real+"*(t-("+rit+")))*cos("+imm+"*(t-("+rit+")))+("+o+")";titolo="Signal's Kind: Harmonic Evolution"}
+                25->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*Π((t-("+rit+"))/"+T+")+("+o+")";titolo="Signal's Kind: Cosine Window Modulation"}
+                26->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*Λ((t-("+rit+"))/"+T+")+("+o+")";titolo="Signal's Kind: Cosine Modulated Triangularly"}
+                27->{textView30.text="y(t)="+A+"*cos(2π*"+f1+"*(t-("+rit+")))*cos(2π*"+f2+"*(t-("+rit+"))/"+T+")+("+o+")";titolo="Signal's Kind: Cosine Harmonically Modulated"}
             }
             return false
         }
@@ -316,17 +316,17 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 real_imm()
             when(identifier2)
             {
-                9->{textView23.text="y(t)="+A2+"*Π((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Model Function: y(t)=AΠ((t-to)/T)+k"}
-                10->{textView23.text="y(t)="+A2+"*Λ((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Model Function: y(t)=AΛ((t-to)/T)+k"}
-                11->{textView23.text="y(t)="+A2+"*sinc(t-("+rit2+"))+("+o2+")";titolo2="Model Function: y(t)=Asinc(t-to)+k"}
-                12->{textView23.text="y(t)="+A2+"*sinc(t-("+rit2+"))^2+("+o2+")";titolo2="Model Function: y(t)=Asinc(t-to)^2+k"}
-                21->{textView23.text="y(t)="+A2+"*exp((-1/"+tau1_2+")*(t-("+rit2+")))+("+o2+")";titolo2="Model Function: y(t)=Aexp((-1/τ)*(t-to))+k"}
-                22->{textView23.text="y(t)="+A2+"*(exp((-1/"+tau1_2+")*(t-("+rit2+")))+exp((-1/"+tau2_2+")*(t-("+rit2+"))))+("+o2+")";titolo2="Model Function: y(t)=A(exp((-1/τ1)*(t-to))+exp((-1/τ2)*(t-to)))+k"}
-                23->{textView23.text="y(t)="+A2+"*t*exp((-1/"+tau1_2+")*(t-("+rit2+")))+("+o2+")";titolo2="Model Function: y(t)=Atexp((-1/τ)*(t-to))+k"}
-                24->{textView23.text="y(t)="+A2+"*exp((-1/"+real2+")*(t-("+rit2+")))*cos("+imm2+"*(t-("+rit2+")))+("+o2+")";titolo2="Model Function: y(t)=Aexp((-1/τ)*(t-to))*cos(ω(t-to))+k"}
-                25->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*Π((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Model Function: y(t)=Acos(2πf(t-to))*Π((t-to)/T)+k"}
-                26->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*Λ((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Model Function: y(t)=Acos(2πf(t-to))*Λ((t-to)/T)+k"}
-                27->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*cos(2π*"+f2_2+"*(t-("+rit2+")))+("+o2+")";titolo2="Model Function: y(t)=Acos(2πf1(t-to))*cos(2πf2(t-to))+k"}
+                9->{textView23.text="y(t)="+A2+"*Π((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Signal's Kind: Square wave"}
+                10->{textView23.text="y(t)="+A2+"*Λ((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Signal's Kind: Triangular wave"}
+                11->{textView23.text="y(t)="+A2+"*sinc(t-("+rit2+"))+("+o2+")";titolo2="Signal's Kind: Cardinal Sinus"}
+                12->{textView23.text="y(t)="+A2+"*sinc(t-("+rit2+"))^2+("+o2+")";titolo2="Signal's Kind: Squared Cardinal Sinus"}
+                21->{textView23.text="y(t)="+A2+"*exp((-1/"+tau1_2+")*(t-("+rit2+")))+("+o2+")";titolo2="Signal's Kind: First Order Evolution"}
+                22->{textView23.text="y(t)=("+A2+"/2)*(exp((-1/"+tau1_2+")*(t-("+rit2+")))+exp((-1/"+tau2_2+")*(t-("+rit2+"))))+("+o2+")";titolo2="Signal's Kind: Second Order Evolution"}
+                23->{textView23.text="y(t)="+A2+"*t*exp((-1/"+tau1_2+")*(t-("+rit2+")))+("+o2+")";titolo2="Signal's Kind: Critical Evolution"}
+                24->{textView23.text="y(t)="+A2+"*exp("+real2+"*(t-("+rit2+")))*cos("+imm2+"*(t-("+rit2+")))+("+o2+")";titolo2="Signal's Kind: Harmonic Evolution"}
+                25->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*Π((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Signal's Kind: Cosine Window Modulation"}
+                26->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*Λ((t-("+rit2+"))/"+T2+")+("+o2+")";titolo2="Signal's Kind: Cosine Modulated Triangularly"}
+                27->{textView23.text="y(t)="+A2+"*cos(2π*"+f1_2+"*(t-("+rit2+")))*cos(2π*"+f2_2+"*(t-("+rit2+")))+("+o2+")";titolo2="Signal's Kind: Cosine Harmonically Modulated"}
 
             }
             return false
@@ -345,12 +345,12 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     {
         if((identifier==9)||(identifier==25))
         {
-            if(identifier==10)
+            if(identifier==9)
                 passo=0.1
             else
                 passo=1/(1000*f1)
-            inf=-1*T+rit
-            sup=T+rit
+            inf=-1*2*T+rit
+            sup=2*T+rit
         }
         else
         if((identifier==10)||(identifier==26))

@@ -162,7 +162,7 @@ class Grafici: AppCompatActivity()
                 19->y=A*2.toDouble().pow(t+p)+x//
                 20->y=A* log2(t+p) +x//
                 21->y=A*exp((-1/tau1)*(t-rit))+o
-                22->y=A*(exp((-1/tau1)*(t-rit))+exp((-1/tau2)*(t-rit)))+o
+                22->y=(A/2)*(exp((-1/tau1)*(t-rit))+exp((-1/tau2)*(t-rit)))+o
                 23->y=A*t*exp((-1/tau1)*(t-rit))+o
                 24->y=A*exp(real*(t-rit))*cos(imm*(t-rit))+o
                 25->y=A*cos(2*PI*f1*(t-rit))*((1+ sign(t-(rit-T/2)))/2)*((1+ sign(-t+(rit+T/2)))/2)+o
@@ -193,7 +193,7 @@ class Grafici: AppCompatActivity()
                 19->y=A2*2.toDouble().pow(t+p2)+x2//
                 20->y=A2* log2(t+p2) +x2//
                 21->y=A2*exp((-1/tau1_2)*(t-rit2))+o2
-                22->y=A2*(exp((-1/tau1_2)*(t-rit2))+exp((-1/tau2_2)*(t-rit2)))+o2
+                22->y=(A2/2)*(exp((-1/tau1_2)*(t-rit2))+exp((-1/tau2_2)*(t-rit2)))+o2
                 23->y=A2*t*exp((-1/tau1_2)*(t-rit2))+o2
                 24->y=A2*exp(real2*(t-rit2))*cos(imm2*(t-rit2))+o2
                 25->y=A2*cos(2*PI*f1_2*(t-rit2))*((1+ sign(t-(rit2-T2/2)))/2)*((1+ sign(-t+(rit2+T2/2)))/2)+o2
