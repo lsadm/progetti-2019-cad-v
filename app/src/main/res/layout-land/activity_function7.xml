@@ -235,7 +235,7 @@
     <EditText
             android:layout_width="76dp"
             android:layout_height="38dp"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:ems="10"
             android:id="@+id/editText4"
             android:textSize="14sp" android:textColor="@color/blue"
@@ -275,7 +275,7 @@
     <EditText
             android:layout_width="76dp"
             android:layout_height="38dp"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/editText12"
             android:textSize="14sp"
@@ -285,7 +285,7 @@
     <EditText
             android:layout_width="76dp"
             android:layout_height="38dp"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/editText6"
             android:textSize="14sp"
@@ -326,7 +326,7 @@
     <EditText
             android:layout_width="78dp"
             android:layout_height="38dp"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/editText7"
             android:textSize="14sp"
@@ -337,7 +337,7 @@
     <EditText
             android:layout_width="78dp"
             android:layout_height="38dp"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/editText8"
             android:textSize="14sp"
