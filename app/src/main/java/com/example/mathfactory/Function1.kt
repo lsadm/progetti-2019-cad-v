@@ -1,6 +1,7 @@
 package com.example.mathfactory
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
@@ -17,17 +18,20 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     private var mediaplayer: MediaPlayer?=null
     private var switch= arrayOf(true,true,true,true,true,true)
     var identifier:Int=0
+    var controllo:Boolean=false
+    var parametri=arrayOf(0.0,0.0,0.0,0.0)
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function1)
         nav_view1.setNavigationItemSelectedListener(this)
-        button8.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[0]){identifier=1;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
-        button9.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[1]){ identifier=2;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
-        button10.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[2]){identifier=3;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
-        button30.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[3]){identifier=4;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
-        button31.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[4]){identifier=5;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
-        button11.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[5]){identifier=6;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button8.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[0]){reset();identifier=1;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button9.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[1]){reset();identifier=2;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button10.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[2]){reset();identifier=3;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button30.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[3]){reset();identifier=4;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button31.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[4]){reset();identifier=5;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button11.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[5]){reset();identifier=6;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
+        button20.setOnClickListener { controllo=input_output(identifier);if(controllo){set_color(7);set_color(identifier)} }
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -251,7 +255,83 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             4->button30.setTextColor(selected)
             5->button31.setTextColor(selected)
             6->button11.setTextColor(selected)
+            7->button20.setTextColor(selected2)
+            8->button20.setTextColor(selected3)
         }
+    }
+    private fun input_output(id:Int):Boolean
+    {
+       if(identifier!=0)
+       {
+           when (id) {
+               1, 3, 4 -> {
+                   if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-")) {
+                       textView30.setTextColor(Color.BLUE)
+                       parametri[0] = editText4.text.toString().toDouble()
+                       parametri[1] = editText6.text.toString().toDouble()
+                       parametri[2] = editText10.text.toString().toDouble()
+                       if(identifier==1)
+                           textView30.text="Triangles is ready to be plotted!"
+                       if(identifier==3)
+                           textView30.text="Circumferences is ready to be plotted!"
+                       if(identifier==4)
+                           textView30.text="Parables is ready to be plotted!"
+                       return true
+                   } else
+                   {
+                       textView30.setTextColor(Color.RED)
+                       textView30.text="Parameters Missing!"
+                       return false
+                   }
+               }
+               2 -> {
+                   if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-")) {
+                       textView30.setTextColor(Color.BLUE)
+                       parametri[0] = editText4.text.toString().toDouble()
+                       parametri[1] = editText6.text.toString().toDouble()
+                       if(identifier==2)
+                           textView30.text="Straights is ready to be plotted!"
+                       return true
+                   } else
+                   {
+                       textView30.setTextColor(Color.RED)
+                       textView30.text="Parameters Missing!"
+                       return false
+                   }
+               }
+               5, 6 -> {
+                   if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-") && (editText9.text.toString() != "") && (editText9.text.toString() != ".") && (editText9.text.toString() != "-")) {
+                       textView30.setTextColor(Color.BLUE)
+                       parametri[0] = editText4.text.toString().toDouble()
+                       parametri[1] = editText6.text.toString().toDouble()
+                       parametri[2] = editText10.text.toString().toDouble()
+                       parametri[3] = editText9.text.toString().toDouble()
+                       if(identifier==5)
+                           textView30.text="Ellipses is ready to be plotted!"
+                       if(identifier==6)
+                           textView30.text="Hyperboles is ready to be plotted!"
+                       return true
+                   } else
+                   {
+                       textView30.setTextColor(Color.RED)
+                       textView30.text="Parameters Missing!"
+                       return false
+                   }
+               }
+               else->return false
+           }
+       }
+      else
+           return false
+    }
+    private fun reset()
+    {
+        set_color(8)
+        textView30.text=""
+        editText4.setText("")
+        editText6.setText("")
+        editText10.setText("")
+        editText9.setText("")
     }
 }
 
