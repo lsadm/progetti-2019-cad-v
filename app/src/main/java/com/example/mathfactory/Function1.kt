@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function1.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.*
 
 class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var mediaplayer: MediaPlayer?=null
@@ -20,11 +21,15 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var identifier:Int=0
     var controllo:Boolean=false
     var parametri=arrayOf(0.0,0.0,0.0,0.0)
+    var passo:Double=0.0
+    var inf:Double=0.0
+    var sup:Double=0.0
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function1)
         nav_view1.setNavigationItemSelectedListener(this)
+        controllo_generale=3
         button8.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[0]){reset();identifier=1;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button9.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[1]){reset();identifier=2;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button10.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[2]){reset();identifier=3;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
@@ -32,6 +37,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button31.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[4]){reset();identifier=5;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button11.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[5]){reset();identifier=6;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button20.setOnClickListener { controllo=input_output(identifier);if(controllo){set_color(7);set_color(identifier)} }
+        button17.setOnClickListener {if(controllo){ parametri_fondamentali();val next=Intent(this,Grafici::class.java);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("primo", parametri[0]);next.putExtra("secondo", parametri[1]);next.putExtra("terzo", parametri[2]);next.putExtra("quarto", parametri[3]);reset();setta_elementi(false,0);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -151,9 +157,12 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     editText6.visibility=View.VISIBLE
                     textView29.visibility=View.VISIBLE
                     editText10.visibility=View.VISIBLE
-                    textView24.text="First Side Length"
-                    textView26.text="Second Side Lenght"
-                    textView29.text="Swept Corner Width"
+                    textView28.visibility=View.VISIBLE
+                    editText9.visibility=View.VISIBLE
+                    textView24.text="First Abscissa"
+                    textView26.text="First Ordinate"
+                    textView29.text="Second Abscissa"
+                    textView28.text="Second Ordinate"
                 }
                 2->
                 {
@@ -188,7 +197,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     textView26.text="b"
                     textView29.text="c"
                 }
-                5->
+                5,6->
                 {
                     textView24.visibility=View.VISIBLE
                     textView26.visibility=View.VISIBLE
@@ -202,21 +211,6 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     textView26.text="Origin\nOrdinate"
                     textView29.text="Semi-Minor Axis"
                     textView28.text="Semi-Major Axis"
-                }
-                6->
-                {
-                    textView24.visibility=View.VISIBLE
-                    textView26.visibility=View.VISIBLE
-                    editText4.visibility=View.VISIBLE
-                    editText6.visibility=View.VISIBLE
-                    textView29.visibility=View.VISIBLE
-                    textView28.visibility=View.VISIBLE
-                    editText10.visibility=View.VISIBLE
-                    editText9.visibility=View.VISIBLE
-                    textView24.text="a"
-                    textView26.text="b"
-                    textView29.text="c"
-                    textView28.text="d"
                 }
             }
         }
@@ -264,7 +258,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
        if(identifier!=0)
        {
            when (id) {
-               1, 3, 4 -> {
+               3, 4 -> {
                    if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-")) {
                        textView30.setTextColor(Color.BLUE)
                        parametri[0] = editText4.text.toString().toDouble()
@@ -299,13 +293,15 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                        return false
                    }
                }
-               5, 6 -> {
+               1,5, 6 -> {
                    if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-") && (editText9.text.toString() != "") && (editText9.text.toString() != ".") && (editText9.text.toString() != "-")) {
                        textView30.setTextColor(Color.BLUE)
                        parametri[0] = editText4.text.toString().toDouble()
                        parametri[1] = editText6.text.toString().toDouble()
                        parametri[2] = editText10.text.toString().toDouble()
                        parametri[3] = editText9.text.toString().toDouble()
+                       if(identifier==1)
+                           textView30.text="Segments is ready to be plotted!"
                        if(identifier==5)
                            textView30.text="Ellipses is ready to be plotted!"
                        if(identifier==6)
@@ -332,6 +328,36 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         editText6.setText("")
         editText10.setText("")
         editText9.setText("")
+    }
+    private fun parametri_fondamentali()
+    {
+        when(identifier)
+        {
+            1->
+            {
+                passo=1.0
+                inf=0.0
+                sup=2.0
+            }
+            2->
+            {
+                passo=0.1
+                inf=-10.0-parametri[1]
+                sup=10.0+parametri[1]
+            }
+            3,5,6->
+            {
+                passo=0.1
+                inf=0.0
+                sup=6.28
+            }
+            4->
+            {
+                passo=0.1
+                inf=-10-abs(parametri[1]/(2*parametri[0]))
+                sup=10+abs(parametri[1]/(2*parametri[0]))
+            }
+        }
     }
 }
 
