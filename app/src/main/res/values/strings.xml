@@ -54,7 +54,7 @@
     <string name="action_two">Enjoy with Math!</string>
     <string name="action_three">Created by: Raffaele Maddaloni and Giuseppe Barbato ®</string>
     <string name="navigation">Advanced functions</string>
-    <string name="action_four">Analytic Geometry</string>
+    <string name="action_four">Geometry Plotting</string>
     <string name="action_five">Linear Equations</string>
     <string name="action_six">Elementary Plotting</string>
     <string name="action_seven">Linear Differential Equations</string>
@@ -135,5 +135,12 @@
     <string name="modulatione_a_finestra_del_coseno">Window Modulated Cosine</string>
     <string name="modulazione_a_rampa_del_coseno">Cosine Modulated Triangularly</string>
     <string name="modulazione_armonica_del_coseno">Cosine Harmonically Modulated</string>
+    <string name="presentazione1">Geometry Plotting</string>
+    <string name="poligono">Polygon</string>
+    <string name="retta">Straight</string>
+    <string name="circonferenza">Circumference</string>
+    <string name="parabola">Parable</string>
+    <string name="ellisse">Ellipse</string>
+    <string name="iperbole">Hyperbole</string>
     </resources>
 

@@ -18,7 +18,6 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function1)
         nav_view1.setNavigationItemSelectedListener(this)
-        prova1.setOnClickListener { prova1.text="OK!" }
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

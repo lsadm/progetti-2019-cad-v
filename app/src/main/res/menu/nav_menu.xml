@@ -4,22 +4,18 @@
       tools:showIn="navigation_view">
     <item android:title="@string/Basic">
         <menu>
-    <item
-            android:id="@+id/calculator"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/calculator"/>
-    <item
-            android:id="@+id/action_history_window"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/history_window"/>
+            <item
+                    android:id="@+id/action_history_window"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/history_window"/>
+            <item
+                    android:id="@+id/calculator"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/calculator"/>
         </menu>
     </item>
     <item android:title="@string/classico">
         <menu>
-    <item
-            android:id="@+id/action_four"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/action_four"/>
     <item
             android:id="@+id/action_five"
             android:icon="@drawable/ic_android_black_24dp"
@@ -40,14 +36,18 @@
     </item>
     <item android:title="@string/plottare">
         <menu>
-    <item
-            android:id="@+id/action_six"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/action_six"/>
-    <item
-            android:id="@+id/action_ten"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/action_ten"/>
+            <item
+                    android:id="@+id/action_four"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/action_four"/>
+            <item
+                    android:id="@+id/action_six"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/action_six"/>
+            <item
+                    android:id="@+id/action_ten"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/action_ten"/>
         </menu>
     </item>
 </menu>
