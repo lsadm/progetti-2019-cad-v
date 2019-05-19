@@ -136,7 +136,7 @@
     <string name="modulazione_a_rampa_del_coseno">Cosine Modulated Triangularly</string>
     <string name="modulazione_armonica_del_coseno">Cosine Harmonically Modulated</string>
     <string name="presentazione1">Geometry Plotting</string>
-    <string name="poligono">Polygon</string>
+    <string name="triangoli">Triangles</string>
     <string name="retta">Straight</string>
     <string name="circonferenza">Circumference</string>
     <string name="parabola">Parable</string>
