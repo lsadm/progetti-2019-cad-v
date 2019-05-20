@@ -24,6 +24,8 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var passo:Double=0.0
     var inf:Double=0.0
     var sup:Double=0.0
+    var titolo:String=""
+    var controllo_reset=false
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button31.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[4]){reset();identifier=5;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button11.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[5]){reset();identifier=6;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button20.setOnClickListener { controllo=input_output(identifier);if(controllo){set_color(7);set_color(identifier)} }
-        button17.setOnClickListener {if(controllo){ parametri_fondamentali();val next=Intent(this,Grafici::class.java);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("primo", parametri[0]);next.putExtra("secondo", parametri[1]);next.putExtra("terzo", parametri[2]);next.putExtra("quarto", parametri[3]);reset();setta_elementi(false,0);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}}
+        button17.setOnClickListener {if(controllo){controllo_reset=true;parametri_fondamentali();val next=Intent(this,Grafici::class.java);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier+27);if((identifier==1)||(identifier==3)||(identifier==5)||(identifier==6))next.putExtra("identifier2", identifier+27);next.putExtra("titolo", titolo);next.putExtra("primo", parametri[0]);next.putExtra("secondo", parametri[1]);next.putExtra("terzo", parametri[2]);next.putExtra("quarto", parametri[3]);reset();setta_elementi(false,0);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -157,12 +159,10 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     editText6.visibility=View.VISIBLE
                     textView29.visibility=View.VISIBLE
                     editText10.visibility=View.VISIBLE
-                    textView28.visibility=View.VISIBLE
-                    editText9.visibility=View.VISIBLE
-                    textView24.text="First Abscissa"
-                    textView26.text="First Ordinate"
-                    textView29.text="Second Abscissa"
-                    textView28.text="Second Ordinate"
+                    textView24.text="First Side Lenght:"
+                    textView26.text="Second Side Lenght:"
+                    textView29.text="Corner Width\n(Degrees):"
+                    titolo="Tracing of a Triangle"
                 }
                 2->
                 {
@@ -170,8 +170,9 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     textView26.visibility=View.VISIBLE
                     editText4.visibility=View.VISIBLE
                     editText6.visibility=View.VISIBLE
-                    textView24.text="Angular Coefficient"
-                    textView26.text="Origin\nIntercept"
+                    textView24.text="Angular Coefficient:"
+                    textView26.text="Origin\nIntercept:"
+                    titolo="Tracing of a Straight"
                 }
                 3->
                 {
@@ -181,9 +182,10 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     editText6.visibility=View.VISIBLE
                     textView29.visibility=View.VISIBLE
                     editText10.visibility=View.VISIBLE
-                    textView24.text="Origin\nAbscissa"
-                    textView26.text="Origin\nOrdinate"
-                    textView29.text="Radius"
+                    textView24.text="Origin\nAbscissa:"
+                    textView26.text="Origin\nOrdinate:"
+                    textView29.text="Radius:"
+                    titolo="Tracing of a Circumference"
                 }
                 4->
                 {
@@ -193,9 +195,10 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     editText6.visibility=View.VISIBLE
                     textView29.visibility=View.VISIBLE
                     editText10.visibility=View.VISIBLE
-                    textView24.text="a"
-                    textView26.text="b"
-                    textView29.text="c"
+                    textView24.text="a:"
+                    textView26.text="b:"
+                    textView29.text="c:"
+                    titolo="Tracing of a Parable"
                 }
                 5,6->
                 {
@@ -207,10 +210,14 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     textView28.visibility=View.VISIBLE
                     editText10.visibility=View.VISIBLE
                     editText9.visibility=View.VISIBLE
-                    textView24.text="Origin\nAbscissa"
-                    textView26.text="Origin\nOrdinate"
-                    textView29.text="Semi-Minor Axis"
-                    textView28.text="Semi-Major Axis"
+                    textView24.text="Origin\nAbscissa:"
+                    textView26.text="Origin\nOrdinate:"
+                    textView29.text="First\nSemi-Axis:"
+                    textView28.text="Second\nSemi-Axis:"
+                    if(identifier==5)
+                        titolo="Tracing of a Ellipse"
+                    else
+                        titolo="Tracing of a Hyperbole"
                 }
             }
         }
@@ -258,12 +265,60 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
        if(identifier!=0)
        {
            when (id) {
-               3, 4 -> {
+               1,3, 4 -> {
                    if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-")) {
                        textView30.setTextColor(Color.BLUE)
                        parametri[0] = editText4.text.toString().toDouble()
+                       if((parametri[0]==0.0)&&(identifier==4))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter a can't be null!"
+                           return false
+                       }
+                       if((parametri[0]<=0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter First Side Lenght can't be equal or less than 0!"
+                       }
                        parametri[1] = editText6.text.toString().toDouble()
+                       if((parametri[1]<=0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter Second Side Lenght can't be equal or less than 0!"
+                       }
                        parametri[2] = editText10.text.toString().toDouble()
+                       if((parametri[2]<=0.0)&&(identifier==3))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter Radius can't be equal or less than 0!"
+                       }
+                       if((parametri[2]==0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter Corner Width (Degrees) can't be equal than 0!"
+                       }
+                       if((parametri[0]<=0.0)&&(parametri[1]<=0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter First Side Lenght and Second Side Lenght can't be equal or less than 0!"
+                       }
+                       if((parametri[0]<=0.0)&&(parametri[2]==0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter First Side Lenght can't be equal or less than 0 and Corner Width (Degrees) can't be equal than 0!"
+                       }
+                       if((parametri[1]<=0.0)&&(parametri[2]==0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter Second Side Lenght can't be equal or less than 0 and Corner Width (Degrees) can't be equal than 0!"
+                       }
+                       if((parametri[0]<=0.0)&&(parametri[1]<=0.0)&&(parametri[2]==0.0)&&(identifier==1))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter First Side Lenght and Second Side Lenght can't be equal or less than 0 and Corner Width (Degrees) can't be equal than 0!"
+                       }
+                       if(((parametri[0]<=0.0)||(parametri[1]<=0.0)||(parametri[2]==0.0))&&(identifier==1))
+                           return false
                        if(identifier==1)
                            textView30.text="Triangles is ready to be plotted!"
                        if(identifier==3)
@@ -271,7 +326,8 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                        if(identifier==4)
                            textView30.text="Parables is ready to be plotted!"
                        return true
-                   } else
+                   }
+                   else
                    {
                        textView30.setTextColor(Color.RED)
                        textView30.text="Parameters Missing!"
@@ -293,15 +349,31 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                        return false
                    }
                }
-               1,5, 6 -> {
+               5, 6 -> {
                    if ((editText4.text.toString() != "") && (editText4.text.toString() != ".") && (editText4.text.toString() != "-") && (editText6.text.toString() != "") && (editText6.text.toString() != ".") && (editText6.text.toString() != "-") && (editText10.text.toString() != "") && (editText10.text.toString() != ".") && (editText10.text.toString() != "-") && (editText9.text.toString() != "") && (editText9.text.toString() != ".") && (editText9.text.toString() != "-")) {
                        textView30.setTextColor(Color.BLUE)
                        parametri[0] = editText4.text.toString().toDouble()
                        parametri[1] = editText6.text.toString().toDouble()
                        parametri[2] = editText10.text.toString().toDouble()
+                       if((parametri[2]<=0.0))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter First Semi-Axis can't be equal or less than 0!"
+                       }
                        parametri[3] = editText9.text.toString().toDouble()
-                       if(identifier==1)
-                           textView30.text="Segments is ready to be plotted!"
+                       if((parametri[3]<=0.0))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameter Second Semi-Axis can't be equal or less than 0!"
+                       }
+                       if((parametri[2]<=0.0)&&(parametri[3]<=0.0))
+                       {
+                           textView30.setTextColor(Color.RED)
+                           textView30.text="Error: parameters First Semi-Axis and Second\nSemi-Axis can't be equal or less than 0!"
+                           return false
+                       }
+                       if((parametri[2]<=0.0)||(parametri[3]<=0.0))
+                           return false
                        if(identifier==5)
                            textView30.text="Ellipses is ready to be plotted!"
                        if(identifier==6)
@@ -328,6 +400,10 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         editText6.setText("")
         editText10.setText("")
         editText9.setText("")
+        if(controllo_reset)
+        for(i in 0..5)
+            switch[i]=true
+        controllo_reset=false
     }
     private fun parametri_fondamentali()
     {
@@ -337,7 +413,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             {
                 passo=1.0
                 inf=0.0
-                sup=2.0
+                sup=3.0
             }
             2->
             {
@@ -345,17 +421,23 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 inf=-10.0-parametri[1]
                 sup=10.0+parametri[1]
             }
-            3,5,6->
+            3,5->
             {
-                passo=0.1
-                inf=0.0
-                sup=6.28
+                passo=0.01
+                inf=-3.14
+                sup=0.0
             }
             4->
             {
                 passo=0.1
-                inf=-10-abs(parametri[1]/(2*parametri[0]))
-                sup=10+abs(parametri[1]/(2*parametri[0]))
+                inf=-parametri[1]/(2*parametri[0])-10
+                sup=-parametri[1]/(2*parametri[0])+10
+            }
+            6->
+            {
+                passo=0.0001
+                inf=-3.1415
+                sup=3.1415
             }
         }
     }

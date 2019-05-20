@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.activity_grafici.*
 var n=0
 var t=0.0
 var y=0.0
+var x=0.0
+var x1=0.0
+var y1=0.0
 lateinit var series:LineGraphSeries<DataPoint>
 lateinit var series2:LineGraphSeries<DataPoint>
 class Grafici: AppCompatActivity()
@@ -50,6 +53,11 @@ class Grafici: AppCompatActivity()
     var tau1_2=0.0
     var tau2_2=0.0
     var imm2=0.0
+    var parametri=arrayOf(0.0,0.0,0.0,0.0)
+    var ascisse_punti=arrayOf(0.0,0.0,0.0)
+    var ordinate_punti=arrayOf(0.0,0.0,0.0)
+    var vettore_correttivo=arrayOf(0.0,0.0,0.0)
+    var vettore_correttivo2=arrayOf(0.0,0.0,0.0)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grafici)
@@ -76,6 +84,13 @@ class Grafici: AppCompatActivity()
                tau1=getIntent().getExtras().getDouble("tau1")
                tau2=getIntent().getExtras().getDouble("tau2")
                imm=getIntent().getExtras().getDouble("imm")
+           }
+        else
+           {
+               parametri[0] = getIntent().getExtras().getDouble("primo")
+               parametri[1] = getIntent().getExtras().getDouble("secondo")
+               parametri[2] = getIntent().getExtras().getDouble("terzo")
+               parametri[3] = getIntent().getExtras().getDouble("quarto")
            }
         val titolo=getIntent().getExtras().getString("titolo")
         val interpolat=getIntent().getExtras().getBoolean("interpolat")
@@ -125,7 +140,10 @@ class Grafici: AppCompatActivity()
         series.setTitle(titolo)
         series.setColor(rgb(81,153,167))
         series2.setTitle(titolo2)
-        series2.setColor(rgb(255,215,0))
+        if((identifier==30)||(identifier==32)||(identifier==33)||(identifier==28))
+            series2.setColor(rgb(81,153,167))
+        else
+            series2.setColor(rgb(255,215,0))
         graphview.getLegendRenderer().setVisible(true)
         graphview.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP)
         if((((sup-inf)/passo)>100000)||(((sup-inf)/passo)<-100000))
@@ -137,11 +155,13 @@ class Grafici: AppCompatActivity()
             else
                 n = ceil((sup - inf) / (-1 * passo)).toInt()
         }
-        t = inf - passo
+           t = inf - passo
         var vettore=DoubleArray(n)
         var vettore2=DoubleArray(n)
+        if(identifier==28)
+            componi_coordinate()
         for (i in 0..n-1) {
-            t += passo
+                t += passo
             when(identifier)
             {
                 1->y=A*sin(2*PI*f*t+p)+x  //
@@ -170,9 +190,37 @@ class Grafici: AppCompatActivity()
                 25->y=A*cos(2*PI*f1*(t-rit))*((1+ sign(t-(rit-T/2)))/2)*((1+ sign(-t+(rit+T/2)))/2)+o
                 26->y=A*cos(2*PI*f1*(t-rit))*(-1/T*abs(t-rit)+1)*((1+ sign(t-(rit-T)))/2)*((1+ sign(-t+(rit+T)))/2)+o
                 27->y=A*cos(2*PI*f1*(t-rit))*cos(2*PI*f2*(t-rit))+o
+                28->
+                {
+                    x=ascisse_punti[t.toInt()]
+                    y=ordinate_punti[t.toInt()]
+                }
+                29->y=parametri[0]*t+parametri[1]
+                30->
+                {
+                    x=parametri[2]*cos(t)+parametri[0]
+                    y=parametri[2]*sin(t)+parametri[1]
+                }
+                31->y=parametri[0]*t.pow(2)+parametri[1]*t+parametri[2]
+                32->
+                {
+                    x=parametri[2]*cos(t)+parametri[0]
+                    y=parametri[3]*sin(t)+parametri[1]
+                }
+                33->
+                {
+                    if(t<0)
+                    x=-1*parametri[2]*cosh(t)+parametri[0]
+                    else
+                        x=parametri[2]*cosh(t)+parametri[0]
+                    y=parametri[3]*sinh(t)+parametri[1]
+                }
             }
             vettore[i]= y
-            series.appendData(DataPoint(t, y), true, n)
+            if((identifier==30)||(identifier==32)||(identifier==33)||(identifier==28))
+                series.appendData(DataPoint(x, y), true, n)
+            else
+                series.appendData(DataPoint(t, y), true, n)
             when(identifier2)
             {
                 1->y=A2*sin(2*PI*f_2*t+p2)+x2  //
@@ -201,27 +249,100 @@ class Grafici: AppCompatActivity()
                 25->y=A2*cos(2*PI*f1_2*(t-rit2))*((1+ sign(t-(rit2-T2/2)))/2)*((1+ sign(-t+(rit2+T2/2)))/2)+o2
                 26->y=A2*cos(2*PI*f1_2*(t-rit2))*(-1/T2*abs(t-rit2)+1)*((1+ sign(t-(rit2-T2)))/2)*((1+ sign(-t+(rit2+T2)))/2)+o2
                 27->y=A2*cos(2*PI*f1_2*(t-rit2))*cos(2*PI*f2_2*(t-rit2))+o2
-
+                28->
+                {
+                    x=vettore_correttivo[t.toInt()]
+                    y=vettore_correttivo2[t.toInt()]
+                }
+                30->
+                {
+                    x=parametri[2]*cos(t)+parametri[0]
+                    y=-1*(parametri[2]*sin(t))+parametri[1]
+                }
+                32->
+                {
+                    x=parametri[2]*cos(t)+parametri[0]
+                    y=-1*parametri[3]*sin(t)+parametri[1]
+                }
+                33->
+                {
+                    if(t<0)
+                        x=-1*parametri[2]*cosh(t)+parametri[0]
+                    else
+                        x=parametri[2]*cosh(t)+parametri[0]
+                    y=-1*parametri[3]*sinh(t)+parametri[1]
+                }
             }
             vettore2[i]= y
-            series2.appendData(DataPoint(t, y), true, n)
+            if((identifier==30)||(identifier==32)||(identifier==33)||(identifier==28))
+                series2.appendData(DataPoint(x, y), true, n)
+            else
+                series2.appendData(DataPoint(t, y), true, n)
         }
         graphview.getViewport().setXAxisBoundsManual(true)
         graphview.getViewport().setYAxisBoundsManual(true)
-        graphview.getViewport().setMinX(floor(inf*10)/10)
-        graphview.getViewport().setMaxX(ceil(sup*10)/10)
-        if(identifier!=0)
-         search_min_max(vettore)
-        if(identifier2!=0)
-            search_min_max_2(vettore2)
-        if(min<=min2)
-         graphview.getViewport().setMinY(floor(min)*1.5)
+        if(identifier==28)
+        {
+            if(x1<0)
+            {
+                graphview.getViewport().setMinX(floor(x1-5))
+                graphview.getViewport().setMaxX(ceil(parametri[0]+5))
+            }
+            else
+                if(x1<parametri[0])
+                {
+                    graphview.getViewport().setMinX(-5.0)
+                    graphview.getViewport().setMaxX(ceil(parametri[0]+5))
+                }
+            else
+                {
+                    graphview.getViewport().setMinX(-5.0)
+                    graphview.getViewport().setMaxX(ceil(x1+5))
+                }
+            if(y1<0)
+            {
+                graphview.getViewport().setMinY(floor(y1-5))
+                graphview.getViewport().setMaxY(1.0)
+            }
+            else
+            {
+                graphview.getViewport().setMinY(-1.0)
+                graphview.getViewport().setMaxY(ceil(y1+5))
+            }
+        }
         else
-            graphview.getViewport().setMinY(floor(min2)*1.5)
-        if(max>=max2)
-         graphview.getViewport().setMaxY(ceil(max)*1.5)
+        if(identifier==30)
+        {
+            graphview.getViewport().setMinX(floor(parametri[0]-2*parametri[2]-5))
+            graphview.getViewport().setMaxX(ceil(parametri[0]+2*parametri[2]+5))
+            graphview.getViewport().setMinY(floor(parametri[1]-2*parametri[2]-5))
+            graphview.getViewport().setMaxY(ceil(parametri[1]+2*parametri[2]+5))
+        }
         else
-            graphview.getViewport().setMaxY(ceil(max2)*1.5)
+            if((identifier==32)||(identifier==33))
+            {
+                graphview.getViewport().setMinX(floor(parametri[0]-2*parametri[2]-5))
+                graphview.getViewport().setMaxX(ceil(parametri[0]+2*parametri[2]+5))
+                graphview.getViewport().setMinY(floor(parametri[1]-2*parametri[3]-5))
+                graphview.getViewport().setMaxY(ceil(parametri[1]+2*parametri[3]+5))
+            }
+            else
+           {
+            graphview.getViewport().setMinX(floor(inf * 10) / 10)
+            graphview.getViewport().setMaxX(ceil(sup * 10) / 10)
+            if (identifier != 0)
+                search_min_max(vettore)
+            if (identifier2 != 0)
+                search_min_max_2(vettore2)
+            if (min <= min2)
+                graphview.getViewport().setMinY(floor(min) * 1.5)
+            else
+                graphview.getViewport().setMinY(floor(min2) * 1.5)
+            if (max >= max2)
+                graphview.getViewport().setMaxY(ceil(max) * 1.5)
+            else
+                graphview.getViewport().setMaxY(ceil(max2) * 1.5)
+           }
         graphview.addSeries(series)
         if(identifier2!=0)
          graphview.addSeries(series2)
@@ -289,6 +410,57 @@ class Grafici: AppCompatActivity()
                 max2=vettore[i]
             i++
         }
+    }
+    private fun componi_coordinate()
+    {
+        x1=parametri[1]*cos(parametri[2]*PI/180.0)
+        y1=parametri[1]*sin(parametri[2]*PI/180.0)
+        if(x1<=0.0)
+        {
+            ascisse_punti[0]=x1
+            ascisse_punti[1]=0.0
+            ascisse_punti[2]=parametri[0]
+            ordinate_punti[0]=y1
+            ordinate_punti[1]=0.0
+            ordinate_punti[2]=0.0
+            vettore_correttivo[0]=x1
+            vettore_correttivo[1]=parametri[0]
+            vettore_correttivo[2]=parametri[0]
+            vettore_correttivo2[0]=y1
+            vettore_correttivo2[1]=0.0
+            vettore_correttivo2[2]=0.0
+        }
+        else
+            if(x1<=parametri[0])
+            {
+                ascisse_punti[0]=0.0
+                ascisse_punti[1]=x1
+                ascisse_punti[2]=parametri[0]
+                ordinate_punti[0]=0.0
+                ordinate_punti[1]=y1
+                ordinate_punti[2]=0.0
+                vettore_correttivo[0]=0.0
+                vettore_correttivo[1]=parametri[0]
+                vettore_correttivo[2]=parametri[0]
+                vettore_correttivo2[0]=0.0
+                vettore_correttivo2[1]=0.0
+                vettore_correttivo2[2]=0.0
+            }
+        else
+                {
+                    ascisse_punti[0]=0.0
+                    ascisse_punti[1]=parametri[0]
+                    ascisse_punti[2]=x1
+                    ordinate_punti[0]=0.0
+                    ordinate_punti[1]=0.0
+                    ordinate_punti[2]=y1
+                    vettore_correttivo[0]=0.0
+                    vettore_correttivo[1]=x1
+                    vettore_correttivo[2]=x1
+                    vettore_correttivo2[0]=0.0
+                    vettore_correttivo2[1]=y1
+                    vettore_correttivo2[2]=y1
+                }
     }
 }
 

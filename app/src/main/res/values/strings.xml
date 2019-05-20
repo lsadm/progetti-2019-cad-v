@@ -136,11 +136,12 @@
     <string name="modulazione_a_rampa_del_coseno">Cosine Modulated Triangularly</string>
     <string name="modulazione_armonica_del_coseno">Cosine Harmonically Modulated</string>
     <string name="presentazione1">Geometry Plotting</string>
-    <string name="triangoli">Segments</string>
+    <string name="triangoli">Triangles</string>
     <string name="retta">Straights</string>
     <string name="circonferenza">Circumferences</string>
     <string name="parabola">Parables</string>
     <string name="ellisse">Ellipses</string>
     <string name="iperbole">Hyperboles</string>
+    <string name="view_extra">Build Graph:</string>
     </resources>
 
