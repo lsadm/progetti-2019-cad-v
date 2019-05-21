@@ -373,11 +373,21 @@ class Grafici: AppCompatActivity()
             graphview.getGridLabelRenderer().horizontalAxisTitle = "Abscissas ot the Vertices"
             graphview.getGridLabelRenderer().verticalAxisTitle = "Ordinates ot the Vertices"
         }
-        graphview.getGridLabelRenderer().horizontalAxisTitleColor= rgb(81,153,167)
-        graphview.getGridLabelRenderer().verticalAxisTitleColor= rgb(255,215,0)
+        val color=rgb(40,114,51)
+        graphview.getGridLabelRenderer().horizontalAxisTitleColor= color
+        graphview.getGridLabelRenderer().verticalAxisTitleColor= color
         graphview.getGridLabelRenderer().gridColor= rgb(42,45,89)
         graphview.getGridLabelRenderer().verticalAxisTitleTextSize=50.toFloat()
         graphview.getGridLabelRenderer().horizontalAxisTitleTextSize=50.toFloat()
+        if((identifier<28)&&(identifier2!=0))
+            series.setOnDataPointTapListener { series, dataPoint ->val message="Silver_Graph:\nAbscissa= "+dataPoint.getX()+"\nOrdinate= "+dataPoint.getY(); Toast.makeText(this, message, Toast.LENGTH_LONG).show()}
+        else
+            series.setOnDataPointTapListener { series, dataPoint ->val message="Graph:\nAbscissa= "+dataPoint.getX()+"\nOrdinate= "+dataPoint.getY(); Toast.makeText(this, message, Toast.LENGTH_LONG).show()}
+        if(identifier<28)
+            series2.setOnDataPointTapListener { series, dataPoint ->val message="Gold_Graph:\nAbscissa= "+dataPoint.getX()+"\nOrdinate= "+dataPoint.getY(); Toast.makeText(this, message, Toast.LENGTH_LONG).show()}
+        else
+            if(identifier2!=0)
+                 series2.setOnDataPointTapListener { series, dataPoint ->val message="Graph:\nAbscissa= "+dataPoint.getX()+"\nOrdinate= "+dataPoint.getY(); Toast.makeText(this, message, Toast.LENGTH_LONG).show()}
         graphview.addSeries(series)
         if(identifier2!=0)
          graphview.addSeries(series2)
