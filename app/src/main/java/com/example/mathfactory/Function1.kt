@@ -339,7 +339,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                    else
                    {
                        textView30.setTextColor(Color.RED)
-                       textView30.text="Parameters Missing!"
+                       textView30.text="Wrong or Missing Parameters!"
                        return false
                    }
                }

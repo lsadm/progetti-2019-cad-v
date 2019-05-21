@@ -1,5 +1,6 @@
 package com.example.mathfactory
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Color.*
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -350,6 +351,33 @@ class Grafici: AppCompatActivity()
             else
                 graphview.getViewport().setMaxY(ceil(max2) * 1.5)
            }
+        if((controllo_generale==1)||((controllo_generale==3)&&((identifier==29)||(identifier==31))))
+        {
+            graphview.getGridLabelRenderer().horizontalAxisTitle = "x"
+            graphview.getGridLabelRenderer().verticalAxisTitle = "y(x)"
+        }
+        else
+            if(controllo_generale==2)
+            {
+                graphview.getGridLabelRenderer().horizontalAxisTitle = "t"
+                graphview.getGridLabelRenderer().verticalAxisTitle = "x(t)"
+            }
+            else
+                if((controllo_generale==3)&&((identifier==30)||(identifier==32)||(identifier==33)))
+                {
+                    graphview.getGridLabelRenderer().horizontalAxisTitle = "x(t)"
+                    graphview.getGridLabelRenderer().verticalAxisTitle = "y(t)"
+                }
+        if((controllo_generale==3)&&(identifier==28))
+        {
+            graphview.getGridLabelRenderer().horizontalAxisTitle = "Abscissas ot the Vertices"
+            graphview.getGridLabelRenderer().verticalAxisTitle = "Ordinates ot the Vertices"
+        }
+        graphview.getGridLabelRenderer().horizontalAxisTitleColor= rgb(81,153,167)
+        graphview.getGridLabelRenderer().verticalAxisTitleColor= rgb(255,215,0)
+        graphview.getGridLabelRenderer().gridColor= rgb(42,45,89)
+        graphview.getGridLabelRenderer().verticalAxisTitleTextSize=50.toFloat()
+        graphview.getGridLabelRenderer().horizontalAxisTitleTextSize=50.toFloat()
         graphview.addSeries(series)
         if(identifier2!=0)
          graphview.addSeries(series2)
