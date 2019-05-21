@@ -28,8 +28,8 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var tau1:Double=0.1
     var tau2:Double=0.1
     var omega:Double=100.0
-    var real:Double=0.0
-    var imm:Double=0.0
+    var real:Double=-1.0
+    var imm:Double=0.001
     var titolo=""
     var A2:Double=0.0
     var T2:Double=0.1
@@ -41,8 +41,8 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var tau1_2:Double=0.1
     var tau2_2:Double=0.1
     var omega2:Double=100.0
-    var real2:Double=0.0
-    var imm2:Double=0.0
+    var real2:Double=-1.0
+    var imm2:Double=0.001
     var titolo2=""
     var identifier:Int=0
     var turno=false
@@ -51,6 +51,14 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var identifier2:Int=0
     var controllo=true
     var controllo2=true
+    var fv=0.0
+    var fv2=0.0
+    var Tv=0.0
+    var ritv=0.0
+    var tauv=0.0
+    var tauv2=0.0
+    var realv=0.0
+    var immv=0.0
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -89,7 +97,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if(id==R.id.action_two)
         {
-            Toast.makeText(this,"Enjoy with Math!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Hi, do you want to see any\nsignal functions?", Toast.LENGTH_LONG).show()
             return true
         }
         if(id==R.id.action_three)
@@ -367,14 +375,15 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
     private fun parametri_fondamentali()
     {
+        valutazione()
         if((identifier==9)||(identifier==25))
         {
             if(identifier==9)
                 passo=0.1
             else
-                passo=1/(1000*f1)
-            inf=-1*2*T+rit
-            sup=2*T+rit
+                passo=1/(1000*fv)
+            inf=-1*2*Tv+ritv
+            sup=2*Tv+ritv
         }
         else
         if((identifier==10)||(identifier==26))
@@ -382,50 +391,91 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
            if(identifier==10)
                passo=0.1
             else
-               passo=1/(1000*f1)
-            inf=-2*T+rit
-            sup=2*T+rit
+               passo=1/(1000*fv)
+            inf=-2*Tv+ritv
+            sup=2*Tv+ritv
         }
         else
         if((identifier==11)||(identifier==12))
         {
             passo=0.01
-            inf=-5/f1+rit
-            sup=5/f1+rit
+            inf=-5/fv+ritv
+            sup=5/fv+ritv
         }
         else
         if(identifier==27)
         {
-            if(f1<f2)
+            if(fv<fv2)
             {
-                passo=1/(1000*f2)
-                inf = -5 / f1 + rit
-                sup = 5 / f1 + rit
+                passo=1/(1000*fv2)
+                inf = -5 / fv + ritv
+                sup = 5 / fv + ritv
             }
             else
             {
-                passo=1/(4*f1)
-                inf = -5 / f2 + rit
-                sup = 5 / f2 + rit
+                passo=1/(4*fv)
+                inf = -5 / fv2 + ritv
+                sup = 5 / fv2 + ritv
             }
         }
         else
         {
-            passo=0.1
-            inf=rit
+            inf=ritv
             if(identifier==22)
             {
-                if(tau1>tau2)
-                    sup=4.5*tau1+rit
+                passo=0.1
+                if(tauv>tauv2)
+                    sup=4.5*tauv+ritv
                 else
-                    sup=4.5*tau2+rit
+                    sup=4.5*tauv+ritv
             }
             else
                 if(identifier==24)
-                    sup=-4.5/real+rit
+                {
+                    passo=(2*PI)/(1000*immv)
+                    sup = -4.5 / realv + ritv
+                }
                 else
-                 sup=4.5*tau1+rit
+                {
+                    passo=0.1
+                    sup = 4.5 * tauv + ritv
+                }
         }
+    }
+    private fun valutazione()
+    {
+        if(f1>f1_2)
+            fv=f1
+        else
+            fv=f1_2
+        if(T>T2)
+            Tv=T
+        else
+            Tv=T2
+        if(rit>rit2)
+            ritv=rit
+        else
+            ritv=rit2
+        if(f2>f2_2)
+            fv2=f2
+        else
+            fv2=f2_2
+        if(tau1>tau1_2)
+            tauv=tau1
+        else
+            tauv=tau1_2
+        if(tau2>tau2_2)
+            tauv2=tau2
+        else
+            tauv2=tau2_2
+        if(real>real2)
+            realv=real
+        else
+            realv=real2
+        if(imm>imm2)
+            immv=imm
+        else
+            immv=imm2
     }
 }
 

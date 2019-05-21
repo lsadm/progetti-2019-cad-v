@@ -137,6 +137,13 @@ class Grafici: AppCompatActivity()
             series2.setDrawDataPoints(true)
             series2.setDataPointsRadius(5.toFloat())
         }
+        if(identifier==28)
+        {
+            series.setThickness(3)
+            series2.setThickness(3)
+            series.setDrawDataPoints(true)
+            series.setDataPointsRadius(10.toFloat())
+        }
         series.setTitle(titolo)
         series.setColor(rgb(81,153,167))
         series2.setTitle(titolo2)
@@ -375,7 +382,10 @@ class Grafici: AppCompatActivity()
             if(controllo_generale==2)
              next = Intent(this, Function7::class.java)
             else
+                if(controllo_generale==3)
                 next = Intent(this, Function1::class.java)
+            else
+                    next = Intent(this, MainActivity::class.java)
             startActivity(next)
             mediaplayer= MediaPlayer.create(this,R.raw.return_graph_sound)
             mediaplayer?.start()

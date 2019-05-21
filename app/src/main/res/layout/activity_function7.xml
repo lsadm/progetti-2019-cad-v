@@ -29,7 +29,7 @@
     <Button
             android:text="@string/view"
             android:layout_width="80dp"
-            android:layout_height="47dp" android:id="@+id/button20"
+            android:layout_height="52dp" android:id="@+id/button20"
             android:textColor="@color/red" android:textAllCaps="false"
             android:textSize="18sp"
             android:background="@drawable/my_button1"
@@ -39,7 +39,7 @@
     <Button
             android:text="@string/view_bis"
             android:layout_width="80dp"
-            android:layout_height="47dp" android:id="@+id/button22"
+            android:layout_height="52dp" android:id="@+id/button22"
             android:textColor="@color/red" android:textAllCaps="false"
             android:textSize="18sp"
             android:background="@drawable/my_button1"
@@ -368,7 +368,7 @@
             app:layout_constraintTop_toBottomOf="@+id/pres"/>
     <TextView
             android:layout_width="246dp"
-            android:layout_height="47dp" android:id="@+id/textView30"
+            android:layout_height="52dp" android:id="@+id/textView30"
             android:textSize="14sp" android:textAlignment="center"
             android:textColor="@color/blue" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button20"
@@ -376,7 +376,7 @@
     />
     <TextView
             android:layout_width="246dp"
-            android:layout_height="47dp" android:id="@+id/textView23"
+            android:layout_height="52dp" android:id="@+id/textView23"
             android:textSize="14sp" android:textAlignment="center"
             android:textColor="@color/blue" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button22"

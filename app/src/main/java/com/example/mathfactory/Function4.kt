@@ -38,7 +38,7 @@ class Function4 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if(id==R.id.action_two)
         {
-            Toast.makeText(this,"Enjoy with Math!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Hi, I can resolve all\nyour differential equations!", Toast.LENGTH_LONG).show()
             return true
         }
         if(id==R.id.action_three)

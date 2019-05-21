@@ -12,6 +12,10 @@
                     android:id="@+id/calculator"
                     android:icon="@drawable/ic_android_black_24dp"
                     android:title="@string/calculator"/>
+            <item
+                    android:id="@+id/action_eight"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/action_eight"/>
         </menu>
     </item>
     <item android:title="@string/classico">
@@ -28,10 +32,6 @@
             android:id="@+id/action_seven"
             android:icon="@drawable/ic_android_black_24dp"
             android:title="@string/action_seven"/>
-    <item
-            android:id="@+id/action_eight"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/action_eight"/>
         </menu>
     </item>
     <item android:title="@string/plottare">
