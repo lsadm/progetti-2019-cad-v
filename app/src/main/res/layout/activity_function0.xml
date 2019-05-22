@@ -207,16 +207,16 @@
                 android:background="@drawable/my_button1"
                 app:layout_constraintTop_toBottomOf="@+id/button48" app:layout_constraintStart_toEndOf="@+id/button12"
         />
-    <TextView
-            android:layout_width="326dp"
-            android:layout_height="60dp" android:id="@+id/textView2"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/blue"
-            android:textSize="24sp" android:textAllCaps="false"
-            android:background="@drawable/my_button1"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:layout_width="326dp"
+                android:layout_height="60dp" android:id="@+id/textView2"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/blue"
+                android:textSize="24sp" android:textAllCaps="false"
+                android:background="@drawable/my_button1"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"/>
         <Button
                 android:layout_width="41dp"
                 android:layout_height="43dp" android:id="@+id/button2"
@@ -476,7 +476,14 @@
                 android:background="@drawable/my_button1" android:textColor="@color/silver"
                 android:textAllCaps="false" android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/button31" app:layout_constraintStart_toEndOf="@+id/button37"/>
-</android.support.constraint.ConstraintLayout>
+        <TextView
+                android:text="@string/messaggio2"
+                android:layout_width="326dp"
+                android:layout_height="16dp" android:id="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent" android:textSize="14sp" android:textAlignment="center"
+                android:textStyle="italic"/>
+    </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

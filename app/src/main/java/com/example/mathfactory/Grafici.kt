@@ -342,7 +342,7 @@ class Grafici: AppCompatActivity()
             else
            {
             graphview.getViewport().setMinX(floor(inf * 10) / 10)
-            graphview.getViewport().setMaxX(ceil(sup * 10) / 10+0.5)
+            graphview.getViewport().setMaxX(ceil(sup * 10) / 10)
             if (identifier != 0)
                 search_min_max(vettore)
             if (identifier2 != 0)
@@ -356,28 +356,6 @@ class Grafici: AppCompatActivity()
             else
                 graphview.getViewport().setMaxY(ceil(max2) * 1.5)
            }
-        if((controllo_generale==1)||((controllo_generale==3)&&((identifier==29)||(identifier==31))))
-        {
-            graphview.getGridLabelRenderer().horizontalAxisTitle = "x"
-            graphview.getGridLabelRenderer().verticalAxisTitle = "y(x)"
-        }
-        else
-            if(controllo_generale==2)
-            {
-                graphview.getGridLabelRenderer().horizontalAxisTitle = "t"
-                graphview.getGridLabelRenderer().verticalAxisTitle = "x(t)"
-            }
-            else
-                if((controllo_generale==3)&&((identifier==30)||(identifier==32)||(identifier==33)))
-                {
-                    graphview.getGridLabelRenderer().horizontalAxisTitle = "x(t)"
-                    graphview.getGridLabelRenderer().verticalAxisTitle = "y(t)"
-                }
-        if((controllo_generale==3)&&(identifier==28))
-        {
-            graphview.getGridLabelRenderer().horizontalAxisTitle = "Abscissas ot the Vertices"
-            graphview.getGridLabelRenderer().verticalAxisTitle = "Ordinates ot the Vertices"
-        }
         graphview.getGridLabelRenderer().horizontalAxisTitleColor= color
         graphview.getGridLabelRenderer().verticalAxisTitleColor= color
         graphview.getGridLabelRenderer().gridColor= rgb(42,45,89)

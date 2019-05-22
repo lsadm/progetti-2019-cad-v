@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+    <item
+            android:id="@+id/first_message"
+            android:title="@string/testo1"/>
+    <item
+            android:id="@+id/second_message"
+            android:title="@string/testo2"/>
+    <item
+            android:id="@+id/third_message"
+            android:title="@string/testo3"/>
+    <item
+            android:id="@+id/fourth_message"
+            android:title="@string/testo4"/>
+    <item
+            android:id="@+id/fifth_message"
+            android:title="@string/testo5"/>
+</menu>

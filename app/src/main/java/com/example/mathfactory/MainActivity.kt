@@ -23,7 +23,6 @@ var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
 {
     private var mediaplayer:MediaPlayer?=null
-    var controllo=true
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity()
         plot1.setOnClickListener {  val next = Intent(this, Function1::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start() }
         plot2.setOnClickListener {  val next = Intent(this, Function3::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
-        button21.setOnClickListener {if(controllo){ textView31.text="not implementate";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false;mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else{textView31.text="";button21.text="Profile";button21.setTextColor(rgb(40,114,51));controllo=true;mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound);mediaplayer?.start()}}
+        button21.setOnClickListener {mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound);mediaplayer?.start()}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

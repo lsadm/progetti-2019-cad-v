@@ -249,6 +249,13 @@
             android:textAlignment="center" android:textColor="@color/silver"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textView12"/>
+    <TextView
+            android:text="@string/messaggio2"
+            android:layout_width="326dp"
+            android:layout_height="16dp" android:id="@+id/textView4"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent" android:textSize="14sp" android:textAlignment="center"
+            android:textStyle="italic"/>
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"
