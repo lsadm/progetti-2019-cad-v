@@ -25,13 +25,13 @@
             android:icon="@drawable/ic_android_black_24dp"
             android:title="@string/action_five"/>
     <item
-            android:id="@+id/action_nine"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="@string/action_nine"/>
-    <item
             android:id="@+id/action_seven"
             android:icon="@drawable/ic_android_black_24dp"
             android:title="@string/action_seven"/>
+            <item
+                    android:id="@+id/action_nine"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/action_nine"/>
         </menu>
     </item>
     <item android:title="@string/plottare">

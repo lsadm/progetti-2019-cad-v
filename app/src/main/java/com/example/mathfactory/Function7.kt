@@ -32,17 +32,17 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var imm:Double=0.001
     var titolo=""
     var A2:Double=0.0
-    var T2:Double=0.1
+    var T2:Double=0.0
     var rit2:Double=0.0
     var o2:Double=0.0
-    var D2:Double=0.1
-    var f1_2:Double=100.0
-    var f2_2:Double=100.0
-    var tau1_2:Double=0.1
-    var tau2_2:Double=0.1
-    var omega2:Double=100.0
+    var D2:Double=0.0
+    var f1_2:Double=0.0
+    var f2_2:Double=0.0
+    var tau1_2:Double=0.0
+    var tau2_2:Double=0.0
+    var omega2:Double=0.0
     var real2:Double=-1.0
-    var imm2:Double=0.001
+    var imm2:Double=0.0
     var titolo2=""
     var identifier:Int=0
     var turno=false
@@ -403,7 +403,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         else
         if((identifier==11)||(identifier==12))
         {
-            passo=0.01
+            passo=1/(1000*fv)
             inf=-5/fv+ritv
             sup=5/fv+ritv
         }

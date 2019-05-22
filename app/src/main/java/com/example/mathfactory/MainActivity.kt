@@ -20,7 +20,8 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.math.*
 var controllo_generale:Int=0
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity()
+{
     private var mediaplayer:MediaPlayer?=null
     var controllo=true
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
@@ -28,8 +29,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        nav_view.setNavigationItemSelectedListener(this)
-        button21.setOnClickListener {if(controllo){ textView31.text="not implementate";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false}else{textView31.text="";button21.text="Profile";button21.setTextColor(rgb(40,114,51));controllo=true}}
+        storia.setOnClickListener { val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        equanzioni_differenziali.setOnClickListener {  val next = Intent(this, Function4::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        numeri_complessi.setOnClickListener {  val next = Intent(this, Function6::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        plot1.setOnClickListener {  val next = Intent(this, Function1::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start() }
+        plot2.setOnClickListener {  val next = Intent(this, Function3::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        button21.setOnClickListener {if(controllo){ textView31.text="not implementate";button21.text="Hide";button21.setTextColor(rgb(155,17,30));controllo=false;mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else{textView31.text="";button21.text="Profile";button21.setTextColor(rgb(40,114,51));controllo=true;mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound);mediaplayer?.start()}}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -56,73 +65,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-    override fun onNavigationItemSelected(item: MenuItem): Boolean
-    {
-        val id = item.getItemId()
-        if (id == R.id.action_four) {
-            val next = Intent(this, Function1::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_five) {
-            val next = Intent(this, Function2::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_six) {
-            val next = Intent(this, Function3::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_seven) {
-            val next = Intent(this, Function4::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_eight) {
-            val next = Intent(this, Function5::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_nine) {
-            val next = Intent(this, Function6::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_ten) {
-            val next = Intent(this, Function7::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.action_history_window) {
-            val next = Intent(this, Function8::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        if (id == R.id.calculator) {
-            val next = Intent(this, Function0::class.java)
-            startActivity(next)
-            mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
-            mediaplayer?.start()
-            return true
-        }
-        return true
     }
 }

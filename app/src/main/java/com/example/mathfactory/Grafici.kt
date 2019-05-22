@@ -352,9 +352,9 @@ class Grafici: AppCompatActivity()
             else
                 graphview.getViewport().setMinY(floor(min2) * 1.5)
             if (max >= max2)
-                graphview.getViewport().setMaxY(ceil(max) * 1.5+0.5)
+                graphview.getViewport().setMaxY(ceil(max) * 1.5)
             else
-                graphview.getViewport().setMaxY(ceil(max2) * 1.5+0.5)
+                graphview.getViewport().setMaxY(ceil(max2) * 1.5)
            }
         if((controllo_generale==1)||((controllo_generale==3)&&((identifier==29)||(identifier==31))))
         {

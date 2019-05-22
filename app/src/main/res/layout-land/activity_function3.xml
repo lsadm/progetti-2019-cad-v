@@ -311,7 +311,7 @@
     <EditText
             android:layout_width="83dp"
             android:layout_height="35dp"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/editText10"
             android:textSize="14sp" app:layout_constraintStart_toEndOf="@+id/textView29"
