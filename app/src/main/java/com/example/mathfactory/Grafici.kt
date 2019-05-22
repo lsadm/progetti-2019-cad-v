@@ -59,9 +59,11 @@ class Grafici: AppCompatActivity()
     var ordinate_punti=arrayOf(0.0,0.0,0.0)
     var vettore_correttivo=arrayOf(0.0,0.0,0.0)
     var vettore_correttivo2=arrayOf(0.0,0.0,0.0)
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grafici)
+        val color=rgb(155,17,30)
         val passo=getIntent().getExtras().getDouble("passo")
         val inf=getIntent().getExtras().getDouble("inf")
         val sup=getIntent().getExtras().getDouble("sup")
@@ -154,6 +156,9 @@ class Grafici: AppCompatActivity()
             series2.setColor(rgb(255,215,0))
         graphview.getLegendRenderer().setVisible(true)
         graphview.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP)
+        graphview.getLegendRenderer().backgroundColor=Color.TRANSPARENT
+        graphview.getLegendRenderer().textColor=Color.BLUE
+        graphview.getLegendRenderer().textSize=38.toFloat()
         if((((sup-inf)/passo)>100000)||(((sup-inf)/passo)<-100000))
             n=100000
         else
@@ -337,7 +342,7 @@ class Grafici: AppCompatActivity()
             else
            {
             graphview.getViewport().setMinX(floor(inf * 10) / 10)
-            graphview.getViewport().setMaxX(ceil(sup * 10) / 10)
+            graphview.getViewport().setMaxX(ceil(sup * 10) / 10+0.5)
             if (identifier != 0)
                 search_min_max(vettore)
             if (identifier2 != 0)
@@ -347,9 +352,9 @@ class Grafici: AppCompatActivity()
             else
                 graphview.getViewport().setMinY(floor(min2) * 1.5)
             if (max >= max2)
-                graphview.getViewport().setMaxY(ceil(max) * 1.5)
+                graphview.getViewport().setMaxY(ceil(max) * 1.5+0.5)
             else
-                graphview.getViewport().setMaxY(ceil(max2) * 1.5)
+                graphview.getViewport().setMaxY(ceil(max2) * 1.5+0.5)
            }
         if((controllo_generale==1)||((controllo_generale==3)&&((identifier==29)||(identifier==31))))
         {
@@ -373,7 +378,6 @@ class Grafici: AppCompatActivity()
             graphview.getGridLabelRenderer().horizontalAxisTitle = "Abscissas ot the Vertices"
             graphview.getGridLabelRenderer().verticalAxisTitle = "Ordinates ot the Vertices"
         }
-        val color=rgb(40,114,51)
         graphview.getGridLabelRenderer().horizontalAxisTitleColor= color
         graphview.getGridLabelRenderer().verticalAxisTitleColor= color
         graphview.getGridLabelRenderer().gridColor= rgb(42,45,89)
@@ -405,7 +409,7 @@ class Grafici: AppCompatActivity()
             return true
         }
         if (id == R.id.action_two) {
-            Toast.makeText(this, "Enjoy with Math!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Hi, I'm your own\nGraph_Editor!", Toast.LENGTH_LONG).show()
             return true
         }
         if (id == R.id.action_three) {

@@ -65,7 +65,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         setContentView(R.layout.activity_function7)
         nav_view7.setNavigationItemSelectedListener(this)
         controllo_generale=2
-        button8.setOnClickListener {if(!turno)identifier=0 else identifier2=0;set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
+        button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=9;set_color(identifier)}else{identifier2=9;set_color(identifier2)}}
         button10.setOnClickListener {if(!turno){identifier=10;set_color(identifier)}else{identifier2=10;set_color(identifier2)}}
         button11.setOnClickListener {if(!turno){identifier=11;set_color(identifier)}else{identifier2=11;set_color(identifier2)}}
@@ -77,8 +77,8 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button38.setOnClickListener {if(!turno){identifier=25;set_color(identifier)}else{identifier2=25;set_color(identifier2)}}
         button39.setOnClickListener {if(!turno){identifier=26;set_color(identifier)}else{identifier2=26;set_color(identifier2)}}
         button40.setOnClickListener {if(!turno){identifier=27;set_color(identifier)}else{identifier2=27;set_color(identifier2)}}
-        button20.setOnClickListener {if((identifier!=18)&&(!turno)){set_color(28);if(input_output())textView30.setTextColor(Color.RED)else textView30.setTextColor(Color.BLUE);if(identifier!=0)turno=true}}
-        button22.setOnClickListener {if((identifier2!=18)&&(turno)){set_color(29);if(input_output_bis())textView23.setTextColor(Color.RED)else textView23.setTextColor(Color.BLUE);if(identifier2!=0)turno=false} }
+        button20.setOnClickListener {if(!turno){set_color(28);if(input_output())textView30.setTextColor(Color.RED)else textView30.setTextColor(Color.BLUE);if(identifier!=0)turno=true}}
+        button22.setOnClickListener {if(turno){set_color(29);if(input_output_bis())textView23.setTextColor(Color.RED)else textView23.setTextColor(Color.BLUE);if(identifier2!=0)turno=false} }
         button17.setOnClickListener {parametri_fondamentali();val next= Intent(this,Grafici::class.java);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("T", T);next.putExtra("rit", rit);next.putExtra("o", o);next.putExtra("real", real);next.putExtra("f1", f1);next.putExtra("f2", f2);next.putExtra("tau1", tau1);next.putExtra("tau2", tau2);next.putExtra("imm", imm);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("T2", T2);next.putExtra("rit2", rit2);next.putExtra("o2", o2);next.putExtra("real2", real2);next.putExtra("f1_2", f1_2);next.putExtra("f2_2", f2_2);next.putExtra("tau1_2", tau1_2);next.putExtra("tau2_2", tau2_2);next.putExtra("imm2", imm2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
@@ -180,12 +180,13 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         return true
     }
-    private fun set_color(id:Int)
-    {
-        val not_selected=rgb(81,153,167)
-        val selected=rgb(255,215,0)
-        val selected2=rgb(40,114,51)
-        val selected3=(rgb(155,17,30))
+    private fun set_color(id:Int) {
+        val not_selected = rgb(81, 153, 167)
+        val selected = rgb(255, 215, 0)
+        val selected2 = rgb(40, 114, 51)
+        val selected3 = (rgb(155, 17, 30))
+        if(id!=18)
+        {
         button9.setTextColor(not_selected)
         button10.setTextColor(not_selected)
         button11.setTextColor(not_selected)
@@ -197,23 +198,27 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button38.setTextColor(not_selected)
         button39.setTextColor(not_selected)
         button40.setTextColor(not_selected)
-        when(id)
-        {
-            18->if(!interpolat)button8.setTextColor(selected2)else button8.setTextColor(selected3)
-            9->button9.setTextColor(selected)
-            10->button10.setTextColor(selected)
-            11->button11.setTextColor(selected)
-            12->button30.setTextColor(selected)
-            21->button31.setTextColor(selected)
-            22->button32.setTextColor(selected)
-            23->button33.setTextColor(selected)
-            24->button37.setTextColor(selected)
-            25->button38.setTextColor(selected)
-            26->button39.setTextColor(selected)
-            27->button40.setTextColor(selected)
-            28->if(identifier!=0)button20.setTextColor(selected2)
-            29->if(identifier!=0)button22.setTextColor(selected2)
+        when (id) {
+            9 -> button9.setTextColor(selected)
+            10 -> button10.setTextColor(selected)
+            11 -> button11.setTextColor(selected)
+            12 -> button30.setTextColor(selected)
+            21 -> button31.setTextColor(selected)
+            22 -> button32.setTextColor(selected)
+            23 -> button33.setTextColor(selected)
+            24 -> button37.setTextColor(selected)
+            25 -> button38.setTextColor(selected)
+            26 -> button39.setTextColor(selected)
+            27 -> button40.setTextColor(selected)
+            28 -> if (identifier != 0) button20.setTextColor(selected2)
+            29 -> if (identifier != 0) button22.setTextColor(selected2)
         }
+    }
+        else
+        if (!interpolat)
+            button8.setTextColor(selected2)
+        else
+            button8.setTextColor(selected3)
     }
     private fun reset()
     {
