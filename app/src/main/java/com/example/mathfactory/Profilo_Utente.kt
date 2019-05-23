@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -30,19 +31,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val PERMISSION_REQUEST_CODE = 0
-    private var CurrentPhotoPath: String? = null
+    val PERMISSION_REQUEST_CODE= 101
+    val CAMERA_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
-        button26.setOnClickListener {
-            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (callCameraIntent.resolveActivity(packageManager) != null) {
-                startActivityForResult(callCameraIntent, PERMISSION_REQUEST_CODE)
-            }
-        }
+        if(checkPermission())
+            button26.setBackgroundResource(R.mipmap.imm13)
+        else
+            button26.setBackgroundResource(R.mipmap.imm15)
+        button26.setOnClickListener{if(checkPermission()){ button26.setBackgroundResource(R.mipmap.imm13);go_to_camera()}else requestPermission()}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,7 +57,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_two) {
-            Toast.makeText(this, "Hi, I'm your own\ncalculator!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Hi, here is your profile!", Toast.LENGTH_LONG).show()
             return true
         }
         if (id == R.id.action_three) {
@@ -146,13 +146,40 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onActivityResult(requestCode, resultCode, data)
        when(requestCode)
        {
-           PERMISSION_REQUEST_CODE->{
+           CAMERA_REQUEST_CODE->{
                if(resultCode==Activity.RESULT_OK&&data!=null)
                {
                    imageView.setImageBitmap(data.extras.get("data") as Bitmap)
+                   Toast.makeText(this, "The photo has been\nsuccessfully uploaded!", Toast.LENGTH_LONG).show()
+                   mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                   mediaplayer?.start()
                }
            }
-           else->Toast.makeText(this,"Request not supported",Toast.LENGTH_LONG).show()
+           else->{
+                   Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
+                   mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                   mediaplayer?.start()
+                 }
        }
+    }
+    private fun checkPermission():Boolean
+    {
+        val permesso=ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED
+        return permesso
+    }
+    private fun requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(CAMERA),PERMISSION_REQUEST_CODE)
+    }
+    private fun go_to_camera()
+    {
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (callCameraIntent.resolveActivity(packageManager) != null)
+        {
+            startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
+            Toast.makeText(this, "The camera has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+            mediaplayer?.start()
+        }
     }
 }
