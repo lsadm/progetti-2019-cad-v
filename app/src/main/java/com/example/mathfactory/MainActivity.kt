@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity()
         plot1.setOnClickListener {  val next = Intent(this, Function1::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start() }
         plot2.setOnClickListener {  val next = Intent(this, Function3::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
-        button21.setOnClickListener {mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound);mediaplayer?.start()}
+        button21.setOnClickListener {val next = Intent(this, Profilo_Utente::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound);mediaplayer?.start()}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

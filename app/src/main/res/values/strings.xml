@@ -149,5 +149,13 @@
     <string name="testo3">interactive environment, in witch</string>
     <string name="testo4">attempt a discrete math functions</string>
     <string name="testo5">class to support your work.</string>
+    <string name="profilo_utente">User Profile</string>
+    <string name="nome">Name:</string>
+    <string name="cognome">Surname:</string>
+    <string name="genere">Gender:</string>
+    <string name="nome_utente">Username:</string>
+    <string name="password">Password:</string>
+    <string name="professione">Profession:</string>
+    <string name="anno_di_nascita">Birthday:</string>
 </resources>
 
