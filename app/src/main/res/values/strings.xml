@@ -157,5 +157,22 @@
     <string name="password">Password:</string>
     <string name="professione">Profession:</string>
     <string name="anno_di_nascita">Birthday:</string>
+    <string name="titolo_start_page">MathView</string>
+    <string name="presentazione_start_page">A free and basic math software!</string>
+    <string name="accesso">Access</string>
+    <string name="registrazione">Registration</string>
+    <string name="conferma">Confirm\nPassword:</string>
+    <string name="sel_gen">Select\nGender:</string>
+    <string name="back">Go Back</string>
+    <string name="tratteggio">-----------------</string>
+    <string name="domanda">Are you\nsure you\nwant to\nexit\nMath\nView?</string>
+    <string name="domanda2">Are you sure\nyou want to\nexit Math\nView?</string>
+    <string name="si">Yes</string>
+    <string name="no">No</string>
+    <string-array name="maschio_femmina">
+        <item>-----------------</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
 

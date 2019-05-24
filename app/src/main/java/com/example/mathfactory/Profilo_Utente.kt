@@ -18,6 +18,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -31,6 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer? = null
@@ -38,11 +40,16 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
+        editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         if(checkPermission())
             button26.setBackgroundResource(R.mipmap.imm13)
         else
             button26.setBackgroundResource(R.mipmap.imm15)
         button26.setOnClickListener{if(checkPermission()){ button26.setBackgroundResource(R.mipmap.imm13);go_to_camera()}else requestPermission()}
+        button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
+        button29.setOnClickListener {setta_uscita(true)}
+        button50.setOnClickListener {setta_uscita(false)}
+        button49.setOnClickListener {val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()  }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -180,6 +187,21 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             Toast.makeText(this, "The camera has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
             mediaplayer?.start()
+        }
+    }
+    private fun setta_uscita(controllo:Boolean)
+    {
+        if(controllo)
+        {
+            textView52.visibility=View.VISIBLE
+            button50.visibility=View.VISIBLE
+            button49.visibility=View.VISIBLE
+        }
+        else
+        {
+            textView52.visibility=View.INVISIBLE
+            button50.visibility=View.INVISIBLE
+            button49.visibility=View.INVISIBLE
         }
     }
 }
