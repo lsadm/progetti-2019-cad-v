@@ -63,15 +63,15 @@ class Start_Activity : AppCompatActivity()
             button27.visibility = View.VISIBLE
             if (id == 1)
             {
-                textView39.text="Insert\nUsername:"
-                textView37.text="Insert\nPassword:"
+                editText15.hint="Username"
+                editText14.hint="Password"
                 textView48.text = "Access"
                 button28.text = "Login"
             } else
                 if (id == 2)
                 {
-                    textView39.text="Choose\nUsername:"
-                    textView37.text="Choose\nPassword:"
+                    editText15.hint="Choose username"
+                    editText14.hint="Choose password"
                     textView47.visibility = View.VISIBLE
                     textView49.visibility = View.VISIBLE
                     editText16.visibility = View.VISIBLE

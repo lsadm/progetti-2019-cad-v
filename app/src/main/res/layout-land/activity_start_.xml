@@ -8,81 +8,84 @@
         android:background="@drawable/my_background1"
         tools:context=".Start_Activity">
         <TextView
-                android:layout_width="140dp"
-                android:layout_height="60dp" android:id="@+id/textView37"
+                android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/textView37"
                 android:textSize="24sp" android:textAlignment="center"
-                android:background="@drawable/my_button1" android:visibility="invisible"
+                android:background="@mipmap/imm23_foreground" android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/editText15"
-                app:layout_constraintTop_toBottomOf="@+id/button25" android:textColor="@color/silver"/>
+                app:layout_constraintTop_toBottomOf="@+id/button25" android:textColor="@color/silver"
+                android:layout_marginStart="8dp"/>
         <TextView
-                android:text="@string/conferma"
-                android:layout_width="140dp"
-                android:layout_height="60dp" android:id="@+id/textView47"
+                android:text=""
+                android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/textView47"
                 android:textSize="24sp" android:textAlignment="center"
-                android:background="@drawable/my_button1"
+                android:background="@mipmap/imm24_foreground"
                 android:visibility="invisible"
-                android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView39" android:textColor="@color/silver"/>
+                android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" android:textColor="@color/silver"
+                android:layout_marginTop="8dp"/>
         <TextView
-                android:text="@string/sel_gen"
-                android:layout_width="140dp"
-                android:layout_height="60dp" android:id="@+id/textView49"
+                android:text=""
+                android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/textView49"
                 android:textSize="24sp" android:textAlignment="center"
-                android:background="@drawable/my_button1"
+                android:background="@mipmap/imm25_foreground"
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/editText16"
-                app:layout_constraintTop_toBottomOf="@+id/textView37"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView37" android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
         <TextView
-                android:layout_width="140dp"
-                android:layout_height="60dp" android:id="@+id/textView39"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/textView39"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
                 android:textSize="24sp" android:textAlignment="center"
-                android:background="@drawable/my_button1"
+                android:background="@mipmap/imm22_foreground"
                 app:layout_constraintTop_toBottomOf="@+id/button24" android:visibility="invisible"
                 android:textColor="@color/silver"/>
         <EditText
-                android:layout_width="140dp"
-                android:layout_height="60dp"
+                android:layout_width="222dp"
+                android:layout_height="50dp"
                 android:inputType="textPassword"
                 android:text=""
-                android:hint="Input..."
                 android:ems="10"
                 android:id="@+id/editText14"
                 android:textSize="18sp"
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/textView37"
-                app:layout_constraintTop_toBottomOf="@+id/button25" android:textColor="@color/sea_green"/>
+                app:layout_constraintTop_toBottomOf="@+id/button25" android:textColor="@android:color/black"
+                android:background="@color/start"/>
         <EditText
-                android:layout_width="140dp"
-                android:layout_height="60dp"
+                android:layout_width="222dp"
+                android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:text=""
-                android:hint="Input..."
+                android:hint="Confirm password"
                 android:ems="10"
                 android:id="@+id/editText16"
                 android:textSize="18sp"
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/textView47"
-                app:layout_constraintTop_toBottomOf="@+id/editText15" android:textColor="@color/sea_green"/>
+                app:layout_constraintTop_toBottomOf="@+id/editText15" android:textColor="@android:color/black"
+                android:layout_marginTop="8dp" android:background="@color/start"/>
         <EditText
-                android:layout_width="140dp"
-                android:layout_height="60dp"
+                android:layout_width="222dp"
+                android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:text=""
-                android:hint="Input..."
                 android:ems="10"
                 android:id="@+id/editText15"
                 app:layout_constraintStart_toEndOf="@+id/textView39"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/button25" android:visibility="invisible"
-                android:textColor="@color/sea_green"/>
+                android:textColor="@android:color/black" android:background="@color/start"/>
         <TextView
                 android:text="@string/titolo_start_page"
                 android:layout_width="170dp"
                 android:layout_height="38dp" android:id="@+id/textView46"
                 android:textSize="30sp" android:textColor="@color/gold"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="220dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="210dp" app:layout_constraintStart_toStartOf="parent"
                 android:textAlignment="center"/>
         <Button
                 android:text="@string/accesso"
@@ -90,48 +93,52 @@
                 android:layout_height="60dp" android:id="@+id/button24"
                 android:textAllCaps="false"
                 android:textSize="24sp" android:textColor="@color/silver" android:textAlignment="center"
-                android:background="@drawable/my_button1"
-                android:layout_marginStart="155dp"
+                android:background="@color/start2"
+                android:layout_marginStart="147dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView48"/>
+                app:layout_constraintTop_toTopOf="@+id/textView48" android:layout_marginTop="8dp"/>
         <Button
                 android:text="@string/registrazione"
                 android:layout_width="140dp"
                 android:layout_height="60dp" android:id="@+id/button25"
                 android:textAllCaps="false"
                 android:textSize="24sp" android:textColor="@color/silver" android:textAlignment="center"
-                android:background="@drawable/my_button1"
+                android:background="@color/start2"
                 app:layout_constraintStart_toEndOf="@+id/button24"
-                app:layout_constraintTop_toTopOf="@+id/textView48"/>
+                app:layout_constraintTop_toTopOf="@+id/textView48" android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
         <TextView
                 android:layout_width="170dp"
                 android:layout_height="50dp" android:id="@+id/textView48"
                 android:textAlignment="center"
                 android:textSize="24sp" android:textColor="@color/silver"
-                app:layout_constraintTop_toBottomOf="@+id/textView46" android:layout_marginStart="215dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView46" android:layout_marginStart="205dp"
                 app:layout_constraintStart_toStartOf="parent" android:visibility="invisible"/>
         <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
+                android:layout_width="222dp"
+                android:layout_height="50dp"
                 android:entries="@array/maschio_femmina"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@+id/editText14"
-                app:layout_constraintStart_toEndOf="@+id/textView49">
+                app:layout_constraintStart_toEndOf="@+id/textView49" android:layout_marginTop="8dp"
+                android:background="@color/start">
         </Spinner>
         <Button
                 android:layout_width="140dp"
                 android:layout_height="60dp" android:id="@+id/button27"
-                android:background="@drawable/my_button1" android:textSize="24sp" android:textAllCaps="false"
+                android:background="@color/start2" android:textSize="24sp" android:textAllCaps="false"
                 android:textAlignment="center" android:visibility="invisible"
-                android:text="@string/back" android:layout_marginStart="148dp"
+                android:text="@string/back" android:layout_marginStart="147dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText16" android:textColor="@color/red"/>
+                app:layout_constraintTop_toBottomOf="@+id/editText16" android:textColor="@color/red"
+                android:layout_marginTop="8dp"/>
         <Button
                 android:layout_width="140dp"
                 android:layout_height="60dp" android:id="@+id/button28"
-                android:background="@drawable/my_button1" android:textSize="24sp" android:textAllCaps="false"
+                android:background="@color/start2" android:textSize="24sp" android:textAllCaps="false"
                 android:textAlignment="center" android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/button27"
-                app:layout_constraintTop_toBottomOf="@+id/textView49" android:textColor="@color/smeraldo"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView49" android:textColor="@color/smeraldo"
+                android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>

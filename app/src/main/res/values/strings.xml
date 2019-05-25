@@ -161,8 +161,6 @@
     <string name="presentazione_start_page">A free and basic math software!</string>
     <string name="accesso">Access</string>
     <string name="registrazione">Registration</string>
-    <string name="conferma">Confirm\nPassword:</string>
-    <string name="sel_gen">Select\nGender:</string>
     <string name="back">Go Back</string>
     <string name="tratteggio">-----------------</string>
     <string name="domanda">Are you\nsure you\nwant to\nexit\nMath\nView?</string>
