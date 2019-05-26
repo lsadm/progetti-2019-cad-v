@@ -132,10 +132,16 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             mediaplayer?.start()
             return true
         }
-        if (id == R.id.action_history_window) {
+        if (id == R.id.note_testuali) {
             val next = Intent(this, Function8::class.java)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.Profile) {
+            Toast.makeText(this,"You are already here!", Toast.LENGTH_LONG).show()
+            mediaplayer=MediaPlayer.create(this,R.raw.error_sound)
             mediaplayer?.start()
             return true
         }

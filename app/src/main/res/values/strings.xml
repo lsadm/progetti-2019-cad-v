@@ -150,6 +150,7 @@
     <string name="testo4">attempt a discrete math functions</string>
     <string name="testo5">class to support your work.</string>
     <string name="profilo_utente">User Profile</string>
+    <string name="profilo">Profile</string>
     <string name="nome">Name:</string>
     <string name="cognome">Surname:</string>
     <string name="genere">Gender:</string>
@@ -167,10 +168,15 @@
     <string name="domanda2">Are you sure\nyou want to\nexit Math\nView?</string>
     <string name="si">Yes</string>
     <string name="no">No</string>
+    <string name="presentazione8">Text Note</string>
     <string-array name="maschio_femmina">
         <item>-----------------</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="note">Note Functions</string>
+    <string name="note_testuali">Text Note</string>
+    <string name="note_immagini">Image Note</string>
+    <string name="note_audio">Audio Note</string>
 </resources>
 

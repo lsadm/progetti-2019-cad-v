@@ -13,6 +13,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Function10">
+        </activity>
+        <activity android:name=".Function9">
+        </activity>
         <activity android:name=".Start_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

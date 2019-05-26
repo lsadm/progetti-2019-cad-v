@@ -147,8 +147,29 @@ class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             mediaplayer?.start()
             return true
         }
-        if (id == R.id.action_history_window) {
+        if (id == R.id.note_testuali) {
             val next = Intent(this, Function8::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.note_immagini) {
+            val next = Intent(this, Function9::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.note_audio) {
+            val next = Intent(this, Function10::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.Profile) {
+            val next = Intent(this, Profilo_Utente::class.java)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()

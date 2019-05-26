@@ -1,5 +1,4 @@
 package com.example.mathfactory
-
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.rgb
@@ -29,6 +28,8 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         storia.setOnClickListener { val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        storia_per_immagini.setOnClickListener { val next = Intent(this, Function9::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        storia_vocale.setOnClickListener { val next = Intent(this, Function10::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
         calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
