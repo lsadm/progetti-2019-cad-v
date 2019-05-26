@@ -88,7 +88,7 @@
                 android:textAllCaps="false"
                 android:textSize="24sp" android:textColor="@color/silver" android:textAlignment="center"
                 android:background="@color/start2"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="26dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView48"/>
         <Button

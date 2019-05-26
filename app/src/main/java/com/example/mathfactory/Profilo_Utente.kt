@@ -153,7 +153,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         return true
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
         super.onActivityResult(requestCode, resultCode, data)

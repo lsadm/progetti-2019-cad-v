@@ -36,6 +36,8 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             {
                 data=formato.format(Date()).toString()
                 users.add(User(editText17.text.toString(), data))
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
                 editText17.setText("")
                 Toast.makeText(this,"The note has been\nsuccessfully added!", Toast.LENGTH_LONG).show()
                 adapter=CustomAdapter(users)
@@ -43,21 +45,35 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 controllo=false
             }
             else
-                Toast.makeText(this,"You can't add an empty note!", Toast.LENGTH_LONG).show()
+            {
+                Toast.makeText(this, "You can't add an empty note!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
              }
         button52.setOnClickListener {
             if(users.size!=0)
             {
                 users.clear()
                 Toast.makeText(this, "Text Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
                 adapter = CustomAdapter(users)
                 recyclerView.adapter = adapter
             }
             else
                 if(controllo)
-                    Toast.makeText(this,"Text Note is still empty!", Toast.LENGTH_LONG).show()
+                {
+                    Toast.makeText(this, "Text Note is still empty!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
                 else
-                    Toast.makeText(this,"Text Note has already\nbeen cleaned up!", Toast.LENGTH_LONG).show()
+                {
+                    Toast.makeText(this, "Text Note has already\nbeen cleaned up!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
         }
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
