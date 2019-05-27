@@ -30,7 +30,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             return true
         }
         if (id == R.id.action_two) {
-            Toast.makeText(this, "Hi, I can resolve all\nyour algebraic equations!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Hi, I am your own\nAudio Note!", Toast.LENGTH_LONG).show()
             return true
         }
         if (id == R.id.action_three) {

@@ -19,7 +19,7 @@ import java.util.*
 
 class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var mediaplayer: MediaPlayer?=null
-    val formato= SimpleDateFormat("HH:mm:ss                                                            dd/MM/yyyy")
+    val formato= SimpleDateFormat("HH:mm:ss_dd/MM/yyyy")
     var data:String=""
     var adapter:CustomAdapter?=null
     var controllo=true
@@ -35,7 +35,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(editText17.text.toString()!="")
             {
                 data=formato.format(Date()).toString()
-                users.add(User(editText17.text.toString(), data))
+                users.add(User(editText17.text.toString(), "Upload time and day---> "+data))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 editText17.setText("")

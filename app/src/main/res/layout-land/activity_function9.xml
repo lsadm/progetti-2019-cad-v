@@ -7,58 +7,57 @@
         android:layout_height="match_parent"
         android:id="@+id/drawer_layout"
         android:fitsSystemWindows="true"
-        tools:context=".Function8"
+        tools:context=".Function9"
         tools:openDrawer="start">
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".Function8"
+            tools:context=".Function9"
             android:background="@drawable/my_background1">
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerView2"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="167dp" tools:layout_editor_absoluteX="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/editText17" android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView55"/>
         <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp" android:id="@+id/button21"
                 app:layout_constraintTop_toBottomOf="@+id/textView53"
-                app:layout_constraintStart_toEndOf="@+id/editText17" android:background="@mipmap/imm27_foreground"/>
+                android:background="@mipmap/imm27_foreground" app:layout_constraintStart_toEndOf="@+id/textView55"
+        />
+        <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/button53"
+                android:background="@mipmap/imm29_foreground"
+                app:layout_constraintTop_toBottomOf="@+id/textView53" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"/>
         <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp" android:id="@+id/button52"
                 android:background="@mipmap/imm28_foreground"
                 app:layout_constraintStart_toEndOf="@+id/button21"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" android:layout_marginStart="8dp"/>
-        <EditText
-                android:layout_width="418dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editText17"
-                app:layout_constraintStart_toEndOf="@+id/textView54"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" android:hint="Insert your note..."
-                android:textColor="@android:color/black" android:background="@color/start"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView53"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:textColor="@color/gold" android:textSize="36sp"
-                android:text="@string/presentazione8" android:layout_marginStart="222dp"
+                android:text="@string/presentazione9" android:layout_marginStart="222dp"
                 android:textAlignment="center"/>
         <TextView
-                android:layout_width="50dp"
-                android:layout_height="50dp" android:id="@+id/textView54"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@mipmap/imm26_foreground"
-                android:layout_marginStart="8dp"/>
+                android:layout_width="418dp"
+                android:layout_height="50dp" android:id="@+id/textView55"
+                android:textColor="@color/red" android:textSize="20sp"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/button53"
+                app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@color/start"/>
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:id="@+id/nav_view8"
+            android:id="@+id/nav_view9"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/nav_menu"
             app:itemTextColor="@color/sea_green">
