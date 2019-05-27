@@ -26,7 +26,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     val CAMERA_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer?=null
     var adapter2:CustomAdapter2?=null
-    val formato= SimpleDateFormat("          HH:mm:ss\n        dd/MM/yyyy")
+    val formato= SimpleDateFormat("           HH:mm:ss\n         dd/MM/yyyy")
     var data:String=""
     var imm:Bitmap?=null
     var controllo=true
@@ -47,7 +47,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(imm!=null)
             {
                 data=formato.format(Date()).toString()
-                users2.add(User2(imm,"Upload time and day:\n"+data))
+                users2.add(User2(imm,"Upload time and date:\n"+data))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 imm=null

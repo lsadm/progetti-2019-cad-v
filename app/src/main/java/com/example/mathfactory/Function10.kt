@@ -1,23 +1,136 @@
 package com.example.mathfactory
-
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color.rgb
 import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function10.*
-
+import kotlinx.android.synthetic.main.list_layout3.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val PERMISSION_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer? = null
+    private var output:String?=null
+    private var nome_audio:String?=null
+    private var mediarecorder:MediaRecorder?=null
+    private var registra_ferma:Boolean=true
+    var adapter3:CustomAdapter3?=null
+    val formato= SimpleDateFormat("HH:mm:ss_dd/MM/yyyy")
+    var data:String=""
+    var controllo:Boolean=false
+    var controllo2:Boolean=true
+    var controllo3:Boolean=true
+    var counter:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function10)
         nav_view10.setNavigationItemSelectedListener(this)
+        val recyclerView3=findViewById(R.id.recyclerView3)as RecyclerView
+        recyclerView3.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
+        val users3= ArrayList<User3>()
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Audio_"
+        if(checkPermission())
+            button53.setBackgroundResource(R.mipmap.imm32_foreground)
+        else
+            button53.setBackgroundResource(R.mipmap.imm31_foreground)
+        textView55.setTextColor(rgb(155,17,30))
+        textView55.text="No audio is ready to\nupload!"
+        button53.setOnClickListener {
+          if(checkPermission())
+              if(registra_ferma)
+              {
+                  counter++
+                  nome_audio=output+counter.toString()+".mp3"
+                  controllo3=true
+                  mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+                  mediaplayer?.start()
+                  startRecording()
+                  if(controllo3)
+                  {
+                      button53.setBackgroundResource(R.mipmap.imm33_foreground)
+                      registra_ferma = false
+                  }
+              }
+            else
+              {
+                 if(controllo3)
+                 {
+                     button53.setBackgroundResource(R.mipmap.imm32_foreground)
+                     registra_ferma = true
+                     stopRecording()
+                     textView55.setTextColor(rgb(40, 114, 51))
+                     textView55.text = "The audio is ready to\nupload!"
+                     controllo = true
+                 }
+              }
+            else
+              requestPermission()
+        }
+        button21.setOnClickListener {
+            if(controllo)
+            {
+                data = formato.format(Date()).toString()
+                users3.add(User3(nome_audio, prova2(), "Upload time and date---> " + data))
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
+                controllo=false
+                textView55.setTextColor(rgb(155,17,30))
+                textView55.text="No audio is ready to\nupload!"
+                Toast.makeText(this,"The audio has been\nsuccessfully added!", Toast.LENGTH_LONG).show()
+                adapter3 = CustomAdapter3(users3)
+                recyclerView3.adapter = adapter3
+                controllo2=false
+            }
+            else
+            {
+                Toast.makeText(this, "You can't add an empty audio!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
+        button52.setOnClickListener {
+            if(users3.size!=0)
+            {
+                users3.clear()
+                Toast.makeText(this, "Audio Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
+                adapter3 = CustomAdapter3(users3)
+                recyclerView3.adapter = adapter3
+            }
+            else
+                if(controllo2)
+                {
+                    Toast.makeText(this, "Audio Note is still empty!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+                else
+                {
+                    Toast.makeText(this,"Audio Note has already\nbeen cleaned up!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+        }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application2, menu)
         return true
@@ -46,7 +159,6 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
         return super.onOptionsItemSelected(item)
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.getItemId()
         if (id == R.id.action_four) {
@@ -133,5 +245,50 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             return true
         }
         return true
+    }
+    private fun checkPermission():Boolean
+    {
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        return permesso
+    }
+    private fun requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
+    }
+    private fun startRecording()
+    {
+            mediarecorder= MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(nome_audio)
+            try
+            {
+                 prepare()
+            }
+            catch (e: IOException)
+            {
+                controllo3=false
+            }
+                if(controllo3)
+                    start()
+            }
+        if(controllo3)
+            Toast.makeText(this, "The recorder has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(this, "The recorder has some problems!", Toast.LENGTH_LONG).show()
+    }
+    private fun stopRecording()
+    {
+        mediarecorder?.apply{
+            stop()
+            release()
+        }
+        mediarecorder=null
+        Toast.makeText(this, "The registration has been successfully acquired!", Toast.LENGTH_LONG).show()
+    }
+    private fun prova2():Int
+    {
+        return 50
     }
 }

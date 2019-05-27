@@ -35,7 +35,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(editText17.text.toString()!="")
             {
                 data=formato.format(Date()).toString()
-                users.add(User(editText17.text.toString(), "Upload time and day---> "+data))
+                users.add(User(editText17.text.toString(), "Upload time and date---> "+data))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 editText17.setText("")

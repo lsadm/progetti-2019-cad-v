@@ -170,6 +170,7 @@
     <string name="no">No</string>
     <string name="presentazione8">Text Note</string>
     <string name="presentazione9">Image Note</string>
+    <string name="presentazione10">Audio Note</string>
     <string-array name="maschio_femmina">
         <item>-----------------</item>
         <item>Male</item>
