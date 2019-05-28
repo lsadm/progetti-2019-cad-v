@@ -1,13 +1,22 @@
 package com.example.mathfactory
 import android.graphics.Bitmap
+import android.graphics.Color.rgb
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.support.annotation.UiThread
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.concurrent.thread
+import kotlin.concurrent.timerTask
 
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
@@ -79,6 +88,67 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         var mediaplayer: MediaPlayer? = null
         var riproduci_pausa=true
         val user3:User3=userList[p1]
+        var controllo=true
+        class MyHandler:Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                if(valore!=R.mipmap.imm34_foreground.toString())
+                {
+                    if(valore=="The selected audio is not available!")
+                        p0.timer.setTextColor(rgb(155,17,30))
+                    p0.timer.text = valore
+                }
+                else
+                    p0.riproduci_ferma.setBackgroundResource(valore.toInt())
+            }
+        }
+        class TimerThread constructor(val handler:Handler):Thread()
+        {
+            var contatore:Int=0
+            override fun run()
+            {
+                contatore=0
+                while((p0.progress_audio.progress<100)&&(!riproduci_pausa))
+                {
+                    if(controllo)
+                    {
+                        notify_message("Remaining: "+(user3.scorri-contatore).toString()+" s")
+                        contatore++
+                    }
+                    sleep(1000)
+                    p0.progress_audio.incrementProgressBy(100 / user3.scorri)
+                }
+                if ((p0.progress_audio.progress >= 100)||(riproduci_pausa))
+                {
+                    if(!riproduci_pausa)
+                    {
+                        riproduci_pausa = true
+                        if(controllo)
+                         notify_message("Remaining: 0 s")
+                        sleep(500)
+                        notify_message(R.mipmap.imm34_foreground.toString())
+                    }
+                    if(controllo)
+                     notify_message("Duration: "+user3.scorri.toString()+" s")
+                    else
+                     notify_message("The selected audio is not available!")
+                    p0.progress_audio.progress = 0
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val handler=MyHandler()
+        val timer=TimerThread(handler)
         p0.riproduci_ferma.setOnClickListener{
             if(riproduci_pausa)
             {
@@ -93,9 +163,11 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                     }
                     catch (e: IOException)
                     {
-                        p0.errore.text="The selected audio is not available!"
+                        controllo=false
+                        user3.scorri=1
                     }
                 }
+                timer.start()
             }
             else
             {
@@ -105,14 +177,17 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                 mediaplayer=null
             }
         }
-        p0.progress_audio.incrementProgressBy(user3.scorri)
+        p0.progress_audio.progress=0
+        p0.progress_audio.setMax(100)
+        p0.progress_audio.setOnTouchListener { v, event ->true  }
         p0.textViewOrario_Data3.text=user3.orario_data3
+        p0.timer.text="Duration: "+user3.scorri.toString()+" s"
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
         var riproduci_ferma=itemView.findViewById(R.id.riproduci_ferma)as Button
         var progress_audio=itemView.findViewById(R.id.progress_audio)as SeekBar
         val textViewOrario_Data3=itemView.findViewById(R.id.textViewOrario_Data3)as TextView
-        val errore=itemView.findViewById(R.id.errore)as TextView
+        val timer=itemView.findViewById(R.id.timer)as TextView
     }
 }

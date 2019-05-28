@@ -5,4 +5,4 @@ import android.widget.SeekBar
 
 data class User(val testo:String,val orario_data:String)
 data class User2(val immagine:Bitmap?,val orario_data2:String)
-data class User3(val path:String?, val scorri:Int,val orario_data3:String)
+data class User3(val path:String?, var scorri:Int,val orario_data3:String)

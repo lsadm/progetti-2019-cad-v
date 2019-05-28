@@ -2,12 +2,13 @@ package com.example.mathfactory
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Environment
+import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -23,7 +24,9 @@ import kotlinx.android.synthetic.main.activity_function10.*
 import kotlinx.android.synthetic.main.list_layout3.*
 import java.io.File
 import java.io.IOException
+import java.sql.Time
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val PERMISSION_REQUEST_CODE=0
@@ -39,20 +42,59 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     var controllo2:Boolean=true
     var controllo3:Boolean=true
     var counter:Int=0
+    var durata_registrazione:Int=0
+    var istante_iniziale_registrazione:Long=0
+    var istante_finale_registrazione:Long=0
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function10)
         nav_view10.setNavigationItemSelectedListener(this)
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                textView55.setTextColor(Color.BLUE)
+                textView55.text=valore
+            }
+        }
+        class TimerThread constructor(val handler: Handler):Thread()
+        {
+            var contatore:Int=0
+            override fun run()
+            {
+                contatore=0
+                while(!registra_ferma)
+                {
+                    notify_message("Recordering...\nDuration: "+contatore.toString()+" s")
+                    contatore++
+                    sleep(1000)
+                }
+                sleep(500)
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
         val recyclerView3=findViewById(R.id.recyclerView3)as RecyclerView
         recyclerView3.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         val users3= ArrayList<User3>()
-        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Audio_"
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Audio/MathView_Audio_"
         if(checkPermission())
             button53.setBackgroundResource(R.mipmap.imm32_foreground)
         else
             button53.setBackgroundResource(R.mipmap.imm31_foreground)
         textView55.setTextColor(rgb(155,17,30))
         textView55.text="No audio is ready to\nupload!"
+        val handler=MyHandler()
+        val timer=TimerThread(handler)
         button53.setOnClickListener {
           if(checkPermission())
               if(registra_ferma)
@@ -68,6 +110,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                       button53.setBackgroundResource(R.mipmap.imm33_foreground)
                       registra_ferma = false
                   }
+                  timer.start()
               }
             else
               {
@@ -87,8 +130,11 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         button21.setOnClickListener {
             if(controllo)
             {
+                durata_registrazione=(istante_finale_registrazione-istante_iniziale_registrazione).toInt()/1000
+                if(durata_registrazione==0)
+                    durata_registrazione=1
                 data = formato.format(Date()).toString()
-                users3.add(User3(nome_audio, prova2(), "Upload time and date---> " + data))
+                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 controllo=false
@@ -255,6 +301,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun startRecording()
     {
             mediarecorder= MediaRecorder().apply {
@@ -271,24 +318,25 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 controllo3=false
             }
                 if(controllo3)
+                {
+                    istante_iniziale_registrazione=System.currentTimeMillis()
                     start()
+                }
             }
         if(controllo3)
             Toast.makeText(this, "The recorder has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
         else
             Toast.makeText(this, "The recorder has some problems!", Toast.LENGTH_LONG).show()
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording()
     {
         mediarecorder?.apply{
             stop()
+            istante_finale_registrazione= System.currentTimeMillis()
             release()
         }
         mediarecorder=null
         Toast.makeText(this, "The registration has been successfully acquired!", Toast.LENGTH_LONG).show()
-    }
-    private fun prova2():Int
-    {
-        return 50
     }
 }
