@@ -1,23 +1,20 @@
 package com.example.mathfactory
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color.rgb
-import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.annotation.UiThread
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.concurrent.thread
-import kotlin.concurrent.timerTask
-
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
@@ -46,6 +43,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
 }
 class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomAdapter2.ViewHolder>()
 {
+    var mediaplayer:MediaPlayer?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
         val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout2,p0,false)
@@ -60,7 +58,17 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
         val user2:User2=userList[p1]
+        val opzioni:Bundle?=null
         p0.imageViewData.setImageBitmap(user2.immagine)
+        p0.imageViewData.setOnClickListener{
+            val next=Intent(user2.contesto,call::class.java)
+            val stream=ByteArrayOutputStream()
+            user2.immagine?.compress(Bitmap.CompressFormat.PNG,90,stream)
+            val image=stream.toByteArray()
+            next.putExtra("immagine",image)
+            startActivity(user2.contesto,next,opzioni)
+            mediaplayer= MediaPlayer.create(user2.contesto,R.raw.move_graph_sound)
+            mediaplayer?.start()}
         p0.textViewOrario_Data2.text=user2.orario_data2
     }
 

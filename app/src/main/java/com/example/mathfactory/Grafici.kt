@@ -387,7 +387,7 @@ class Grafici: AppCompatActivity()
             return true
         }
         if (id == R.id.action_two) {
-            Toast.makeText(this, "Hi, I'm your own\nGraph_Editor!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Hi, I'm your own\nGraph_Viewer!", Toast.LENGTH_LONG).show()
             return true
         }
         if (id == R.id.action_three) {

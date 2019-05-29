@@ -139,6 +139,20 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             mediaplayer?.start()
             return true
         }
+        if (id == R.id.note_immagini) {
+            val next = Intent(this, Function9::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
+        if (id == R.id.note_audio) {
+            val next = Intent(this, Function10::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+            mediaplayer?.start()
+            return true
+        }
         if (id == R.id.Profile) {
             Toast.makeText(this,"You are already here!", Toast.LENGTH_LONG).show()
             mediaplayer=MediaPlayer.create(this,R.raw.error_sound)
@@ -146,8 +160,9 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.calculator) {
-            Toast.makeText(this, "You are already here!", Toast.LENGTH_LONG).show()
-            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            val next = Intent(this, Function0::class.java)
+            startActivity(next)
+            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
             return true
         }

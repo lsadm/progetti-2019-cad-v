@@ -11,6 +11,5 @@
             android:layout_height="match_parent"
             android:id="@+id/graph"
             tools:layout_editor_absoluteX="0dp"
-            android:background="@drawable/my_background1"
-    />
+            android:background="@drawable/my_background1"/>
 </android.support.constraint.ConstraintLayout>
