@@ -25,93 +25,184 @@
                 android:textAllCaps="false" android:textColor="@color/gold"
                 android:textAlignment="center" android:layout_marginTop="4dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/profilo"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/profilo"
                 android:textColor="@color/smeraldo"
                 android:textSize="24sp" android:textAllCaps="false" android:background="@mipmap/imm10"
                 android:textAlignment="center"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="46dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"/>
         <TextView
                 android:layout_width="464dp"
                 android:layout_height="31dp" android:id="@+id/textView31"
                 android:textSize="18sp"
-                android:textStyle="italic" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/plot2" android:layout_marginStart="64dp"
+                android:textStyle="italic"
+                android:layout_marginStart="64dp"
                 app:layout_constraintStart_toStartOf="parent" android:text="@string/messaggio"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@+id/textView72"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/storia"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/storia"
                 android:background="@mipmap/imm3"
                 app:layout_constraintStart_toEndOf="@+id/plot3" android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/equanzioni_differenziali"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView78"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/storia_per_immagini"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/storia_per_immagini"
                 android:background="@mipmap/imm21"
-                app:layout_constraintStart_toEndOf="@+id/storia"
-                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/storia_vocale"/>
+                app:layout_constraintStart_toEndOf="@+id/storia_vocale"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView76"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/storia_vocale"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/storia_vocale"
                 android:background="@mipmap/imm20"
-                app:layout_constraintStart_toEndOf="@+id/equanzioni_differenziali"
-                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView77" app:layout_constraintStart_toEndOf="@+id/storia"
+                android:layout_marginStart="16dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/calcolatrice"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/calcolatrice"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" android:background="@mipmap/imm1"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toEndOf="@+id/profilo" android:layout_marginStart="16dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/numeri_casuali"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/numeri_casuali"
                 app:layout_constraintStart_toEndOf="@+id/calcolatrice"
                 android:layout_marginStart="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 android:background="@mipmap/imm2" android:layout_marginTop="16dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/equazioni_lineari"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/equazioni_lineari"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 app:layout_constraintStart_toEndOf="@+id/numeri_casuali" android:layout_marginStart="16dp"
                 android:background="@mipmap/imm4" android:layout_marginTop="16dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/equanzioni_differenziali"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/equanzioni_differenziali"
                 app:layout_constraintStart_toEndOf="@+id/equazioni_lineari"
                 android:layout_marginStart="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" android:background="@mipmap/imm5"
                 android:layout_marginTop="16dp"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/numeri_complessi"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/numeri_complessi"
                 android:background="@mipmap/imm6"
-                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/profilo"/>
-        <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/plot1"
-                app:layout_constraintStart_toEndOf="@+id/numeri_complessi"
+                app:layout_constraintStart_toEndOf="@+id/equanzioni_differenziali"
                 android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/calcolatrice" android:background="@mipmap/imm7"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView3"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/plot2"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/plot1"
+                android:background="@mipmap/imm7"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="46dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView69"/>
+        <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/plot2"
                 app:layout_constraintStart_toEndOf="@+id/plot1"
-                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/numeri_casuali" android:background="@mipmap/imm8"/>
+                android:layout_marginStart="16dp"
+                android:background="@mipmap/imm8"
+                app:layout_constraintTop_toBottomOf="@+id/textView80"/>
         <Button
-                android:layout_width="80dp"
-                android:layout_height="80dp" android:id="@+id/plot3"
+                android:layout_width="70dp"
+                android:layout_height="70dp" android:id="@+id/plot3"
                 app:layout_constraintStart_toEndOf="@+id/plot2"
-                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/equazioni_lineari" android:background="@mipmap/imm9"/>
+                android:layout_marginStart="16dp"
+                android:background="@mipmap/imm9"
+                app:layout_constraintTop_toBottomOf="@+id/textView79"/>
+        <TextView
+                android:text="@string/uno"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView69"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@+id/profilo"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="46dp"
+                android:textSize="10sp"/>
+        <TextView
+                android:text="@string/dodici"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView70"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView71" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/storia_per_immagini" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/undici"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView71"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView72" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/storia_vocale" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/dieci"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView72"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView73" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/storia" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/nove"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView73"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView74" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/plot3" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/otto"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView74"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView75" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/plot2" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/sette"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView75"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/plot1"
+                android:layout_marginStart="46dp" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/sei"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView76"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView77" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/numeri_complessi" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/cinque"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView77"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@+id/equanzioni_differenziali"
+                app:layout_constraintStart_toEndOf="@+id/textView78" android:layout_marginStart="16dp"
+                android:textSize="10sp"/>
+        <TextView
+                android:text="@string/quattro"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView78"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView79" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/equazioni_lineari" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/tre"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView79"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView80" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/numeri_casuali" android:textSize="10sp"/>
+        <TextView
+                android:text="@string/due"
+                android:layout_width="70dp"
+                android:layout_height="26dp" android:id="@+id/textView80"
+                android:textColor="@color/silver" android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@+id/calcolatrice"
+                app:layout_constraintStart_toEndOf="@+id/textView69" android:layout_marginStart="16dp"
+                android:textSize="10sp"/>
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

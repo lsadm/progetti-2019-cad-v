@@ -57,7 +57,7 @@
     <string name="action_four">Geometry Plotting</string>
     <string name="action_five">Linear Equations</string>
     <string name="action_six">Elementary Plotting</string>
-    <string name="action_seven">Linear Differential Equations</string>
+    <string name="action_seven">Differential Equations</string>
     <string name="action_eight">Random Numbers</string>
     <string name="action_nine">Complex Numbers</string>
     <string name="action_ten">Signal Plotting</string>
@@ -182,8 +182,17 @@
     <string name="note_testuali">Text Note</string>
     <string name="note_immagini">Image Note</string>
     <string name="note_audio">Audio Note</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="uno">Profile</string>
+    <string name="due">Calculator</string>
+    <string name="tre">Random Numbers</string>
+    <string name="quattro">Linear Equations</string>
+    <string name="cinque">Differential Equations</string>
+    <string name="sei">Complex Numbers</string>
+    <string name="sette">Geometry Plotting</string>
+    <string name="otto">Elementary Plotting</string>
+    <string name="nove">Signal Plotting</string>
+    <string name="dieci">Text Note</string>
+    <string name="undici">Audio Note</string>
+    <string name="dodici">Image Note</string>
 </resources>
 
