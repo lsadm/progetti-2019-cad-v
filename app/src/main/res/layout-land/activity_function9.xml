@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content" android:id="@+id/textView53"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:textColor="@color/gold" android:textSize="36sp"
-                android:text="@string/presentazione9" android:layout_marginStart="222dp"
+                android:text="@string/presentazione9" android:layout_marginStart="215dp"
                 android:textAlignment="center"/>
         <TextView
                 android:layout_width="418dp"
