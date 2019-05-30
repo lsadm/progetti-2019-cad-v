@@ -17,6 +17,9 @@
         android:layout_height="match_parent"
         tools:context=".Function3"
         android:background="@drawable/my_background1">
+    <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"/>
     <Button
             android:text="@string/button9"
             android:layout_width="63dp"
@@ -122,7 +125,7 @@
             android:textSize="14sp"
             android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/pres"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <Button
             android:text="@string/button4"
             android:layout_width="63dp"
@@ -132,7 +135,7 @@
             android:textAllCaps="false"
             android:textSize="14sp" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button8"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <Button
             android:text="@string/button6"
             android:layout_width="63dp"
@@ -141,7 +144,7 @@
             android:textSize="14sp"
             android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button9"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <Button
             android:text="@string/potenza_cubo"
             android:layout_width="63dp"
@@ -151,7 +154,7 @@
             android:textSize="14sp"
             android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button10"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <Button
             android:text="@string/button"
             android:layout_width="63dp"
@@ -225,7 +228,7 @@
             android:textAlignment="center"
             android:textSize="24sp" android:background="@drawable/my_button1" android:textColor="@color/silver"
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <EditText
             android:layout_width="81dp"
             android:layout_height="47dp"
@@ -329,13 +332,6 @@
             android:textColor="@color/blue" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/button22"
             app:layout_constraintTop_toBottomOf="@+id/textView30"/>
-    <TextView
-            android:text="@string/messaggio2"
-            android:layout_width="326dp"
-            android:layout_height="16dp" android:id="@+id/textView4"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="parent" android:textSize="14sp" android:textAlignment="center"
-            android:textStyle="italic"/>
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

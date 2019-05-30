@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.activity_function0.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
 import android.media.MediaPlayer
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
+
 class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
     private var mediaplayer:MediaPlayer?=null
@@ -51,6 +54,12 @@ class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function0)
         nav_view0.setNavigationItemSelectedListener(this)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         b0.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;controllore(identificatore);counter++;controllo15=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="0";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;if(controllo7)controllo6=false;controllo8=true} }
         b1.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="1";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }
         b2.setOnClickListener { if((controllo)&&(controllo6)&&(controllo9)&&(counter<11)&&(!controllo17)){if(controllo20){textView2.text="";controllo20=false;textView2.setTextColor(Color.BLUE)};controllo19=false;counter++;controllo15=true;if(controllo14)controllo13=true;textView2.textSize=24.toFloat();val s1=textView2.text.toString();val s2="2";val s3=s1+s2;textView2.text=s3;if(controllo3)controllo2=true;controllo4=false;controllo5=true;controllo7=false;controllo8=true} }

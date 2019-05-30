@@ -14,6 +14,9 @@
             android:layout_height="match_parent"
             tools:context=".Function9"
             android:background="@drawable/my_background1">
+        <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"/>
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView2"
                 android:scrollbars="vertical"
@@ -43,9 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView53"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" android:textColor="@color/gold" android:textSize="36sp"
+                android:textColor="@color/gold" android:textSize="36sp"
                 android:text="@string/presentazione9" android:layout_marginStart="86dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
         <TextView
                 android:layout_width="245dp"
                 android:layout_height="50dp" android:id="@+id/textView55"

@@ -12,6 +12,8 @@ import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -50,6 +52,12 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function10)
         nav_view10.setNavigationItemSelectedListener(this)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         class MyHandler: Handler()
         {
             override fun handleMessage(msg: Message)

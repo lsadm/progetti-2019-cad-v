@@ -18,10 +18,12 @@ class Start_Activity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
         button24.setOnClickListener {settaggio(1)}
         button25.setOnClickListener {settaggio(2)}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener { val next = Intent(this, MainActivity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start() }
+        button28.setOnClickListener {val next = Intent(this, MainActivity::class.java);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start() }
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

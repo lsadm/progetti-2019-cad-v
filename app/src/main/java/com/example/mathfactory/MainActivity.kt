@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import android.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -27,6 +29,12 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle=ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         storia.setOnClickListener { val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
         storia_per_immagini.setOnClickListener { val next = Intent(this, Function9::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
         storia_vocale.setOnClickListener { val next = Intent(this, Function10::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }

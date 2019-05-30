@@ -63,6 +63,8 @@ class Grafici: AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grafici)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
         val color=rgb(155,17,30)
         val passo=getIntent().getExtras().getDouble("passo")
         val inf=getIntent().getExtras().getDouble("inf")

@@ -5,6 +5,8 @@ import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -29,6 +31,12 @@ class Function6 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function6)
         nav_view6.setNavigationItemSelectedListener(this)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         somma_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=1;setta_colore();check2=false}}
         differenza_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=2;setta_colore();check2=false}}
         moltiplicazione_complessa.setOnClickListener {if(input1()){editText.setText("");editText2.setText("");id=3;setta_colore();check2=false}}

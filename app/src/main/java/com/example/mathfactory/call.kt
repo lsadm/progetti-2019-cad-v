@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -17,6 +19,8 @@ class call : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
         val immagine=getIntent().getExtras().getByteArray("immagine")
         val stream= ByteArrayInputStream(immagine)
         val imm_bitmap= BitmapFactory.decodeStream(stream)

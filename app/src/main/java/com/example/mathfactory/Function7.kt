@@ -7,6 +7,8 @@ import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -64,6 +66,12 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function7)
         nav_view7.setNavigationItemSelectedListener(this)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         controllo_generale=2
         button8.setOnClickListener {set_color(18);if(!interpolat){interpolat=true;interpolat2=true;button8.text="Interpolat\nOn"}else{interpolat=false;interpolat2=false;button8.text="Interpolat\nOff"}}
         button9.setOnClickListener {if(!turno){identifier=9;set_color(identifier)}else{identifier2=9;set_color(identifier2)}}

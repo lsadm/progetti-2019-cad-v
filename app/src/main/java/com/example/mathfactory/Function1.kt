@@ -7,6 +7,8 @@ import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +34,12 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function1)
         nav_view1.setNavigationItemSelectedListener(this)
+        val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
+        setSupportActionBar(toolbar)
+        val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
+        val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
+        drawer.addDrawerListener(toogle)
+        toogle.syncState()
         controllo_generale=3
         button8.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[0]){reset();identifier=1;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
         button9.setOnClickListener {if((switch[0]&&switch[1]&&switch[2]&&switch[3]&&switch[4]&&switch[5])||!switch[1]){reset();identifier=2;if(switch[identifier-1]){setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=false;set_color(identifier)}else{setta_elementi(switch[identifier-1],identifier);switch[identifier-1]=true;set_color(0)}}}
