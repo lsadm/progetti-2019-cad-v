@@ -33,7 +33,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp" android:id="@+id/button53"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="8dp" android:background="@mipmap/imm31_foreground"/>
         <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp" android:id="@+id/button52"

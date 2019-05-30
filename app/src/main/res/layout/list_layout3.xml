@@ -13,14 +13,21 @@
                 android:layout_width="match_parent"
                 android:background="@color/start"
                 android:orientation="vertical">
+            <TextView
+                    android:id="@+id/titolo3"
+                    android:textSize="24sp"
+                    android:textColor="@color/smeraldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
             <Button
                     android:id="@+id/riproduci_ferma"
                     android:background="@mipmap/imm34_foreground"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="0dp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo3"/>
             <SeekBar
                     android:id="@+id/progress_audio"
                     android:background="@color/start2"
@@ -28,7 +35,7 @@
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     app:layout_constraintStart_toEndOf="@+id/riproduci_ferma"
-                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/titolo3"/>
             <TextView
                     android:id="@+id/textViewOrario_Data3"
                     android:textColor="@color/blue"

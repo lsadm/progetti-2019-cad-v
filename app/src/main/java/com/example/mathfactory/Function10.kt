@@ -47,6 +47,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     var durata_registrazione:Int=0
     var istante_iniziale_registrazione:Long=0
     var istante_finale_registrazione:Long=0
+    val prefisso3:String="Audio_Note_"
+    var titolo3:String=""
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,11 +96,9 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         val recyclerView3=findViewById(R.id.recyclerView3)as RecyclerView
         recyclerView3.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         val users3= ArrayList<User3>()
-        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Audio/MathView_Audio_"
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Audio/Audio_Note_"
         if(checkPermission())
             button53.setBackgroundResource(R.mipmap.imm32_foreground)
-        else
-            button53.setBackgroundResource(R.mipmap.imm31_foreground)
         textView55.setTextColor(rgb(155,17,30))
         textView55.text="No audio is ready to\nupload!"
         val handler=MyHandler()
@@ -142,7 +142,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 if(durata_registrazione==0)
                     durata_registrazione=1
                 data = formato.format(Date()).toString()
-                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data))
+                titolo3=prefisso3+counter.toString()
+                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 controllo=false

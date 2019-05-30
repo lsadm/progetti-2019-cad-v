@@ -4,14 +4,19 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
@@ -21,6 +26,7 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function9.*
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +38,12 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var data:String=""
     var imm:Bitmap?=null
     var controllo=true
+    val prefisso2:String="Image_Note_"
+    var nome_image:String=""
+    var photoFile:File?=null
+    var titolo2:String=""
+    var counter=1
+    var output:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function9)
@@ -44,18 +56,19 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         toogle.syncState()
         if(checkPermission())
             button53.setBackgroundResource(R.mipmap.imm30_foreground)
-        else
-            button53.setBackgroundResource(R.mipmap.imm29_foreground)
         textView55.text="No photo is ready to\nupload!"
         val recyclerView2=findViewById(R.id.recyclerView2)as RecyclerView
         recyclerView2.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         val users2= ArrayList<User2>()
-        button53.setOnClickListener { if(checkPermission()){ button53.setBackgroundResource(R.mipmap.imm30_foreground);go_to_camera()}else requestPermission()}
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Image/"
+        button53.setOnClickListener { if(checkPermission()){ button53.setBackgroundResource(R.mipmap.imm30_foreground);photoFile=go_to_camera()}else requestPermission()}
         button21.setOnClickListener{
             if(imm!=null)
             {
                 data=formato.format(Date()).toString()
-                users2.add(User2(imm,"Upload time and date:\n"+data,this))
+                titolo2=prefisso2+counter.toString()
+                users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2))
+                counter++
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 imm=null
@@ -225,15 +238,23 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode)
         {
-            CAMERA_REQUEST_CODE->{
-                if(resultCode== Activity.RESULT_OK&&data!=null)
+            CAMERA_REQUEST_CODE->
+            {
+                if(resultCode== Activity.RESULT_OK)
                 {
-                    imm = data.extras.get("data") as Bitmap
+                    imm = BitmapFactory.decodeFile(photoFile?.getAbsolutePath())
                     textView55.setTextColor(rgb(40,114,51))
                     textView55.text="The photo is ready to\nupload!"
                 }
+                else
+                {
+                    Toast.makeText(this,"Ops... Image not found!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
             }
-            else->{
+            else->
+            {
                 Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                 mediaplayer?.start()
@@ -242,16 +263,20 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
     private fun checkPermission():Boolean
     {
-        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
         return permesso
     }
     private fun requestPermission()
     {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),PERMISSION_REQUEST_CODE)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
     }
-    private fun go_to_camera()
+    private fun go_to_camera():File
     {
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        nome_image=prefisso2+counter.toString()+".jpg"
+        val photoFile=File(output,nome_image)
+        val fileProvider=FileProvider.getUriForFile(this,"com.mydomain.fileprovider",photoFile)
+        callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,fileProvider)
         if (callCameraIntent.resolveActivity(packageManager) != null)
         {
             startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
@@ -259,5 +284,6 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
             mediaplayer?.start()
         }
+        return photoFile
     }
 }

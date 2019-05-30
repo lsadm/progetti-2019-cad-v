@@ -37,12 +37,12 @@
         <EditText
                 android:layout_width="418dp"
                 android:layout_height="50dp"
-                android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/editText17"
-                app:layout_constraintStart_toEndOf="@+id/textView54"
+                app:layout_constraintStart_toEndOf="@+id/buttoncheck"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" android:hint="Insert your note..."
-                android:textColor="@android:color/black" android:background="@color/start"/>
+                android:textColor="@android:color/black" android:background="@color/start"
+                android:inputType="textPersonName"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView53"
@@ -51,9 +51,9 @@
                 android:text="@string/presentazione8" android:layout_marginStart="222dp"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
-        <TextView
+        <Button
                 android:layout_width="50dp"
-                android:layout_height="50dp" android:id="@+id/textView54"
+                android:layout_height="50dp" android:id="@+id/buttoncheck"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@mipmap/imm26_foreground"
                 android:layout_marginStart="8dp"/>

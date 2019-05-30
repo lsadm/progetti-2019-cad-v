@@ -33,12 +33,14 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
       val user:User=userList[p1]
         p0.textViewTesto.text=user.testo
         p0.textViewOrario_Data.text=user.orario_data
+        p0.titolo1.text=user.titolo1
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
   {
       val textViewTesto=itemView.findViewById(R.id.textViewTesto)as TextView
       val textViewOrario_Data=itemView.findViewById(R.id.textViewOrario_Data)as TextView
+      val titolo1=itemView.findViewById(R.id.titolo1)as TextView
   }
 }
 class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomAdapter2.ViewHolder>()
@@ -63,19 +65,21 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
         p0.imageViewData.setOnClickListener{
             val next=Intent(user2.contesto,call::class.java)
             val stream=ByteArrayOutputStream()
-            user2.immagine?.compress(Bitmap.CompressFormat.PNG,90,stream)
+            user2.immagine?.compress(Bitmap.CompressFormat.JPEG,45,stream)
             val image=stream.toByteArray()
             next.putExtra("immagine",image)
             startActivity(user2.contesto,next,opzioni)
             mediaplayer= MediaPlayer.create(user2.contesto,R.raw.move_graph_sound)
             mediaplayer?.start()}
         p0.textViewOrario_Data2.text=user2.orario_data2
+        p0.titolo2.text=user2.titolo2
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
         val imageViewData=itemView.findViewById(R.id.imageViewData)as ImageView
         val textViewOrario_Data2=itemView.findViewById(R.id.textViewOrario_Data2)as TextView
+        val titolo2=itemView.findViewById(R.id.titolo2)as TextView
     }
 }
 class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomAdapter3.ViewHolder>()
@@ -190,6 +194,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.progress_audio.setOnTouchListener { v, event ->true  }
         p0.textViewOrario_Data3.text=user3.orario_data3
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
+        p0.titolo3.text=user3.titolo3
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
@@ -197,5 +202,6 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         var progress_audio=itemView.findViewById(R.id.progress_audio)as SeekBar
         val textViewOrario_Data3=itemView.findViewById(R.id.textViewOrario_Data3)as TextView
         val timer=itemView.findViewById(R.id.timer)as TextView
+        val titolo3=itemView.findViewById(R.id.titolo3)as TextView
     }
 }
