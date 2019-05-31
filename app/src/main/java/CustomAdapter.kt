@@ -127,11 +127,11 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                 {
                     if(controllo)
                     {
-                        notify_message("Remaining: "+(user3.scorri-contatore).toString()+" s")
+                        notify_message("Remaining: "+(user3.scorri.toString().toInt()-contatore).toString()+" s")
                         contatore++
                     }
                     sleep(1000)
-                    p0.progress_audio.incrementProgressBy(100 / user3.scorri)
+                    p0.progress_audio.incrementProgressBy(100 / user3.scorri.toString().toInt())
                 }
                 if ((p0.progress_audio.progress >= 100)||(riproduci_pausa))
                 {

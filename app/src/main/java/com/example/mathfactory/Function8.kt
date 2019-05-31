@@ -22,6 +22,8 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function1.*
 import kotlinx.android.synthetic.main.activity_function8.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,14 +35,49 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var adapter:CustomAdapter?=null
     var controllo=true
     var output:String?=null
+    var output_parametro1:String?=null
+    var output_data:String?=null
     val prefisso1:String="Text_Note_"
+    val prefisso_data:String="Date_Text_Note_"
     var titolo1:String=""
-    var counter=0
+    var nome_text:String?=null
+    var nome_data_text:String?=null
+    var textFile:File?=null
+    var file_parametro1:File?=null
+    var file_data:File?=null
+    var text:String?=null
+    var counter:Int?=null
+    var indice:Int?=1
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function8)
         nav_view8.setNavigationItemSelectedListener(this)
+        val recyclerView=findViewById(R.id.recyclerView)as RecyclerView
+        recyclerView.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)
+        val users=ArrayList<User>()
+        output_parametro1=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro1.txt"
+        output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Text/"
+        output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Text_Note/"
+        file_parametro1=File(output_parametro1)
+        if(file_parametro1?.exists()==true)
+            counter=file_parametro1?.readText(Charsets.UTF_8)?.toInt()?.plus(1)
+        else
+            counter=1
+        if(counter!=1)
+        {
+            while (indice != counter)
+            {
+                nome_text = output + prefisso1 + indice?.toString() + ".txt"
+                nome_data_text=output_data+prefisso_data+indice?.toString()+".txt"
+                textFile = File(nome_text)
+                file_data=File(nome_data_text)
+                users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> "+file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString()))
+                indice=indice?.plus(1)
+             }
+            adapter=CustomAdapter(users)
+            recyclerView.adapter=adapter
+        }
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -51,18 +88,22 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             buttoncheck.setBackgroundResource(R.mipmap.imm36_foreground)
         else
             editText17.inputType=InputType.TYPE_NULL
-        val recyclerView=findViewById(R.id.recyclerView)as RecyclerView
-        recyclerView.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)
-        val users=ArrayList<User>()
-        output= Environment.getExternalStorageDirectory().absolutePath+"/MathView_Text/Text_Note_"
         buttoncheck.setOnClickListener {if(checkPermission()){buttoncheck.setBackgroundResource(R.mipmap.imm36_foreground);editText17.inputType= InputType.TYPE_CLASS_TEXT}else requestPermission()}
         button21.setOnClickListener{
             if(editText17.text.toString()!="")
             {
                 data=formato.format(Date()).toString()
-                counter++
+                nome_text=output+prefisso1+counter.toString()+".txt"
+                nome_data_text=output_data+prefisso_data+counter.toString()+".txt"
+                textFile=File(nome_text)
+                file_data=File(nome_data_text)
+                textFile?.writeText(editText17.text.toString(),Charsets.UTF_8)
+                file_data?.writeText(data,Charsets.UTF_8)
+                file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
+                text=textFile?.readText(Charsets.UTF_8)
                 titolo1=prefisso1+counter.toString()
-                users.add(User(editText17.text.toString(), "Upload time and date---> "+data,titolo1))
+                users.add(User(text, "Upload time and date---> "+data,titolo1))
+                counter=counter?.plus(1)
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 editText17.setText("")
@@ -82,6 +123,9 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(users.size!=0)
             {
                 users.clear()
+                cancellazione_text()
+                counter=0
+                file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
                 Toast.makeText(this, "Text Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -233,6 +277,20 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     private fun requestPermission()
     {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
+    }
+    private fun cancellazione_text()
+    {
+        indice=1
+        while (indice != counter)
+        {
+            nome_text = output + prefisso1 + indice?.toString() + ".txt"
+            nome_data_text=output_data+prefisso_data+indice?.toString()+".txt"
+            textFile = File(nome_text)
+            file_data=File(nome_data_text)
+            textFile?.delete()
+            file_data?.delete()
+            indice=indice?.plus(1)
+        }
     }
 }
 

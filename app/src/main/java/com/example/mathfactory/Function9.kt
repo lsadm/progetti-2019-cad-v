@@ -34,20 +34,52 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     val CAMERA_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer?=null
     var adapter2:CustomAdapter2?=null
-    val formato= SimpleDateFormat("           HH:mm:ss\n         dd/MM/yyyy")
+    val formato= SimpleDateFormat("HH:mm:ss_dd/MM/yyyy")
     var data:String=""
     var imm:Bitmap?=null
     var controllo=true
     val prefisso2:String="Image_Note_"
     var nome_image:String=""
     var photoFile:File?=null
+    var file_parametro2:File?=null
     var titolo2:String=""
-    var counter=1
-    var output:String=""
+    var counter:Int?=null
+    var indice:Int?=1
+    var output:String?=null
+    var output_parametro2:String?=null
+    var output_data:String?=null
+    var file_data:File?=null
+    val prefisso_data:String="Date_Image_Note_"
+    var nome_data_image:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function9)
         nav_view9.setNavigationItemSelectedListener(this)
+        val recyclerView2=findViewById(R.id.recyclerView2)as RecyclerView
+        recyclerView2.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
+        val users2= ArrayList<User2>()
+        output_parametro2=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro2.txt"
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Image/"
+        output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Image_Note/"
+        file_parametro2=File(output_parametro2)
+        if(file_parametro2?.exists()==true)
+            counter=file_parametro2?.readText(Charsets.UTF_8)?.toInt()?.plus(1)
+        else
+            counter=1
+        if(counter!=1)
+        {
+            while (indice != counter)
+            {
+                nome_image =prefisso2+ indice?.toString() + ".jpg"
+                nome_data_image=output_data+prefisso_data+indice?.toString()+".txt"
+                photoFile = File(output,nome_image)
+                file_data=File(nome_data_image)
+                users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n"+file_data?.readText(Charsets.UTF_8), this,prefisso2 + indice?.toString()))
+                indice=indice?.plus(1)
+            }
+            adapter2=CustomAdapter2(users2)
+            recyclerView2.adapter=adapter2
+        }
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -57,18 +89,18 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if(checkPermission())
             button53.setBackgroundResource(R.mipmap.imm30_foreground)
         textView55.text="No photo is ready to\nupload!"
-        val recyclerView2=findViewById(R.id.recyclerView2)as RecyclerView
-        recyclerView2.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
-        val users2= ArrayList<User2>()
-        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView_Image/"
         button53.setOnClickListener { if(checkPermission()){ button53.setBackgroundResource(R.mipmap.imm30_foreground);photoFile=go_to_camera()}else requestPermission()}
         button21.setOnClickListener{
             if(imm!=null)
             {
                 data=formato.format(Date()).toString()
                 titolo2=prefisso2+counter.toString()
+                nome_data_image=output_data+prefisso_data+counter?.toString()+".txt"
+                file_data=File(nome_data_image)
                 users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2))
-                counter++
+                file_data?.writeText(data,Charsets.UTF_8)
+                file_parametro2?.writeText(counter.toString(),Charsets.UTF_8)
+                counter=counter?.plus(1)
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 imm=null
@@ -90,6 +122,9 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(users2.size!=0)
             {
                 users2.clear()
+                cancellazione_image()
+                counter=0
+                file_parametro2?.writeText(counter.toString(),Charsets.UTF_8)
                 Toast.makeText(this, "Image Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -285,5 +320,19 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             mediaplayer?.start()
         }
         return photoFile
+    }
+    private fun cancellazione_image()
+    {
+        indice=1
+        while (indice != counter)
+        {
+            nome_image = output + prefisso2 + indice?.toString() + ".jpg"
+            photoFile = File(nome_image)
+            nome_data_image=output_data+prefisso_data+indice?.toString()+".txt"
+            file_data=File(nome_data_image)
+            photoFile?.delete()
+            file_data?.delete()
+            indice=indice?.plus(1)
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
@@ -15,10 +16,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
@@ -26,9 +29,20 @@ class MainActivity : AppCompatActivity()
     private var mediaplayer:MediaPlayer?=null
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
+    val prefisso:String=Environment.getExternalStorageDirectory().absolutePath+"/MathView"
+    val suffissi=arrayOf<String>("","/MathView_Parametri","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note")
+    var paths=arrayOf<String?>(null,null,null,null,null,null,null,null,null)
+    var directories=arrayOf<File?>(null,null,null,null,null,null,null,null,null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        for(i in 0..8)
+        {
+            paths[i]=prefisso+suffissi[i]
+            directories[i]=File(paths[i])
+            if(directories[i]?.exists()==false)
+                directories[i]?.mkdir()
+        }
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
