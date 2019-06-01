@@ -105,8 +105,13 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             {
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
-                textView55.setTextColor(Color.BLUE)
-                textView55.text=valore
+                if(valore=="")
+                    button53.setBackgroundResource(R.mipmap.imm32_foreground)
+                else
+                {
+                    textView55.setTextColor(Color.BLUE)
+                    textView55.text = valore
+                }
             }
         }
         class TimerThread constructor(val handler: Handler):Thread()
@@ -138,6 +143,26 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         textView55.text="No audio is ready to\nupload!"
         val handler=MyHandler()
         val timer=TimerThread(handler)
+        class CheckThread constructor(val handler: Handler):Thread()
+        {
+            override fun run()
+            {
+                while(!checkPermission())
+                    sleep(100)
+               notify_message("")
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val checkThread=CheckThread(myHandler)
+        checkThread.start()
         button53.setOnClickListener {
           if(checkPermission())
               if(registra_ferma)
@@ -209,8 +234,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             {
                 users3.clear()
                 cancellazione_audio()
-                counter=0
-                file_parametro3?.writeText(counter.toString(),Charsets.UTF_8)
+                counter=1
                 Toast.makeText(this, "Audio Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -410,5 +434,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             duratafile?.delete()
             indice=indice?.plus(1)
         }
+        file_parametro3=File(output_parametro3)
+        file_parametro3?.delete()
     }
 }

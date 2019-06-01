@@ -121,8 +121,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             {
                 users.clear()
                 cancellazione_text()
-                counter=0
-                file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
+                counter=1
                 Toast.makeText(this, "Text Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -279,6 +278,8 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             file_data?.delete()
             indice=indice?.plus(1)
         }
+        file_parametro1=File(output_parametro1)
+        file_parametro1?.delete()
     }
 }
 

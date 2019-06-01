@@ -22,9 +22,11 @@ class call : AppCompatActivity()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val immagine=getIntent().getExtras().getByteArray("immagine")
+        val titolo_immagine=getIntent().getExtras().getString("titolo_immagine")
         val stream= ByteArrayInputStream(immagine)
         val imm_bitmap= BitmapFactory.decodeStream(stream)
         foto.setImageBitmap(imm_bitmap)
+        Toast.makeText(this, titolo_immagine+" preview!", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

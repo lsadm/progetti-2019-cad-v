@@ -11,6 +11,8 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Message
 import android.provider.MediaStore
 import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
 import android.support.design.widget.NavigationView
@@ -89,7 +91,36 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if(checkPermission())
             button53.setBackgroundResource(R.mipmap.imm30_foreground)
         textView55.text="No photo is ready to\nupload!"
-        button53.setOnClickListener { if(checkPermission()){ button53.setBackgroundResource(R.mipmap.imm30_foreground);photoFile=go_to_camera()}else requestPermission()}
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                button53.setBackgroundResource(R.mipmap.imm30_foreground)
+            }
+        }
+        class CheckThread constructor(val handler: Handler):Thread()
+        {
+            override fun run()
+            {
+              while(!checkPermission())
+                  sleep(100)
+             notify_message("")
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val checkThread=CheckThread(myHandler)
+        checkThread.start()
+        button53.setOnClickListener { if(checkPermission())photoFile=go_to_camera()else requestPermission()}
         button21.setOnClickListener{
             if(imm!=null)
             {
@@ -123,8 +154,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             {
                 users2.clear()
                 cancellazione_image()
-                counter=0
-                file_parametro2?.writeText(counter.toString(),Charsets.UTF_8)
+                counter=1
                 Toast.makeText(this, "Image Note has been\nsuccessfully cleaned up!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -280,11 +310,14 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     imm = BitmapFactory.decodeFile(photoFile?.getAbsolutePath())
                     textView55.setTextColor(rgb(40,114,51))
                     textView55.text="The photo is ready to\nupload!"
+                    Toast.makeText(this,"The image has been acquired!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
                 }
                 else
                 {
-                    Toast.makeText(this,"Ops... Image not found!",Toast.LENGTH_LONG).show()
-                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    Toast.makeText(this,"The image has not been acquired!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
                     mediaplayer?.start()
                 }
             }
@@ -334,5 +367,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             file_data?.delete()
             indice=indice?.plus(1)
         }
+        file_parametro2=File(output_parametro2)
+        file_parametro2?.delete()
     }
 }

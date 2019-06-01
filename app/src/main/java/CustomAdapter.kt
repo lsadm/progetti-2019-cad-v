@@ -68,6 +68,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             user2.immagine?.compress(Bitmap.CompressFormat.JPEG,45,stream)
             val image=stream.toByteArray()
             next.putExtra("immagine",image)
+            next.putExtra("titolo_immagine",user2.titolo2)
             startActivity(user2.contesto,next,opzioni)
             mediaplayer= MediaPlayer.create(user2.contesto,R.raw.move_graph_sound)
             mediaplayer?.start()}
