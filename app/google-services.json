@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "399600060615",
+    "firebase_url": "https://mathview-database.firebaseio.com",
+    "project_id": "mathview-database",
+    "storage_bucket": "mathview-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399600060615:android:6885974d81e07249",
+        "android_client_info": {
+          "package_name": "com.example.mathfactory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399600060615-l46o0rmkqup58lenltr9bgta8pev78hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNDXfO1cPO4lEsbtLTQMxH8JnsEfe68Iw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399600060615-l46o0rmkqup58lenltr9bgta8pev78hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
