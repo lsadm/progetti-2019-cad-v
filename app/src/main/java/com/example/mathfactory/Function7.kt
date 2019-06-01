@@ -1,12 +1,15 @@
 package com.example.mathfactory
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
@@ -16,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_function7.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.*
 class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val PERMISSION_REQUEST_CODE=0
     private var mediaplayer: MediaPlayer?=null
     var passo:Double=0.1
     var inf:Double=0.0
@@ -175,24 +179,39 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             return true
         }
         if (id == R.id.note_testuali) {
-            val next = Intent(this, Function8::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission())
+            {
+                val next = Intent(this, Function8::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else
+                requestPermission()
             return true
         }
         if (id == R.id.note_immagini) {
-            val next = Intent(this, Function9::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission())
+            {
+                val next = Intent(this, Function9::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else
+                requestPermission()
             return true
         }
         if (id == R.id.note_audio) {
-            val next = Intent(this, Function10::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission())
+            {
+                val next = Intent(this, Function10::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else
+                requestPermission()
             return true
         }
         if (id == R.id.Profile) {
@@ -510,6 +529,15 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             immv=imm
         else
             immv=imm2
+    }
+    private fun checkPermission():Boolean
+    {
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        return permesso
+    }
+    private fun requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
     }
 }
 

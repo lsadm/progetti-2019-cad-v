@@ -7,6 +7,8 @@ import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Message
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -60,35 +62,30 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Text/"
         output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Text_Note/"
         file_parametro1=File(output_parametro1)
-        if(file_parametro1?.exists()==true)
-            counter=file_parametro1?.readText(Charsets.UTF_8)?.toInt()?.plus(1)
-        else
-            counter=1
-        if(counter!=1)
-        {
-            while (indice != counter)
+            if (file_parametro1?.exists() == true)
+                counter = file_parametro1?.readText(Charsets.UTF_8)?.toInt()?.plus(1)
+            else
+                counter = 1
+            if (counter != 1)
             {
-                nome_text = output + prefisso1 + indice?.toString() + ".txt"
-                nome_data_text=output_data+prefisso_data+indice?.toString()+".txt"
-                textFile = File(nome_text)
-                file_data=File(nome_data_text)
-                users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> "+file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString()))
-                indice=indice?.plus(1)
-             }
-            adapter=CustomAdapter(users)
-            recyclerView.adapter=adapter
-        }
+                while (indice != counter)
+                {
+                    nome_text = output + prefisso1 + indice?.toString() + ".txt"
+                    nome_data_text = output_data + prefisso_data + indice?.toString() + ".txt"
+                    textFile = File(nome_text)
+                    file_data = File(nome_data_text)
+                    users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString()))
+                    indice = indice?.plus(1)
+                }
+                adapter = CustomAdapter(users)
+                recyclerView.adapter = adapter
+            }
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
         val toogle= ActionBarDrawerToggle(this,drawer,toolbar,0,0)
         drawer.addDrawerListener(toogle)
         toogle.syncState()
-        if(checkPermission())
-            buttoncheck.setBackgroundResource(R.mipmap.imm36_foreground)
-        else
-            editText17.inputType=InputType.TYPE_NULL
-        buttoncheck.setOnClickListener {if(checkPermission()){buttoncheck.setBackgroundResource(R.mipmap.imm36_foreground);editText17.inputType= InputType.TYPE_CLASS_TEXT}else requestPermission()}
         button21.setOnClickListener{
             if(editText17.text.toString()!="")
             {
@@ -268,15 +265,6 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             return true
         }
         return true
-    }
-    private fun checkPermission():Boolean
-    {
-        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
-        return permesso
-    }
-    private fun requestPermission()
-    {
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
     }
     private fun cancellazione_text()
     {

@@ -1,5 +1,6 @@
 package com.example.mathfactory
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
@@ -9,6 +10,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
@@ -26,6 +29,7 @@ import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
 {
+    val PERMISSION_REQUEST_CODE=0
     private var mediaplayer:MediaPlayer?=null
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
@@ -49,9 +53,9 @@ class MainActivity : AppCompatActivity()
         val toogle=ActionBarDrawerToggle(this,drawer,toolbar,0,0)
         drawer.addDrawerListener(toogle)
         toogle.syncState()
-        storia.setOnClickListener { val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
-        storia_per_immagini.setOnClickListener { val next = Intent(this, Function9::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
-        storia_vocale.setOnClickListener { val next = Intent(this, Function10::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        storia.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        storia_per_immagini.setOnClickListener{if(checkPermission()) { val next = Intent(this, Function9::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        storia_vocale.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function10::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
         calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
@@ -87,5 +91,14 @@ class MainActivity : AppCompatActivity()
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun checkPermission():Boolean
+    {
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        return permesso
+    }
+    private fun requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
     }
 }

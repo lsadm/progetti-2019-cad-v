@@ -39,7 +39,7 @@
                 android:layout_height="50dp"
                 android:ems="10"
                 android:id="@+id/editText17"
-                app:layout_constraintStart_toEndOf="@+id/buttoncheck"
+                app:layout_constraintStart_toEndOf="@+id/textView_icona"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" android:hint="Insert your note..."
                 android:textColor="@android:color/black" android:background="@color/start"
                 android:inputType="textPersonName"/>
@@ -51,9 +51,9 @@
                 android:text="@string/presentazione8" android:layout_marginStart="102dp"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
-        <Button
+        <TextView
                 android:layout_width="50dp"
-                android:layout_height="50dp" android:id="@+id/buttoncheck"
+                android:layout_height="50dp" android:id="@+id/textView_icona"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@mipmap/imm26_foreground"
                 android:layout_marginStart="8dp"/>

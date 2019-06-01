@@ -349,12 +349,12 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     }
     private fun checkPermission():Boolean
     {
-        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED
         return permesso
     }
     private fun requestPermission()
     {
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO),PERMISSION_REQUEST_CODE)
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startRecording()

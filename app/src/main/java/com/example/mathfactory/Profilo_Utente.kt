@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val PERMISSION_REQUEST_CODE_2=0
     var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
@@ -141,24 +142,37 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.note_testuali) {
-            val next = Intent(this, Function8::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission2())
+            {
+                val next = Intent(this, Function8::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            requestPermission2()
             return true
         }
         if (id == R.id.note_immagini) {
-            val next = Intent(this, Function9::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission2())
+            {
+                val next = Intent(this, Function9::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else requestPermission2()
             return true
         }
         if (id == R.id.note_audio) {
-            val next = Intent(this, Function10::class.java)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(checkPermission2())
+            {
+                val next = Intent(this, Function10::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else
+                requestPermission2()
             return true
         }
         if (id == R.id.Profile) {
@@ -231,5 +245,14 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             button50.visibility=View.INVISIBLE
             button49.visibility=View.INVISIBLE
         }
+    }
+    private fun checkPermission2():Boolean
+    {
+        val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        return permesso
+    }
+    private fun requestPermission2()
+    {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE_2)
     }
 }
