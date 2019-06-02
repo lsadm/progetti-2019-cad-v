@@ -163,7 +163,6 @@
     <string name="accesso">Access</string>
     <string name="registrazione">Registration</string>
     <string name="back">Go Back</string>
-    <string name="not_specified">Not specified</string>
     <string name="domanda">Are you\nsure you\nwant to\nexit\nMath\nView?</string>
     <string name="domanda2">Are you sure\nyou want to\nexit Math\nView?</string>
     <string name="si">Yes</string>

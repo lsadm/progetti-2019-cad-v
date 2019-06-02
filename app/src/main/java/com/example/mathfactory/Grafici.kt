@@ -59,10 +59,12 @@ class Grafici: AppCompatActivity()
     var ordinate_punti=arrayOf(0.0,0.0,0.0)
     var vettore_correttivo=arrayOf(0.0,0.0,0.0)
     var vettore_correttivo2=arrayOf(0.0,0.0,0.0)
+    var Id_Utente:String?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grafici)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val color=rgb(155,17,30)
@@ -408,6 +410,7 @@ class Grafici: AppCompatActivity()
                 next = Intent(this, Function1::class.java)
             else
                     next = Intent(this, MainActivity::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer= MediaPlayer.create(this,R.raw.return_graph_sound)
             mediaplayer?.start()

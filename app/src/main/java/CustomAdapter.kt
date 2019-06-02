@@ -67,6 +67,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             val stream=ByteArrayOutputStream()
             user2.immagine?.compress(Bitmap.CompressFormat.JPEG,45,stream)
             val image=stream.toByteArray()
+            next.putExtra("Id_Utente",user2.Id_Utente)
             next.putExtra("immagine",image)
             next.putExtra("titolo_immagine",user2.titolo2)
             startActivity(user2.contesto,next,opzioni)

@@ -29,6 +29,7 @@ import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
 {
+    var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE=0
     private var mediaplayer:MediaPlayer?=null
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         for(i in 0..8)
         {
             paths[i]=prefisso+suffissi[i]
@@ -53,18 +55,18 @@ class MainActivity : AppCompatActivity()
         val toogle=ActionBarDrawerToggle(this,drawer,toolbar,0,0)
         drawer.addDrawerListener(toogle)
         toogle.syncState()
-        storia.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function8::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
-        storia_per_immagini.setOnClickListener{if(checkPermission()) { val next = Intent(this, Function9::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
-        storia_vocale.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function10::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
-        calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        equanzioni_differenziali.setOnClickListener {  val next = Intent(this, Function4::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        numeri_complessi.setOnClickListener {  val next = Intent(this, Function6::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        plot1.setOnClickListener {  val next = Intent(this, Function1::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start() }
-        plot2.setOnClickListener {  val next = Intent(this, Function3::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
-        plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
-        profilo.setOnClickListener {val next = Intent(this, Profilo_Utente::class.java);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}
+        storia.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function8::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        storia_per_immagini.setOnClickListener{if(checkPermission()) { val next = Intent(this, Function9::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        storia_vocale.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function10::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        equanzioni_differenziali.setOnClickListener {  val next = Intent(this, Function4::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        numeri_complessi.setOnClickListener {  val next = Intent(this, Function6::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        plot1.setOnClickListener {  val next = Intent(this, Function1::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start() }
+        plot2.setOnClickListener {  val next = Intent(this, Function3::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
+        plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
+        profilo.setOnClickListener {val next = Intent(this, Profilo_Utente::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

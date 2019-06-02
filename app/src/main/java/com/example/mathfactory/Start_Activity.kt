@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_start_.*
 class Start_Activity : AppCompatActivity()
 {
+    var Id_Utente:String=""
     lateinit var item_spinner:Array<String>
     lateinit var adapter_spinner:ArrayAdapter<Any>
     val PERMISSION_REQUEST_CODE=0
@@ -66,14 +67,14 @@ class Start_Activity : AppCompatActivity()
         checkThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
-        item_spinner=arrayOf("Not specified","Male","Female")
+        item_spinner=arrayOf("None","Male","Female")
         adapter_spinner=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,item_spinner)
         spinner=findViewById(R.id.spinner)as Spinner
         spinner?.adapter=adapter_spinner
         button24.setOnClickListener {settaggio(1);controllo=false}
         button25.setOnClickListener {settaggio(2);controllo=true}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {if(checkPermission()){if((controllo==true)&&(aggiungi_utente())){val next = Intent(this, MainActivity::class.java);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}}else requestPermission()}
+        button28.setOnClickListener {if(checkPermission()){if((controllo==true)&&(aggiungi_utente())){val next = Intent(this, MainActivity::class.java);next.putExtra("Id_Utente",Id_Utente);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}}else requestPermission()}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -172,7 +173,7 @@ class Start_Activity : AppCompatActivity()
     }
     private fun aggiungi_utente():Boolean
     {
-      if((editText14.text.toString()=="")||(editText15.text.toString()=="")||(editText16.text.toString()==""))
+      if((editText14.text.toString()=="")||(editText15.text.toString()=="")||(editText16.text.toString()=="")||(selezione_spinner=="None"))
       {
           Toast.makeText(this, "Warning: Data Missing!", Toast.LENGTH_LONG).show()
           mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
@@ -192,9 +193,9 @@ class Start_Activity : AppCompatActivity()
               val controllo_connessione=Check_Network()
               if(controllo_connessione.Network_Disponibile(this))
               {
-                  val dati = arrayOf<String>(editText15.text.toString(), editText14.text.toString(), "Not specified", "Not specified", selezione_spinner, "Not specified", "Not specified")
+                  val dati = arrayOf<String>(editText15.text.toString(), editText14.text.toString(), "", "", selezione_spinner, "", "")
                   val referenza_database = FirebaseDatabase.getInstance().getReference("Users")
-                  val Id_Utente = referenza_database.push().key.toString()
+                  Id_Utente = referenza_database.push().key.toString()
                   val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
                   referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
                       Toast.makeText(this, "A new user has been\nsuccessfully added!", Toast.LENGTH_LONG).show()

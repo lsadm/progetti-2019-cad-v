@@ -50,11 +50,13 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var text:String?=null
     var counter:Int?=null
     var indice:Int?=1
+    var Id_Utente:String?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function8)
         nav_view8.setNavigationItemSelectedListener(this)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val recyclerView=findViewById(R.id.recyclerView)as RecyclerView
         recyclerView.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)
         val users=ArrayList<User>()
@@ -170,6 +172,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if(id==R.id.action_home)
         {
             val next= Intent(this,MainActivity::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound)
             mediaplayer?.start()
@@ -182,6 +185,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         val id = item.getItemId()
         if (id == R.id.action_four) {
             val next = Intent(this, Function1::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -189,6 +193,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_five) {
             val next = Intent(this, Function2::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -196,6 +201,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_six) {
             val next = Intent(this, Function3::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -203,6 +209,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_seven) {
             val next = Intent(this, Function4::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -210,6 +217,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_eight) {
             val next = Intent(this, Function5::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -217,6 +225,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_nine) {
             val next = Intent(this, Function6::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -224,6 +233,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_ten) {
             val next = Intent(this, Function7::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -231,6 +241,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.Profile) {
             val next = Intent(this, Profilo_Utente::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -244,6 +255,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.note_immagini) {
             val next = Intent(this, Function9::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -251,6 +263,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.note_audio) {
             val next = Intent(this, Function10::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -258,6 +271,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.calculator) {
             val next = Intent(this, Function0::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()

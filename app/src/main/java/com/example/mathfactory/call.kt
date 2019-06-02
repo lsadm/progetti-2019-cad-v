@@ -15,12 +15,14 @@ import java.io.ByteArrayInputStream
 class call : AppCompatActivity()
 {
     var mediaplayer:MediaPlayer?=null
+    var Id_Utente:String?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val immagine=getIntent().getExtras().getByteArray("immagine")
         val titolo_immagine=getIntent().getExtras().getString("titolo_immagine")
         val stream= ByteArrayInputStream(immagine)
@@ -51,6 +53,7 @@ class call : AppCompatActivity()
         if (id == R.id.action_home) {
             val next: Intent
             next = Intent(this, Function9::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer= MediaPlayer.create(this,R.raw.return_graph_sound)
             mediaplayer?.start()

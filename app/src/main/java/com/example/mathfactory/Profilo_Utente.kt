@@ -27,6 +27,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.mathfactory.com.example.mathfactory.Utente
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_profilo__utente.*
 import java.io.File
 import java.io.IOException
@@ -34,15 +36,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var referenza_database:DatabaseReference
+    var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE_2=0
     var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
+    var output_reference:String?=null
+    var file_reference:File?=null
     private var mediaplayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
+        output_reference=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Reference.txt"
+        file_reference=File(output_reference)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
+        if(Id_Utente=="")
+            file_reference?.readText(Charsets.UTF_8)
+        else
+            file_reference?.writeText(Id_Utente,Charsets.UTF_8)
+        leggi_utente()
+        editText18.inputType=InputType.TYPE_NULL
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -82,6 +97,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_home) {
             val next = Intent(this, MainActivity::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
             mediaplayer?.start()
@@ -94,6 +110,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val id = item.getItemId()
         if (id == R.id.action_four) {
             val next = Intent(this, Function1::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -101,6 +118,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_five) {
             val next = Intent(this, Function2::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -108,6 +126,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_six) {
             val next = Intent(this, Function3::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -115,6 +134,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_seven) {
             val next = Intent(this, Function4::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -122,6 +142,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_eight) {
             val next = Intent(this, Function5::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -129,6 +150,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_nine) {
             val next = Intent(this, Function6::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -136,6 +158,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.action_ten) {
             val next = Intent(this, Function7::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -145,6 +168,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             if(checkPermission2())
             {
                 val next = Intent(this, Function8::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -156,6 +180,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             if(checkPermission2())
             {
                 val next = Intent(this, Function9::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -167,6 +192,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             if(checkPermission2())
             {
                 val next = Intent(this, Function10::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -183,6 +209,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (id == R.id.calculator) {
             val next = Intent(this, Function0::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
             mediaplayer?.start()
@@ -254,5 +281,50 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private fun requestPermission2()
     {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE_2)
+    }
+    private fun leggi_utente()
+    {
+        var controllo=true
+        referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+        referenza_database.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError){}
+            override fun onDataChange(p0: DataSnapshot) {
+              if(p0.exists())
+              {
+               for(record in p0.children)
+               {
+                   if(controllo)
+                   {
+                       val utente = record.getValue(Utente::class.java)
+                       if(utente?.chiave==Id_Utente)
+                       {
+                           setta_parametri(utente)
+                           controllo=false
+                       }
+                   }
+               }
+              }
+            }
+        })
+    }
+    private fun setta_parametri(utente:Utente?)
+    {
+        editText20.setText(utente?.username)
+        editText20.setSelection(editText20.text.lastIndex+1)
+        editText26.setText(utente?.password)
+        editText26.setSelection(editText26.text.lastIndex+1)
+        editText25.setText(utente?.name)
+        editText25.setSelection(editText25.text.lastIndex+1)
+        editText24.setText(utente?.surname)
+        editText24.setSelection(editText24.text.lastIndex+1)
+        editText18.setText(utente?.gender)
+        editText22.setText(utente?.birthday)
+        editText22.setSelection(editText22.text.lastIndex+1)
+        editText21.setText(utente?.profession)
+        editText21.setSelection(editText21.text.lastIndex+1)
+        if(utente?.gender=="Male")
+            imageView.setBackgroundResource(R.mipmap.imm12)
+        else
+            imageView.setBackgroundResource(R.mipmap.imm36)
     }
 }

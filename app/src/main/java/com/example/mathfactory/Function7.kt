@@ -65,11 +65,13 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var tauv2=0.0
     var realv=0.0
     var immv=0.0
+    var Id_Utente:String?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function7)
         nav_view7.setNavigationItemSelectedListener(this)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -91,7 +93,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button40.setOnClickListener {if(!turno){identifier=27;set_color(identifier)}else{identifier2=27;set_color(identifier2)}}
         button20.setOnClickListener {if(!turno){set_color(28);if(input_output())textView30.setTextColor(Color.RED)else textView30.setTextColor(Color.BLUE);if(identifier!=0)turno=true}}
         button22.setOnClickListener {if(turno){set_color(29);if(input_output_bis())textView23.setTextColor(Color.RED)else textView23.setTextColor(Color.BLUE);if(identifier2!=0)turno=false} }
-        button17.setOnClickListener {parametri_fondamentali();val next= Intent(this,Grafici::class.java);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("T", T);next.putExtra("rit", rit);next.putExtra("o", o);next.putExtra("real", real);next.putExtra("f1", f1);next.putExtra("f2", f2);next.putExtra("tau1", tau1);next.putExtra("tau2", tau2);next.putExtra("imm", imm);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("T2", T2);next.putExtra("rit2", rit2);next.putExtra("o2", o2);next.putExtra("real2", real2);next.putExtra("f1_2", f1_2);next.putExtra("f2_2", f2_2);next.putExtra("tau1_2", tau1_2);next.putExtra("tau2_2", tau2_2);next.putExtra("imm2", imm2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
+        button17.setOnClickListener {parametri_fondamentali();val next= Intent(this,Grafici::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("T", T);next.putExtra("rit", rit);next.putExtra("o", o);next.putExtra("real", real);next.putExtra("f1", f1);next.putExtra("f2", f2);next.putExtra("tau1", tau1);next.putExtra("tau2", tau2);next.putExtra("imm", imm);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("T2", T2);next.putExtra("rit2", rit2);next.putExtra("o2", o2);next.putExtra("real2", real2);next.putExtra("f1_2", f1_2);next.putExtra("f2_2", f2_2);next.putExtra("tau1_2", tau1_2);next.putExtra("tau2_2", tau2_2);next.putExtra("imm2", imm2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -120,6 +122,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if(id==R.id.action_home)
         {
             val next= Intent(this,MainActivity::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_home_sound)
             mediaplayer?.start()
@@ -132,6 +135,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         val id = item.getItemId()
         if (id == R.id.action_four) {
             val next = Intent(this, Function1::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -139,6 +143,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_five) {
             val next = Intent(this, Function2::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -146,6 +151,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_six) {
             val next = Intent(this, Function3::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -153,6 +159,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_seven) {
             val next = Intent(this, Function4::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -160,6 +167,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_eight) {
             val next = Intent(this, Function5::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -167,6 +175,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.action_nine) {
             val next = Intent(this, Function6::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -182,6 +191,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(checkPermission())
             {
                 val next = Intent(this, Function8::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -194,6 +204,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(checkPermission())
             {
                 val next = Intent(this, Function9::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -206,6 +217,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             if(checkPermission())
             {
                 val next = Intent(this, Function10::class.java)
+                next.putExtra("Id_Utente",Id_Utente)
                 startActivity(next)
                 mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                 mediaplayer?.start()
@@ -216,6 +228,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.Profile) {
             val next = Intent(this, Profilo_Utente::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer=MediaPlayer.create(this,R.raw.move_sound)
             mediaplayer?.start()
@@ -223,6 +236,7 @@ class Function7 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         if (id == R.id.calculator) {
             val next = Intent(this, Function0::class.java)
+            next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             return true
         }
