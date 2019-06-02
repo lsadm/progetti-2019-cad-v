@@ -116,17 +116,16 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
         class TimerThread constructor(val handler: Handler):Thread()
         {
-            var contatore:Int=0
+            var contatore:Int?=null
             override fun run()
             {
                 contatore=0
                 while(!registra_ferma)
                 {
                     notify_message("Recordering...\nDuration: "+contatore.toString()+" s")
-                    contatore++
                     sleep(1000)
+                    contatore=contatore?.plus(1)
                 }
-                sleep(500)
             }
             fun notify_message(valore:String)
             {

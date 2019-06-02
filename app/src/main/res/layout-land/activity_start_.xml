@@ -121,7 +121,6 @@
                 android:id="@+id/spinner"
                 android:layout_width="222dp"
                 android:layout_height="50dp"
-                android:entries="@array/maschio_femmina"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@+id/editText14"
                 app:layout_constraintStart_toEndOf="@+id/textView49" android:layout_marginTop="8dp"

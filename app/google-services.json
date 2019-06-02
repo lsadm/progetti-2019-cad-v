@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "399600060615-trscqqej6469mj76mqkgbkdquma5uopp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mathfactory",
+            "certificate_hash": "2dd52ff245083cb4c576c91ec416888f2dcad1bf"
+          }
+        },
+        {
           "client_id": "399600060615-l46o0rmkqup58lenltr9bgta8pev78hc.apps.googleusercontent.com",
           "client_type": 3
         }

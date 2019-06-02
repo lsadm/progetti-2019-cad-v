@@ -41,7 +41,7 @@
             app:layout_constraintStart_toStartOf="@+id/textView36"
             app:layout_constraintTop_toBottomOf="@+id/textView41"/>
     <TextView
-            android:text="@string/tratteggio"
+            android:text="@string/not_specified"
             android:layout_width="159dp"
             android:layout_height="36dp" android:id="@+id/textView51"
             android:textSize="24sp" android:textStyle="italic" android:textColor="@color/silver"

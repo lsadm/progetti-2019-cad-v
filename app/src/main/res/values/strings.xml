@@ -163,7 +163,7 @@
     <string name="accesso">Access</string>
     <string name="registrazione">Registration</string>
     <string name="back">Go Back</string>
-    <string name="tratteggio">-----------------</string>
+    <string name="not_specified">Not specified</string>
     <string name="domanda">Are you\nsure you\nwant to\nexit\nMath\nView?</string>
     <string name="domanda2">Are you sure\nyou want to\nexit Math\nView?</string>
     <string name="si">Yes</string>
@@ -173,11 +173,6 @@
     <string name="presentazione10">Audio Note</string>
     <string name="photoView">PhotoView</string>
     <string name="photoViewLand">\n\nPhotoView</string>
-    <string-array name="maschio_femmina">
-        <item>-----------------</item>
-        <item>Male</item>
-        <item>Female</item>
-    </string-array>
     <string name="note">Note Functions</string>
     <string name="note_testuali">Text Note</string>
     <string name="note_immagini">Image Note</string>

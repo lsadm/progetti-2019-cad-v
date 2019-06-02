@@ -54,7 +54,7 @@
             android:textSize="24sp" android:textStyle="italic" android:textColor="@color/silver"
             android:textAlignment="center"
             app:layout_constraintStart_toEndOf="@+id/textView40"
-            app:layout_constraintTop_toBottomOf="@+id/editText24" android:text="@string/tratteggio"/>
+            app:layout_constraintTop_toBottomOf="@+id/editText24" android:text="@string/not_specified"/>
     <TextView
             android:text="@string/cognome"
             android:layout_width="112dp"
