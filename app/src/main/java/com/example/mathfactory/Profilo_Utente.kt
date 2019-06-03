@@ -42,22 +42,14 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
-    var output_reference:String?=null
-    var file_reference:File?=null
     private var mediaplayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
-        output_reference=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Reference.txt"
-        file_reference=File(output_reference)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
-        if(Id_Utente=="")
-            file_reference?.readText(Charsets.UTF_8)
-        else
-            file_reference?.writeText(Id_Utente,Charsets.UTF_8)
         leggi_utente()
-        editText18.inputType=InputType.TYPE_NULL
+        editText18.setEnabled(false)
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -325,6 +317,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         if(utente?.gender=="Male")
             imageView.setBackgroundResource(R.mipmap.imm12)
         else
-            imageView.setBackgroundResource(R.mipmap.imm36)
+            if(utente?.gender=="Female")
+               imageView.setBackgroundResource(R.mipmap.imm36)
     }
 }

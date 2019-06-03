@@ -74,7 +74,7 @@ class Start_Activity : AppCompatActivity()
         button24.setOnClickListener {settaggio(1);controllo=false}
         button25.setOnClickListener {settaggio(2);controllo=true}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {if(checkPermission()){if((controllo==true)&&(aggiungi_utente())){val next = Intent(this, MainActivity::class.java);next.putExtra("Id_Utente",Id_Utente);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}}else requestPermission()}
+        button28.setOnClickListener {if(checkPermission()){if(((controllo==true)&&(aggiungi_utente()))||((controllo==false)&&(verifica_utente()))){val next = Intent(this, MainActivity::class.java);next.putExtra("Id_Utente",Id_Utente);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}}else requestPermission()}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -140,8 +140,8 @@ class Start_Activity : AppCompatActivity()
             } else
                 if (id == 2)
                 {
-                    editText15.hint="Choose username"
-                    editText14.hint="Choose password"
+                    editText15.hint="Choose username (Min 4 chars)"
+                    editText14.hint="Choose password (Min 8 chars)"
                     textView47.visibility = View.VISIBLE
                     textView49.visibility = View.VISIBLE
                     editText16.visibility = View.VISIBLE
@@ -181,6 +181,14 @@ class Start_Activity : AppCompatActivity()
           return false
       }
         else
+          if((editText15.text.toString().length<4)||(editText14.text.toString().length<8))
+          {
+              Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
+              mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+              mediaplayer?.start()
+              return false
+          }
+        else
           if(editText14.text.toString()!=editText16.text.toString())
           {
               Toast.makeText(this, "Warning: Unmatched passwords!", Toast.LENGTH_LONG).show()
@@ -204,12 +212,16 @@ class Start_Activity : AppCompatActivity()
               }
               else
               {
-                  Toast.makeText(this, "Ops... Connection is not available!", Toast.LENGTH_LONG).show()
+                  Toast.makeText(this, "Warning: Internet is not reachable!", Toast.LENGTH_LONG).show()
                   mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                   mediaplayer?.start()
                   return false
               }
           }
+    }
+    private fun verifica_utente():Boolean
+    {
+        return true
     }
     private fun checkPermission():Boolean
     {

@@ -45,7 +45,7 @@
             android:layout_height="36dp" android:id="@+id/editText18"
             android:textSize="14sp" android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/textView40"
-            app:layout_constraintTop_toBottomOf="@+id/editText24"/>
+            app:layout_constraintTop_toBottomOf="@+id/editText24" android:inputType="textPersonName"/>
     <TextView
             android:text="@string/cognome"
             android:layout_width="112dp"
@@ -65,8 +65,10 @@
     <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:background="@mipmap/imm37"
             android:id="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView34" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView34"
+            app:layout_constraintStart_toStartOf="parent"
     />
     <TextView
             android:text="@string/nome"
