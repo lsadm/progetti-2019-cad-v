@@ -42,7 +42,7 @@
                 android:textSize="18sp"
                 android:textStyle="italic"
                 android:layout_marginStart="64dp"
-                app:layout_constraintStart_toStartOf="parent" android:text="@string/messaggio"
+                app:layout_constraintStart_toStartOf="parent"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@+id/textView72"/>
         <Button

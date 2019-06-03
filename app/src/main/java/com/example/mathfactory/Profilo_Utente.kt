@@ -27,6 +27,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.mathfactory.com.example.mathfactory.Check_Network
 import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_profilo__utente.*
@@ -65,7 +66,9 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {setta_uscita(true)}
         button50.setOnClickListener {setta_uscita(false)}
+        button23.setOnClickListener {modifica_utente()}
         button49.setOnClickListener {val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()  }
+        button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -319,5 +322,51 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         else
             if(utente?.gender=="Female")
                imageView.setBackgroundResource(R.mipmap.imm36)
+    }
+    private fun modifica_utente()
+    {
+        if((editText20.text.toString()=="")||(editText26.text.toString()==""))
+        {
+            Toast.makeText(this, "Warning: Username or password\nmissing!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            mediaplayer?.start()
+            return
+        }
+        else
+            if((editText20.text.toString().length<4)||(editText26.text.toString().length<8))
+            {
+                Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+                return
+            }
+            else
+                {
+                    val controllo_connessione= Check_Network()
+                    if(controllo_connessione.Network_Disponibile(this))
+                    {
+                        val dati = arrayOf(editText20.text.toString(), editText26.text.toString(),editText25.text.toString(),editText24.text.toString(),editText18.text.toString(),editText22.text.toString(),editText21.text.toString())
+                        referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+                        val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
+                        referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
+                            if(editText18.text.toString()=="Male")
+                                imageView.setBackgroundResource(R.mipmap.imm12)
+                            else
+                                if(editText18.text.toString()=="Female")
+                                    imageView.setBackgroundResource(R.mipmap.imm36)
+                            Toast.makeText(this, "The profile has been\nsuccessfully modified!", Toast.LENGTH_LONG).show()
+                            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                            mediaplayer?.start()
+                        }
+                        return
+                    }
+                    else
+                    {
+                        Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
+                        mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                        mediaplayer?.start()
+                        return
+                    }
+                }
     }
 }

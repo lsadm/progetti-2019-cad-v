@@ -110,7 +110,6 @@
     <string name="calculator">Calculator</string>
     <string name="Basic">Basic Functions</string>
     <string name="welcome">Welcome in MathView!</string>
-    <string name="messaggio2">Scroll from left to right to access to the Collection!</string>
     <string name="nascondi">Hide</string>
     <string name="clock">Clock</string>
     <string name="presentazione7">Signal Plotting</string>
@@ -142,7 +141,6 @@
     <string name="ellisse">Ellipses</string>
     <string name="iperbole">Hyperboles</string>
     <string name="view_extra">Build Graph:</string>
-    <string name="messaggio">Scroll from left to right to see more!</string>
     <string name="titolo2">Information</string>
     <string name="testo1">MathView is a free and basic math</string>
     <string name="testo2">software, born to offer you an</string>
@@ -163,8 +161,7 @@
     <string name="accesso">Access</string>
     <string name="registrazione">Registration</string>
     <string name="back">Go Back</string>
-    <string name="domanda">Are you\nsure you\nwant to\nexit\nMath\nView?</string>
-    <string name="domanda2">Are you sure\nyou want to\nexit Math\nView?</string>
+    <string name="domanda">Are you sure?</string>
     <string name="si">Yes</string>
     <string name="no">No</string>
     <string name="presentazione8">Text Note</string>

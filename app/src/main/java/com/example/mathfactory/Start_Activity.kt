@@ -175,7 +175,7 @@ class Start_Activity : AppCompatActivity()
     {
       if((editText14.text.toString()=="")||(editText15.text.toString()=="")||(editText16.text.toString()=="")||(selezione_spinner=="None"))
       {
-          Toast.makeText(this, "Warning: Data Missing!", Toast.LENGTH_LONG).show()
+          Toast.makeText(this, "Warning: Data missing!", Toast.LENGTH_LONG).show()
           mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
           mediaplayer?.start()
           return false
@@ -206,13 +206,13 @@ class Start_Activity : AppCompatActivity()
                   Id_Utente = referenza_database.push().key.toString()
                   val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
                   referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
-                      Toast.makeText(this, "A new user has been\nsuccessfully added!", Toast.LENGTH_LONG).show()
+                      Toast.makeText(this,editText15.text.toString()+"\nhas been successfully added!", Toast.LENGTH_LONG).show()
                   }
                   return true
               }
               else
               {
-                  Toast.makeText(this, "Warning: Internet is not reachable!", Toast.LENGTH_LONG).show()
+                  Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
                   mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                   mediaplayer?.start()
                   return false
