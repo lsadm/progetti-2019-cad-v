@@ -16,6 +16,7 @@ class call : AppCompatActivity()
 {
     var mediaplayer:MediaPlayer?=null
     var Id_Utente:String?=null
+    var controllo:Boolean?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -25,10 +26,19 @@ class call : AppCompatActivity()
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val immagine=getIntent().getExtras().getByteArray("immagine")
         val titolo_immagine=getIntent().getExtras().getString("titolo_immagine")
-        val stream= ByteArrayInputStream(immagine)
-        val imm_bitmap= BitmapFactory.decodeStream(stream)
-        foto.setImageBitmap(imm_bitmap)
-        Toast.makeText(this, titolo_immagine+" preview!", Toast.LENGTH_LONG).show()
+        controllo=getIntent().getExtras().getBoolean("controllo")
+        if(immagine!=null)
+        {
+            val stream = ByteArrayInputStream(immagine)
+            val imm_bitmap = BitmapFactory.decodeStream(stream)
+            foto.setImageBitmap(imm_bitmap)
+            Toast.makeText(this, titolo_immagine + " preview!", Toast.LENGTH_LONG).show()
+        }
+        else
+        {
+            foto.setBackgroundResource(R.mipmap.imm40_foreground)
+            Toast.makeText(this, titolo_immagine+" not\nfound for preview!", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,7 +62,13 @@ class call : AppCompatActivity()
         }
         if (id == R.id.action_home) {
             val next: Intent
-            next = Intent(this, Function9::class.java)
+            if(controllo==true)
+                next = Intent(this, Function9::class.java)
+            else
+                if(controllo==false)
+                    next= Intent(this,Profilo_Utente::class.java)
+                else
+                    next= Intent(this,MainActivity::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
             mediaplayer= MediaPlayer.create(this,R.raw.return_graph_sound)

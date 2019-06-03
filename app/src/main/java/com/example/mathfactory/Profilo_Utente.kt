@@ -14,6 +14,8 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Message
 import android.provider.MediaStore
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
@@ -30,15 +32,22 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.example.mathfactory.com.example.mathfactory.Check_Network
 import com.example.mathfactory.com.example.mathfactory.Utente
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_profilo__utente.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var referenza_database:DatabaseReference
+    lateinit var outputStream:ByteArrayOutputStream
+    var array_di_bytes:ByteArray?=null
     var utente:Utente?=null
     var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE_2=0
@@ -66,7 +75,36 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             button26.setBackgroundResource(R.mipmap.imm13)
         else
             button26.setBackgroundResource(R.mipmap.imm15)
-        button26.setOnClickListener{if(checkPermission()){ button26.setBackgroundResource(R.mipmap.imm13);go_to_camera()}else requestPermission()}
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                button26.setBackgroundResource(R.mipmap.imm13)
+            }
+        }
+        class CheckThread constructor(val handler: Handler):Thread()
+        {
+            override fun run()
+            {
+                while(!checkPermission())
+                    sleep(100)
+                notify_message("")
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val checkThread=CheckThread(myHandler)
+        checkThread.start()
+        button26.setOnClickListener{if(checkPermission())go_to_camera()else requestPermission()}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
@@ -74,6 +112,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
+        imageView.setOnClickListener { val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -225,7 +264,12 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
            CAMERA_REQUEST_CODE->{
                if(resultCode==Activity.RESULT_OK&&data!=null)
                {
-                   imageView.setImageBitmap(data.extras.get("data") as Bitmap)
+                   outputStream= ByteArrayOutputStream()
+                   val imm=data.extras.get("data")as Bitmap
+                   imm.compress(Bitmap.CompressFormat.JPEG,45,outputStream)
+                   array_di_bytes=outputStream.toByteArray()
+                   imageView.setBackgroundResource(0)
+                   imageView.setImageBitmap(imm)
                    Toast.makeText(this, "The photo has been\nsuccessfully uploaded!", Toast.LENGTH_LONG).show()
                    mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                    mediaplayer?.start()
