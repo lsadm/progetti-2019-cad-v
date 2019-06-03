@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color.rgb
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
@@ -38,11 +39,14 @@ import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var referenza_database:DatabaseReference
+    var utente:Utente?=null
     var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE_2=0
     var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
+    var gestione_uscita_cancellazione:Boolean=true
+    var uscita_cancellazione:Boolean?=null
     private var mediaplayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +68,12 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             button26.setBackgroundResource(R.mipmap.imm15)
         button26.setOnClickListener{if(checkPermission()){ button26.setBackgroundResource(R.mipmap.imm13);go_to_camera()}else requestPermission()}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
-        button29.setOnClickListener {setta_uscita(true)}
+        button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
         button23.setOnClickListener {modifica_utente()}
-        button49.setOnClickListener {val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()  }
+        button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
+        button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -260,12 +265,20 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             textView52.visibility=View.VISIBLE
             button50.visibility=View.VISIBLE
             button49.visibility=View.VISIBLE
+            gestione_uscita_cancellazione=false
         }
         else
         {
             textView52.visibility=View.INVISIBLE
             button50.visibility=View.INVISIBLE
             button49.visibility=View.INVISIBLE
+            gestione_uscita_cancellazione=true
+            if(uscita_cancellazione==true)
+                button55.setTextColor(rgb(155,17,30))
+            else
+                if(uscita_cancellazione==false)
+                    button29.setBackgroundResource(R.mipmap.imm16)
+            uscita_cancellazione=null
         }
     }
     private fun checkPermission2():Boolean
@@ -290,7 +303,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                {
                    if(controllo)
                    {
-                       val utente = record.getValue(Utente::class.java)
+                       utente = record.getValue(Utente::class.java)
                        if(utente?.chiave==Id_Utente)
                        {
                            setta_parametri(utente)
@@ -368,5 +381,23 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                         return
                     }
                 }
+    }
+    private fun delete_account():Boolean
+    {
+        val controllo_connessione= Check_Network()
+        if(controllo_connessione.Network_Disponibile(this))
+        {
+            referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+            referenza_database.child(Id_Utente).removeValue()
+            Toast.makeText(this, utente?.username + "\nhas been successfully deleted!", Toast.LENGTH_LONG).show()
+            return true
+        }
+        else
+        {
+            Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            mediaplayer?.start()
+            return false
+        }
     }
 }

@@ -173,7 +173,7 @@
     <string name="note_testuali">Text Note</string>
     <string name="note_immagini">Image Note</string>
     <string name="note_audio">Audio Note</string>
-    <string name="uno">Profile</string>
+    <string name="uno">Account</string>
     <string name="due">Calculator</string>
     <string name="tre">Random Numbers</string>
     <string name="quattro">Linear Equations</string>
@@ -185,5 +185,6 @@
     <string name="dieci">Text Note</string>
     <string name="undici">Audio Note</string>
     <string name="dodici">Image Note</string>
+    <string name="delete_account">Delete\nAccount</string>
 </resources>
 
