@@ -3,6 +3,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -22,11 +23,12 @@ import kotlinx.android.synthetic.main.activity_start_.*
 var controllo_generale2:Boolean?=null
 class Start_Activity : AppCompatActivity()
 {
+    var controllo_barra=false
     var utente:Utente?=null
     lateinit var referenza_database:DatabaseReference
     var Id_Utente:String=""
     lateinit var item_spinner:Array<String>
-    lateinit var adapter_spinner:ArrayAdapter<Any>
+    lateinit var adapter_spinner:SpinnerAdapter
     val PERMISSION_REQUEST_CODE=0
     var spinner: Spinner?=null
     var selezione_spinner:String=""
@@ -42,7 +44,10 @@ class Start_Activity : AppCompatActivity()
             {
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
-                button28.performClick()
+                if(valore=="visible")
+                    progress_access.visibility=View.VISIBLE
+                    else
+                        button28.performClick()
             }
         }
         class CheckThread constructor(val handler: Handler):Thread()
@@ -66,8 +71,38 @@ class Start_Activity : AppCompatActivity()
                 handler.sendMessage(messaggio)
             }
         }
+        class ProgressBarThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                while(!controllo_barra)
+                {
+                    sleep(500)
+                }
+                notify_message("visible")
+                while(true)
+                {
+                    while(progress_access.progress<100)
+                    {
+                       progress_access.incrementProgressBy(1)
+                       sleep(10)
+                    }
+                    progress_access.progress=0
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
         val myHandler=MyHandler()
         val checkThread=CheckThread(myHandler)
+        val progressThread=ProgressBarThread(myHandler)
+        progressThread.start()
         checkThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
@@ -184,7 +219,7 @@ class Start_Activity : AppCompatActivity()
           mediaplayer?.start()
       }
         else
-          if((editText15.text.toString().length<4)||(editText14.text.toString().length<8))
+          if((editText14.text.toString().length<8)||(editText14.text.toString()==""))
           {
               Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
               mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
@@ -204,17 +239,18 @@ class Start_Activity : AppCompatActivity()
               {
                   val dati = arrayOf<String>(editText15.text.toString(), editText14.text.toString(), "", "", selezione_spinner, "", "")
                   referenza_database = FirebaseDatabase.getInstance().getReference("Users")
-                  Id_Utente = referenza_database.push().key.toString()
-                  val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
-                  referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
-                      Toast.makeText(this,editText15.text.toString()+"\nhas been successfully added!", Toast.LENGTH_LONG).show()
-                      val next = Intent(this, MainActivity::class.java)
-                      next.putExtra("Id_Utente",Id_Utente)
-                      settaggio(0)
-                      startActivity(next)
-                      mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-                      mediaplayer?.start()
-                  }
+                  controllo_barra=true
+                      Id_Utente = referenza_database.push().key.toString()
+                      utente = Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
+                      referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
+                          Toast.makeText(this, editText15.text.toString() + "\nhas been successfully added!", Toast.LENGTH_LONG).show()
+                          val next = Intent(this, MainActivity::class.java)
+                          next.putExtra("Id_Utente", Id_Utente)
+                          settaggio(0)
+                          startActivity(next)
+                          mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                          mediaplayer?.start()
+                      }
               }
               else
               {
@@ -232,6 +268,7 @@ class Start_Activity : AppCompatActivity()
             mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
             mediaplayer?.start()
         }
+        else
         if((editText15.text.toString().length<4)||(editText14.text.toString().length<8))
         {
             Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
@@ -245,6 +282,7 @@ class Start_Activity : AppCompatActivity()
             {
                 var controllo=true
                 referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+                controllo_barra=true
                 referenza_database.addValueEventListener(object:ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {}
                     override fun onDataChange(p0: DataSnapshot) {

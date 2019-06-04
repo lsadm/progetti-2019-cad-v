@@ -3,6 +3,7 @@ import android.Manifest
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -24,12 +25,8 @@ import android.support.v4.content.FileProvider
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.text.InputType
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import com.example.mathfactory.com.example.mathfactory.Check_Network
 import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.android.gms.tasks.OnFailureListener
@@ -75,13 +72,16 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             button26.setBackgroundResource(R.mipmap.imm13)
         else
             button26.setBackgroundResource(R.mipmap.imm15)
-        class MyHandler: Handler()
+        class MyHandler constructor(val contesto:Context): Handler()
         {
             override fun handleMessage(msg: Message)
             {
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
-                button26.setBackgroundResource(R.mipmap.imm13)
+                if(valore=="check_connection")
+                    Toast.makeText(contesto, "                     Warning!\nCheck your Internet's connection.", Toast.LENGTH_LONG).show()
+                else
+                    button26.setBackgroundResource(R.mipmap.imm13)
             }
         }
         class CheckThread constructor(val handler: Handler):Thread()
@@ -101,9 +101,38 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 handler.sendMessage(messaggio)
             }
         }
-        val myHandler=MyHandler()
+        class ConnectionThread constructor(val handler:Handler,val contesto:Context):Thread()
+        {
+            val controllo_connessione = Check_Network()
+            override fun run()
+            {
+                while(true)
+                {
+                    if(!controllo_connessione.Network_Disponibile(contesto)) {
+                        notify_message("check_connection")
+                        sleep(500)
+                        mediaplayer = MediaPlayer.create(contesto, R.raw.error_sound)
+                        mediaplayer?.start()
+                        sleep(10000)
+                    }
+                    else
+                        sleep(10000)
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler(this)
         val checkThread=CheckThread(myHandler)
+        val connectionThread=ConnectionThread(myHandler,this)
         checkThread.start()
+        connectionThread.start()
         button26.setOnClickListener{if(checkPermission())go_to_camera()else requestPermission()}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
