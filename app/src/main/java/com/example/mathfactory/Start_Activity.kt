@@ -1,4 +1,5 @@
 package com.example.mathfactory
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -16,10 +17,13 @@ import android.view.View
 import android.widget.*
 import com.example.mathfactory.com.example.mathfactory.Check_Network
 import com.example.mathfactory.com.example.mathfactory.Utente
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_start_.*
+var controllo_generale2:Boolean?=null
 class Start_Activity : AppCompatActivity()
 {
+    var utente:Utente?=null
+    lateinit var referenza_database:DatabaseReference
     var Id_Utente:String=""
     lateinit var item_spinner:Array<String>
     lateinit var adapter_spinner:ArrayAdapter<Any>
@@ -74,7 +78,7 @@ class Start_Activity : AppCompatActivity()
         button24.setOnClickListener {settaggio(1);controllo=false}
         button25.setOnClickListener {settaggio(2);controllo=true}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {if(checkPermission()){if(((controllo==true)&&(aggiungi_utente()))||((controllo==false)&&(verifica_utente()))){val next = Intent(this, MainActivity::class.java);next.putExtra("Id_Utente",Id_Utente);settaggio(0);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}}else requestPermission()}
+        button28.setOnClickListener {controllo_generale2=true;if(checkPermission()){if(controllo==true)aggiungi_utente()else if(controllo==false)verifica_utente(this)}else requestPermission()}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -171,14 +175,13 @@ class Start_Activity : AppCompatActivity()
             spinner?.visibility = View.INVISIBLE
         }
     }
-    private fun aggiungi_utente():Boolean
+    private fun aggiungi_utente()
     {
       if((editText14.text.toString()=="")||(editText15.text.toString()=="")||(editText16.text.toString()=="")||(selezione_spinner=="None"))
       {
           Toast.makeText(this, "Warning: Data missing!", Toast.LENGTH_LONG).show()
           mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
           mediaplayer?.start()
-          return false
       }
         else
           if((editText15.text.toString().length<4)||(editText14.text.toString().length<8))
@@ -186,7 +189,6 @@ class Start_Activity : AppCompatActivity()
               Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
               mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
               mediaplayer?.start()
-              return false
           }
         else
           if(editText14.text.toString()!=editText16.text.toString())
@@ -194,7 +196,6 @@ class Start_Activity : AppCompatActivity()
               Toast.makeText(this, "Warning: Unmatched passwords!", Toast.LENGTH_LONG).show()
               mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
               mediaplayer?.start()
-              return false
           }
         else
           {
@@ -202,26 +203,86 @@ class Start_Activity : AppCompatActivity()
               if(controllo_connessione.Network_Disponibile(this))
               {
                   val dati = arrayOf<String>(editText15.text.toString(), editText14.text.toString(), "", "", selezione_spinner, "", "")
-                  val referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+                  referenza_database = FirebaseDatabase.getInstance().getReference("Users")
                   Id_Utente = referenza_database.push().key.toString()
                   val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
                   referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
                       Toast.makeText(this,editText15.text.toString()+"\nhas been successfully added!", Toast.LENGTH_LONG).show()
+                      val next = Intent(this, MainActivity::class.java)
+                      next.putExtra("Id_Utente",Id_Utente)
+                      settaggio(0)
+                      startActivity(next)
+                      mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                      mediaplayer?.start()
                   }
-                  return true
               }
               else
               {
                   Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
                   mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                   mediaplayer?.start()
-                  return false
               }
           }
     }
-    private fun verifica_utente():Boolean
+    private fun verifica_utente(contesto: Context)
     {
-        return true
+        if((editText15.text.toString()=="")||(editText14.text.toString()==""))
+        {
+            Toast.makeText(this, "Warning: Data missing!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            mediaplayer?.start()
+        }
+        if((editText15.text.toString().length<4)||(editText14.text.toString().length<8))
+        {
+            Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            mediaplayer?.start()
+        }
+        else
+        {
+            val controllo_connessione = Check_Network()
+            if (controllo_connessione.Network_Disponibile(this))
+            {
+                var controllo=true
+                referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+                referenza_database.addValueEventListener(object:ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {}
+                    override fun onDataChange(p0: DataSnapshot) {
+                        if(p0.exists())
+                        {
+                            for(record in p0.children)
+                            {
+                                if(controllo)
+                                {
+                                    utente = record.getValue(Utente::class.java)
+                                        if (utente?.username==editText15.text.toString())
+                                        {
+                                            controllo = false
+                                            if (utente?.password == editText14.text.toString())
+                                                Id_Utente = utente?.chiave.toString()
+                                        }
+                                }
+                            }
+                        }
+                        if(esito(controllo)&&(controllo_generale2==true))
+                        {
+                            val next = Intent(contesto, MainActivity::class.java)
+                            next.putExtra("Id_Utente",Id_Utente)
+                            settaggio(0)
+                            startActivity(next)
+                            mediaplayer = MediaPlayer.create(contesto, R.raw.move_sound)
+                            mediaplayer?.start()
+                        }
+                    }
+                })
+            }
+            else
+            {
+                Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
     }
     private fun checkPermission():Boolean
     {
@@ -231,5 +292,29 @@ class Start_Activity : AppCompatActivity()
     private fun requestPermission()
     {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
+    }
+    private fun esito(controllo:Boolean):Boolean
+    {
+        if(controllo)
+        {
+            Toast.makeText(this, "Warning: Username '"+editText15.text.toString()+"'\nnot found!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+            mediaplayer?.start()
+            return false
+        }
+        else
+            if(Id_Utente=="")
+            {
+                Toast.makeText(this, "Warning: Unmatched passwords!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+                return false
+            }
+            else
+            {
+               if(controllo_generale2==true)
+                  Toast.makeText(this, "Welcome back\n"+editText15.text.toString()+"!", Toast.LENGTH_LONG).show()
+                return true
+            }
     }
 }

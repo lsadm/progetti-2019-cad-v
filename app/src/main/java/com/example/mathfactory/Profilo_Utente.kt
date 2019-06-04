@@ -109,7 +109,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
         button23.setOnClickListener {modifica_utente()}
-        button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
+        button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
         imageView.setOnClickListener { val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start() }
