@@ -21,6 +21,10 @@ import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_start_.*
 var controllo_generale2:Boolean?=null
+var controllo_generale3:Boolean?=null
+var controllo_generale4:Boolean?=null
+var controllo_generale5:Boolean?=null
+var controllo_generale6:Boolean?=null
 class Start_Activity : AppCompatActivity()
 {
     var controllo_barra=false
@@ -38,6 +42,8 @@ class Start_Activity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_)
+        controllo_generale5=true
+        controllo_generale6=true
         class MyHandler: Handler()
         {
             override fun handleMessage(msg: Message)
@@ -46,6 +52,9 @@ class Start_Activity : AppCompatActivity()
                 val valore:String=bundle.getString("reflesh")
                 if(valore=="visible")
                     progress_access.visibility=View.VISIBLE
+                    else
+                    if(valore=="invisible")
+                        progress_access.visibility=View.INVISIBLE
                     else
                         button28.performClick()
             }
@@ -75,20 +84,24 @@ class Start_Activity : AppCompatActivity()
         {
             override fun run()
             {
-                while(!controllo_barra)
-                {
-                    sleep(500)
-                }
-                notify_message("visible")
-                while(true)
-                {
-                    while(progress_access.progress<100)
-                    {
-                       progress_access.incrementProgressBy(1)
-                       sleep(10)
-                    }
-                    progress_access.progress=0
-                }
+               while(true)
+               {
+                   while (!controllo_barra)
+                   {
+                       sleep(500)
+                   }
+                   notify_message("visible")
+                   while (controllo_barra)
+                   {
+                       while (progress_access.progress < 100)
+                       {
+                           progress_access.incrementProgressBy(1)
+                           sleep(10)
+                       }
+                       progress_access.progress = 0
+                   }
+                   notify_message("invisible")
+               }
             }
             fun notify_message(valore:String)
             {
@@ -113,7 +126,7 @@ class Start_Activity : AppCompatActivity()
         button24.setOnClickListener {settaggio(1);controllo=false}
         button25.setOnClickListener {settaggio(2);controllo=true}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {controllo_generale2=true;if(checkPermission()){if(controllo==true)aggiungi_utente()else if(controllo==false)verifica_utente(this)}else requestPermission()}
+        button28.setOnClickListener {if(checkPermission()){if(controllo==true){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;verifica_utente(this)}}else requestPermission()}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -237,20 +250,7 @@ class Start_Activity : AppCompatActivity()
               val controllo_connessione=Check_Network()
               if(controllo_connessione.Network_Disponibile(this))
               {
-                  val dati = arrayOf<String>(editText15.text.toString(), editText14.text.toString(), "", "", selezione_spinner, "", "")
-                  referenza_database = FirebaseDatabase.getInstance().getReference("Users")
-                  controllo_barra=true
-                      Id_Utente = referenza_database.push().key.toString()
-                      utente = Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
-                      referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
-                          Toast.makeText(this, editText15.text.toString() + "\nhas been successfully added!", Toast.LENGTH_LONG).show()
-                          val next = Intent(this, MainActivity::class.java)
-                          next.putExtra("Id_Utente", Id_Utente)
-                          settaggio(0)
-                          startActivity(next)
-                          mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-                          mediaplayer?.start()
-                      }
+                  verifica_username(this)
               }
               else
               {
@@ -280,9 +280,9 @@ class Start_Activity : AppCompatActivity()
             val controllo_connessione = Check_Network()
             if (controllo_connessione.Network_Disponibile(this))
             {
+                controllo_barra=true
                 var controllo=true
                 referenza_database = FirebaseDatabase.getInstance().getReference("Users")
-                controllo_barra=true
                 referenza_database.addValueEventListener(object:ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {}
                     override fun onDataChange(p0: DataSnapshot) {
@@ -290,7 +290,7 @@ class Start_Activity : AppCompatActivity()
                         {
                             for(record in p0.children)
                             {
-                                if(controllo)
+                                if((controllo)&&(controllo_generale2==true)&&(controllo_generale4==true))
                                 {
                                     utente = record.getValue(Utente::class.java)
                                         if (utente?.username==editText15.text.toString())
@@ -302,7 +302,7 @@ class Start_Activity : AppCompatActivity()
                                 }
                             }
                         }
-                        if(esito(controllo)&&(controllo_generale2==true))
+                        if(esito(controllo)&&(controllo_generale2==true)&&(controllo_generale4==true)&&(controllo_generale6==true))
                         {
                             val next = Intent(contesto, MainActivity::class.java)
                             next.putExtra("Id_Utente",Id_Utente)
@@ -310,6 +310,7 @@ class Start_Activity : AppCompatActivity()
                             startActivity(next)
                             mediaplayer = MediaPlayer.create(contesto, R.raw.move_sound)
                             mediaplayer?.start()
+                            controllo_barra=false
                         }
                     }
                 })
@@ -335,24 +336,81 @@ class Start_Activity : AppCompatActivity()
     {
         if(controllo)
         {
-            Toast.makeText(this, "Warning: Username '"+editText15.text.toString()+"'\nnot found!", Toast.LENGTH_LONG).show()
-            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
-            mediaplayer?.start()
+            if((controllo_generale2==true)&&(controllo_generale4==true)&&(controllo_generale6==true))
+            {
+                Toast.makeText(this, "Warning: Username '" + editText15.text.toString() + "'\nnot found!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+                controllo_barra = false
+            }
             return false
         }
         else
             if(Id_Utente=="")
             {
-                Toast.makeText(this, "Warning: Unmatched passwords!", Toast.LENGTH_LONG).show()
-                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
-                mediaplayer?.start()
+                if((controllo_generale2==true)&&(controllo_generale4==true)&&(controllo_generale6==true))
+                {
+                    Toast.makeText(this, "Warning: Incorrect password!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                    controllo_barra = false
+                }
                 return false
             }
             else
             {
-               if(controllo_generale2==true)
+               if((controllo_generale2==true)&&(controllo_generale4==true)&&(controllo_generale6==true))
                   Toast.makeText(this, "Welcome back\n"+editText15.text.toString()+"!", Toast.LENGTH_LONG).show()
                 return true
             }
     }
+    private fun verifica_username(contesto:Context)
+    {
+            controllo_barra=true
+            var controllo=true
+            referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+            referenza_database.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {}
+                override fun onDataChange(p0: DataSnapshot)
+                {
+                    if(p0.exists())
+                    {
+                        for(record in p0.children)
+                        {
+                            if((controllo)&&(controllo_generale3==true))
+                            {
+                                utente = record.getValue(Utente::class.java)
+                                if ((utente?.username==editText15.text.toString())&&(controllo_generale5==true))
+                                {
+                                    controllo = false
+                                    Toast.makeText(contesto, "Warning: The username '"+editText15.text.toString()+"'\n is already used!", Toast.LENGTH_LONG).show()
+                                    mediaplayer = MediaPlayer.create(contesto, R.raw.error_sound)
+                                    mediaplayer?.start()
+                                    controllo_barra=false
+                                }
+                            }
+                        }
+                    }
+                    if((controllo)&&(controllo_generale3==true)&&(controllo_generale5==true))
+                    {
+                        val dati = arrayOf(editText15.text.toString(), editText14.text.toString(), "", "", selezione_spinner, "", "")
+                        referenza_database = FirebaseDatabase.getInstance().getReference("Users")
+                        Id_Utente = referenza_database.push().key.toString()
+                        utente = Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
+                        controllo_generale5=false
+                        controllo_generale6=false
+                        referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
+                            val next = Intent(contesto, MainActivity::class.java)
+                            next.putExtra("Id_Utente", Id_Utente)
+                            settaggio(0)
+                            startActivity(next)
+                            Toast.makeText(contesto, editText15.text.toString()+"\nhas been successfully added!", Toast.LENGTH_LONG).show()
+                            mediaplayer = MediaPlayer.create(contesto, R.raw.move_sound)
+                            mediaplayer?.start()
+                            controllo_barra = false
+                        }
+                    }
+                }
+            })
+        }
 }
