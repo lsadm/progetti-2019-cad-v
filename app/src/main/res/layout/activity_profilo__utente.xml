@@ -229,6 +229,18 @@
             android:textColor="@color/red" android:textSize="14sp"
             android:textAllCaps="false" android:background="@drawable/my_button1"
             app:layout_constraintStart_toEndOf="@+id/editText21"/>
+    <ProgressBar
+            android:id="@+id/progress_access"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            style="?android:progressBarStyleHorizontal"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="312dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

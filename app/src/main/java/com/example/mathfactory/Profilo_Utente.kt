@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
     lateinit var outputStream:ByteArrayOutputStream
     var array_di_bytes:ByteArray?=null
@@ -59,7 +60,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
-        leggi_utente()
         editText18.setEnabled(false)
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
@@ -81,7 +81,13 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 if(valore=="check_connection")
                     Toast.makeText(contesto, "                     Warning!\nCheck your Internet's connection.", Toast.LENGTH_LONG).show()
                 else
-                    button26.setBackgroundResource(R.mipmap.imm13)
+                    if(valore=="visible")
+                        progress_access.visibility=View.VISIBLE
+                    else
+                        if(valore=="invisible")
+                            progress_access.visibility=View.INVISIBLE
+                        else
+                            button26.setBackgroundResource(R.mipmap.imm13)
             }
         }
         class CheckThread constructor(val handler: Handler):Thread()
@@ -128,11 +134,45 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 handler.sendMessage(messaggio)
             }
         }
+        class ProgressBarThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                while(true)
+                {
+                    while (!controllo_barra)
+                    {
+                        sleep(50)
+                    }
+                    notify_message("visible")
+                    while (controllo_barra)
+                    {
+                        while (progress_access.progress < 100)
+                        {
+                            progress_access.incrementProgressBy(1)
+                            sleep(10)
+                        }
+                        progress_access.progress = 0
+                    }
+                    notify_message("invisible")
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
         val myHandler=MyHandler(this)
         val checkThread=CheckThread(myHandler)
         val connectionThread=ConnectionThread(myHandler,this)
+        val progressBarThread=ProgressBarThread(myHandler)
         checkThread.start()
         connectionThread.start()
+        progressBarThread.start()
         button26.setOnClickListener{if(checkPermission())go_to_camera()else requestPermission()}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
@@ -141,7 +181,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;controllo_generale3=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
-        imageView.setOnClickListener { val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start() }
+        imageView.setOnClickListener {val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
+        leggi_utente()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -173,7 +214,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         return super.onOptionsItemSelected(item)
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.getItemId()
         if (id == R.id.action_four) {
@@ -365,6 +405,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
     private fun leggi_utente()
     {
+        controllo_barra=true
         var controllo=true
         referenza_database = FirebaseDatabase.getInstance().getReference("Users")
         referenza_database.addValueEventListener(object: ValueEventListener{
@@ -385,6 +426,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                    }
                }
               }
+                controllo_barra=false
             }
         })
     }
@@ -432,6 +474,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     val controllo_connessione= Check_Network()
                     if(controllo_connessione.Network_Disponibile(this))
                     {
+                        controllo_barra=true
                         val dati = arrayOf(editText20.text.toString(), editText26.text.toString(),editText25.text.toString(),editText24.text.toString(),editText18.text.toString(),editText22.text.toString(),editText21.text.toString())
                         referenza_database = FirebaseDatabase.getInstance().getReference("Users")
                         val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
@@ -444,6 +487,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                             Toast.makeText(this, "The profile has been\nsuccessfully modified!", Toast.LENGTH_LONG).show()
                             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                             mediaplayer?.start()
+                            controllo_barra=false
                         }
                         return
                     }
@@ -458,12 +502,14 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
     private fun delete_account():Boolean
     {
+        controllo_barra=true
         val controllo_connessione= Check_Network()
         if(controllo_connessione.Network_Disponibile(this))
         {
             referenza_database = FirebaseDatabase.getInstance().getReference("Users")
             referenza_database.child(Id_Utente).removeValue()
             Toast.makeText(this, utente?.username + "\nhas been successfully deleted!", Toast.LENGTH_LONG).show()
+            controllo_barra=false
             return true
         }
         else
