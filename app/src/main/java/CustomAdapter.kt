@@ -34,6 +34,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
         p0.textViewTesto.text=user.testo
         p0.textViewOrario_Data.text=user.orario_data
         p0.titolo1.text=user.titolo1
+        p0.cancella1.setOnClickListener {  }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -41,6 +42,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
       val textViewTesto=itemView.findViewById(R.id.textViewTesto)as TextView
       val textViewOrario_Data=itemView.findViewById(R.id.textViewOrario_Data)as TextView
       val titolo1=itemView.findViewById(R.id.titolo1)as TextView
+      val cancella1=itemView.findViewById(R.id.cancella1)as Button
   }
 }
 class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomAdapter2.ViewHolder>()
@@ -61,8 +63,58 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
     {
         val user2:User2=userList[p1]
         val opzioni:Bundle?=null
+        var controllo_barra=false
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                if(valore=="visible")
+                    p0.progress_immage.visibility=View.VISIBLE
+                else
+                    if(valore=="invisible")
+                        p0.progress_immage.visibility=View.INVISIBLE
+            }
+        }
+        class ProgressBarThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                while(true)
+                {
+                    while (!controllo_barra)
+                    {
+                        sleep(500)
+                    }
+                    notify_message("visible")
+                    while (controllo_barra)
+                    {
+                        while (p0.progress_immage.progress < 100)
+                        {
+                            p0.progress_immage.incrementProgressBy(1)
+                            sleep(10)
+                        }
+                        p0.progress_immage.progress = 0
+                    }
+                    notify_message("invisible")
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val progressBarThread=ProgressBarThread(myHandler)
+        progressBarThread.start()
         p0.imageViewData.setImageBitmap(user2.immagine)
         p0.imageViewData.setOnClickListener{
+            controllo_barra=true
             val next=Intent(user2.contesto,call::class.java)
             val stream=ByteArrayOutputStream()
             user2.immagine?.compress(Bitmap.CompressFormat.JPEG,45,stream)
@@ -73,9 +125,11 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             next.putExtra("controllo",true)
             startActivity(user2.contesto,next,opzioni)
             mediaplayer= MediaPlayer.create(user2.contesto,R.raw.move_graph_sound)
-            mediaplayer?.start()}
+            mediaplayer?.start()
+            controllo_barra=false}
         p0.textViewOrario_Data2.text=user2.orario_data2
         p0.titolo2.text=user2.titolo2
+        p0.cancella2.setOnClickListener {  }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -83,6 +137,8 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
         val imageViewData=itemView.findViewById(R.id.imageViewData)as ImageView
         val textViewOrario_Data2=itemView.findViewById(R.id.textViewOrario_Data2)as TextView
         val titolo2=itemView.findViewById(R.id.titolo2)as TextView
+        val cancella2=itemView.findViewById(R.id.cancella2)as Button
+        val progress_immage=itemView.findViewById(R.id.progress_image)as ProgressBar
     }
 }
 class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomAdapter3.ViewHolder>()
@@ -198,6 +254,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.textViewOrario_Data3.text=user3.orario_data3
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
         p0.titolo3.text=user3.titolo3
+        p0.cancella3.setOnClickListener {  }
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
@@ -206,5 +263,6 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         val textViewOrario_Data3=itemView.findViewById(R.id.textViewOrario_Data3)as TextView
         val timer=itemView.findViewById(R.id.timer)as TextView
         val titolo3=itemView.findViewById(R.id.titolo3)as TextView
+        val cancella3=itemView.findViewById(R.id.cancella3)as Button
     }
 }

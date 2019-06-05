@@ -21,6 +21,7 @@ class call : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
+        controllo_generale7=false
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")

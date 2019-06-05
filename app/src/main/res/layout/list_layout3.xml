@@ -28,11 +28,18 @@
                     android:layout_height="50dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/titolo3"/>
+            <Button
+                    android:id="@+id/cancella3"
+                    android:background="@mipmap/imm41_foreground"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintStart_toEndOf="@+id/progress_audio"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo3"/>
             <SeekBar
                     android:id="@+id/progress_audio"
                     android:background="@color/start2"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="250dp"
+                    android:layout_width="230dp"
                     android:layout_height="50dp"
                     app:layout_constraintStart_toEndOf="@+id/riproduci_ferma"
                     app:layout_constraintTop_toBottomOf="@+id/titolo3"/>

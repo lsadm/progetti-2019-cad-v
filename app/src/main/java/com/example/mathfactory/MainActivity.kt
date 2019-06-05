@@ -4,10 +4,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
-import android.os.Build
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
@@ -16,6 +14,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import android.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +28,7 @@ import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
 {
+    var controllo_barra=false
     var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE=0
     private var mediaplayer:MediaPlayer?=null
@@ -49,15 +49,63 @@ class MainActivity : AppCompatActivity()
             if(directories[i]?.exists()==false)
                 directories[i]?.mkdir()
         }
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                if(valore=="visible")
+                    progress_access.visibility= View.VISIBLE
+                else
+                    if(valore=="invisible")
+                        progress_access.visibility=View.INVISIBLE
+            }
+        }
+        class ProgressBarThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                while(true)
+                {
+                    while (!controllo_barra)
+                    {
+                        sleep(500)
+                    }
+                    notify_message("visible")
+                    while (controllo_barra)
+                    {
+                        while (progress_access.progress < 100)
+                        {
+                            progress_access.incrementProgressBy(1)
+                            sleep(10)
+                        }
+                        progress_access.progress = 0
+                    }
+                    notify_message("invisible")
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val progressBarThread=ProgressBarThread(myHandler)
+        progressBarThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
         val toogle=ActionBarDrawerToggle(this,drawer,toolbar,0,0)
         drawer.addDrawerListener(toogle)
         toogle.syncState()
-        storia.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function8::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
-        storia_per_immagini.setOnClickListener{if(checkPermission()) { val next = Intent(this, Function9::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
-        storia_vocale.setOnClickListener {if(checkPermission()){ val next = Intent(this, Function10::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
+        storia.setOnClickListener {if(checkPermission()){ controllo_barra=true;val next = Intent(this, Function8::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
+        storia_per_immagini.setOnClickListener{if(checkPermission()) {controllo_barra=true; val next = Intent(this, Function9::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
+        storia_vocale.setOnClickListener {if(checkPermission()){controllo_barra=true; val next = Intent(this, Function10::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
         calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         numeri_casuali.setOnClickListener {  val next = Intent(this, Function5::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
         equazioni_lineari.setOnClickListener {  val next = Intent(this, Function2::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }

@@ -6,6 +6,8 @@ import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -13,9 +15,9 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function3.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import kotlin.math.*
 class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
@@ -43,12 +45,61 @@ class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var controllo2=true
     var turno=false
     var Id_Utente:String?=null
+    var controllo_barra=false
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function3)
         nav_view3.setNavigationItemSelectedListener(this)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
+        class MyHandler: Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                if(valore=="visible")
+                    progress_access.visibility= View.VISIBLE
+                else
+                    if(valore=="invisible")
+                        progress_access.visibility= View.INVISIBLE
+            }
+        }
+        class ProgressBarThread constructor(val handler: Handler):Thread()
+        {
+            override fun run()
+            {
+                while(true)
+                {
+                    while (!controllo_barra)
+                    {
+                        sleep(500)
+                    }
+                    notify_message("visible")
+                    while (controllo_barra)
+                    {
+                        while (progress_access.progress < 100)
+                        {
+                            progress_access.incrementProgressBy(1)
+                            sleep(10)
+                        }
+                        progress_access.progress = 0
+                    }
+                    notify_message("invisible")
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        val myHandler=MyHandler()
+        val progressBarThread=ProgressBarThread(myHandler)
+        progressBarThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         val drawer=findViewById(R.id.drawer_layout)as DrawerLayout
@@ -74,7 +125,7 @@ class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button48.setOnClickListener {if(!turno){identifier=4;set_color(identifier)}else{identifier2=4;set_color(identifier2)}}
         button20.setOnClickListener {if(!turno){set_color(21);if(input_output())textView30.setTextColor(Color.RED)else textView30.setTextColor(Color.BLUE);if(identifier!=0)turno=true}}
         button22.setOnClickListener {if(turno){set_color(22);if(input_output_bis())textView23.setTextColor(Color.RED)else textView23.setTextColor(Color.BLUE);if(identifier2!=0)turno=false} }
-        button17.setOnClickListener {val next= Intent(this,Grafici::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("f", f);next.putExtra("p", p);next.putExtra("x", x);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("f2", f2);next.putExtra("p2", p2);next.putExtra("x2", x2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
+        button17.setOnClickListener {controllo_barra=true;val next= Intent(this,Grafici::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("f", f);next.putExtra("p", p);next.putExtra("x", x);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("f2", f2);next.putExtra("p2", p2);next.putExtra("x2", x2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start();controllo_barra=false}
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {

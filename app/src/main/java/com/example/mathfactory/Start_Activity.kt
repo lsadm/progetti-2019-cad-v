@@ -44,6 +44,7 @@ class Start_Activity : AppCompatActivity()
         setContentView(R.layout.activity_start_)
         controllo_generale5=true
         controllo_generale6=true
+        controllo_generale7=false
         class MyHandler: Handler()
         {
             override fun handleMessage(msg: Message)

@@ -40,7 +40,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-
+var controllo_generale7:Boolean?=null
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
@@ -59,6 +59,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
+        controllo_generale7=true
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         editText18.setEnabled(false)
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
@@ -112,7 +113,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             val controllo_connessione = Check_Network()
             override fun run()
             {
-                while(true)
+                while(controllo_generale7==true)
                 {
                     if(!controllo_connessione.Network_Disponibile(contesto)) {
                         notify_message("check_connection")
@@ -205,6 +206,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_home) {
+            controllo_generale7=false
             val next = Intent(this, MainActivity::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -217,6 +219,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.getItemId()
         if (id == R.id.action_four) {
+            controllo_generale7=false
             val next = Intent(this, Function1::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -225,6 +228,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_five) {
+            controllo_generale7=false
             val next = Intent(this, Function2::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -233,6 +237,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_six) {
+            controllo_generale7=false
             val next = Intent(this, Function3::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -241,6 +246,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_seven) {
+            controllo_generale7=false
             val next = Intent(this, Function4::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -249,6 +255,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_eight) {
+            controllo_generale7=false
             val next = Intent(this, Function5::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -257,6 +264,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_nine) {
+            controllo_generale7=false
             val next = Intent(this, Function6::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -265,6 +273,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.action_ten) {
+            controllo_generale7=false
             val next = Intent(this, Function7::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
@@ -273,6 +282,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.note_testuali) {
+            controllo_generale7=false
             if(checkPermission2())
             {
                 val next = Intent(this, Function8::class.java)
@@ -285,6 +295,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.note_immagini) {
+            controllo_generale7=false
             if(checkPermission2())
             {
                 val next = Intent(this, Function9::class.java)
@@ -297,6 +308,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.note_audio) {
+            controllo_generale7=false
             if(checkPermission2())
             {
                 val next = Intent(this, Function10::class.java)
@@ -316,6 +328,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             return true
         }
         if (id == R.id.calculator) {
+            controllo_generale7=false
             val next = Intent(this, Function0::class.java)
             next.putExtra("Id_Utente",Id_Utente)
             startActivity(next)
