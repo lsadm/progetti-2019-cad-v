@@ -76,7 +76,10 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     nome_data_text = output_data + prefisso_data + indice?.toString() + ".txt"
                     textFile = File(nome_text)
                     file_data = File(nome_data_text)
-                    users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString()))
+                    if((textFile?.exists()==true)&&(file_data?.exists()==true))
+                    {
+                        users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString(),this))
+                    }
                     indice = indice?.plus(1)
                 }
                 adapter = CustomAdapter(users)
@@ -101,7 +104,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
                 text=textFile?.readText(Charsets.UTF_8)
                 titolo1=prefisso1+counter.toString()
-                users.add(User(text, "Upload time and date---> "+data,titolo1))
+                users.add(User(text, "Upload time and date---> "+data,titolo1,this))
                 counter=counter?.plus(1)
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -288,8 +291,11 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             nome_data_text=output_data+prefisso_data+indice?.toString()+".txt"
             textFile = File(nome_text)
             file_data=File(nome_data_text)
-            textFile?.delete()
-            file_data?.delete()
+            if((textFile?.exists()==true)&&(file_data?.exists()==true))
+            {
+                textFile?.delete()
+                file_data?.delete()
+            }
             indice=indice?.plus(1)
         }
         file_parametro1=File(output_parametro1)

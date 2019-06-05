@@ -78,7 +78,10 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 nome_data_image=output_data+prefisso_data+indice?.toString()+".txt"
                 photoFile = File(output,nome_image)
                 file_data=File(nome_data_image)
-                users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n"+file_data?.readText(Charsets.UTF_8), this,prefisso2 + indice?.toString(),Id_Utente))
+                if((photoFile?.exists()==true)&&(file_data?.exists()==true))
+                {
+                    users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n" + file_data?.readText(Charsets.UTF_8), this, prefisso2 + indice?.toString(), Id_Utente))
+                }
                 indice=indice?.plus(1)
             }
             adapter2=CustomAdapter2(users2)
@@ -377,8 +380,11 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             photoFile = File(nome_image)
             nome_data_image=output_data+prefisso_data+indice?.toString()+".txt"
             file_data=File(nome_data_image)
-            photoFile?.delete()
-            file_data?.delete()
+            if((photoFile?.exists()==true)&&(file_data?.exists()==true))
+            {
+                photoFile?.delete()
+                file_data?.delete()
+            }
             indice=indice?.plus(1)
         }
         file_parametro2=File(output_parametro2)

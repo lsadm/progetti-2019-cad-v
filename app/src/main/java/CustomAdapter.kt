@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Message
 import android.support.v4.content.ContextCompat.startActivity
@@ -13,10 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import java.util.*
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
+    var mediaplayer:MediaPlayer?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
       val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout,p0,false)
@@ -30,11 +33,25 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-      val user:User=userList[p1]
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Text/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Text_Note/"
+        var file_text: File?=null
+        var file_data_text:File?=null
+        val user:User=userList[p1]
         p0.textViewTesto.text=user.testo
         p0.textViewOrario_Data.text=user.orario_data
         p0.titolo1.text=user.titolo1
-        p0.cancella1.setOnClickListener {  }
+        p0.cancella1.setOnClickListener {
+            val path1=output+user.titolo1+".txt"
+            val path_data1=output_data+"Date_"+user.titolo1+".txt"
+            file_text=File(path1)
+            file_data_text=File(path_data1)
+            file_text?.delete()
+            file_data_text?.delete()
+            Toast.makeText(user.contesto, user.titolo1+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(user.contesto, R.raw.return_graph_sound)
+            mediaplayer?.start()
+        }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -61,6 +78,10 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Image/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Image_Note/"
+        var file_image: File?=null
+        var file_data_image:File?=null
         val user2:User2=userList[p1]
         val opzioni:Bundle?=null
         var controllo_barra=false
@@ -129,7 +150,17 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             controllo_barra=false}
         p0.textViewOrario_Data2.text=user2.orario_data2
         p0.titolo2.text=user2.titolo2
-        p0.cancella2.setOnClickListener {  }
+        p0.cancella2.setOnClickListener {
+            val path2=output+user2.titolo2+".jpg"
+            val path_data2=output_data+"Date_"+user2.titolo2+".txt"
+            file_image=File(path2)
+            file_data_image=File(path_data2)
+            file_image?.delete()
+            file_data_image?.delete()
+            Toast.makeText(user2.contesto, user2.titolo2+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(user2.contesto, R.raw.return_graph_sound)
+            mediaplayer?.start()
+        }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -143,6 +174,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
 }
 class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomAdapter3.ViewHolder>()
 {
+    var mediaplayer: MediaPlayer? = null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
         val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout3,p0,false)
@@ -156,7 +188,12 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        var mediaplayer: MediaPlayer? = null
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Audio/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Audio_Note/"
+        val output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Duration_Audio_Note/"
+        var file_audio: File?=null
+        var file_data_audio:File?=null
+        var file_durata_audio:File?=null
         var riproduci_pausa=true
         val user3:User3=userList[p1]
         var controllo=true
@@ -254,7 +291,20 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.textViewOrario_Data3.text=user3.orario_data3
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
         p0.titolo3.text=user3.titolo3
-        p0.cancella3.setOnClickListener {  }
+        p0.cancella3.setOnClickListener {
+            val path3=output+user3.titolo3+".mp3"
+            val path_data3=output_data+"Date_"+user3.titolo3+".txt"
+            val path_durata=output_durata+"Durata_"+user3.titolo3+".txt"
+            file_audio=File(path3)
+            file_data_audio=File(path_data3)
+            file_durata_audio=File(path_durata)
+            file_audio?.delete()
+            file_data_audio?.delete()
+            file_durata_audio?.delete()
+            Toast.makeText(user3.contesto, user3.titolo3+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
+            mediaplayer?.start()
+        }
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {

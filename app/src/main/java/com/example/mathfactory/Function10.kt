@@ -89,7 +89,10 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 nome_durata=output_durata+prefisso_durata+indice?.toString()+".txt"
                 duratafile = File(nome_durata)
                 file_data=File(nome_data_audio)
-                users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(),"Upload time and date---> "+file_data?.readText(Charsets.UTF_8),prefisso3 + indice?.toString()))
+                if((file_data?.exists()==true)&&(duratafile?.exists()==true))
+                {
+                    users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso3 + indice?.toString(),this))
+                }
                 indice=indice?.plus(1)
             }
             adapter3=CustomAdapter3(users3)
@@ -209,7 +212,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 file_data=File(nome_data_audio)
                 file_data?.writeText(data,Charsets.UTF_8)
                 titolo3=prefisso3+counter.toString()
-                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3))
+                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3,this))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 controllo=false
@@ -442,9 +445,12 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             file_data=File(nome_data_audio)
             duratafile=File(nome_durata)
             audioFile = File(nome_audio)
-            audioFile?.delete()
-            file_data?.delete()
-            duratafile?.delete()
+            if((file_data?.exists()==true)&&(duratafile?.exists()==true)&&(audioFile?.exists()==true))
+            {
+                audioFile?.delete()
+                file_data?.delete()
+                duratafile?.delete()
+            }
             indice=indice?.plus(1)
         }
         file_parametro3=File(output_parametro3)
