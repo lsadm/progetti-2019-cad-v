@@ -171,6 +171,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
           if(checkPermission())
               if(registra_ferma)
               {
+                  if(users3.size==0)
+                      counter=1
                   nome_audio=output+prefisso3+counter.toString()+".mp3"
                   controllo3=true
                   mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
@@ -201,6 +203,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         button21.setOnClickListener {
             if(controllo)
             {
+                if(users3.size==0)
+                    counter=1
                 durata_registrazione=(istante_finale_registrazione-istante_iniziale_registrazione).toInt()/1000
                 if(durata_registrazione==0)
                     durata_registrazione=1

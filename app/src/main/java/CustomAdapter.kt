@@ -51,6 +51,9 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
             Toast.makeText(user.contesto, user.titolo1+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(user.contesto, R.raw.return_graph_sound)
             mediaplayer?.start()
+            val position= p0.getAdapterPosition()
+            userList.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 
@@ -160,6 +163,9 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             Toast.makeText(user2.contesto, user2.titolo2+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(user2.contesto, R.raw.return_graph_sound)
             mediaplayer?.start()
+            val position= p0.getAdapterPosition()
+            userList.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 
@@ -304,6 +310,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             Toast.makeText(user3.contesto, user3.titolo3+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
             mediaplayer?.start()
+            val position= p0.getAdapterPosition()
+            userList.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)

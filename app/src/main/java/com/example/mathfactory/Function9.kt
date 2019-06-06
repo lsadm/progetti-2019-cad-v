@@ -31,6 +31,8 @@ import kotlinx.android.synthetic.main.activity_function9.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+
 class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
@@ -54,6 +56,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     val prefisso_data:String="Date_Image_Note_"
     var nome_data_image:String?=null
     var Id_Utente:String?=null
+    lateinit var users2:ArrayList<User2>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function9)
@@ -61,7 +64,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         val recyclerView2=findViewById(R.id.recyclerView2)as RecyclerView
         recyclerView2.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
-        val users2= ArrayList<User2>()
+        users2= ArrayList<User2>()
         output_parametro2=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro2.txt"
         output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Image/"
         output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Image_Note/"
@@ -357,6 +360,8 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
     private fun go_to_camera():File
     {
+        if(users2.size==0)
+            counter=1
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         nome_image=prefisso2+counter.toString()+".jpg"
         val photoFile=File(output,nome_image)

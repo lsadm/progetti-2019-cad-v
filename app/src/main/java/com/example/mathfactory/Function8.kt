@@ -94,6 +94,8 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button21.setOnClickListener{
             if(editText17.text.toString()!="")
             {
+                if(users.size==0)
+                    counter=1
                 data=formato.format(Date()).toString()
                 nome_text=output+prefisso1+counter.toString()+".txt"
                 nome_data_text=output_data+prefisso_data+counter.toString()+".txt"
