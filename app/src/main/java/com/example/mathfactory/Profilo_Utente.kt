@@ -42,6 +42,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 var controllo_generale7:Boolean?=null
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    var ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro4.txt")
+    var ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro5.txt")
     var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
     lateinit var outputStream:ByteArrayOutputStream
@@ -519,6 +521,11 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val controllo_connessione= Check_Network()
         if(controllo_connessione.Network_Disponibile(this))
         {
+            if(ricorda_file_username.exists()&&ricorda_file_password.exists())
+            {
+                ricorda_file_username.delete()
+                ricorda_file_password.delete()
+            }
             referenza_database = FirebaseDatabase.getInstance().getReference("Users")
             referenza_database.child(Id_Utente).removeValue()
             Toast.makeText(this, utente?.username + "\nhas been successfully deleted!", Toast.LENGTH_LONG).show()

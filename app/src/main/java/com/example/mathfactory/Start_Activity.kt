@@ -20,6 +20,7 @@ import com.example.mathfactory.com.example.mathfactory.Check_Network
 import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_start_.*
+import java.io.File
 var controllo_generale2:Boolean?=null
 var controllo_generale3:Boolean?=null
 var controllo_generale4:Boolean?=null
@@ -27,6 +28,10 @@ var controllo_generale5:Boolean?=null
 var controllo_generale6:Boolean?=null
 class Start_Activity : AppCompatActivity()
 {
+    var controllo_interno=true
+    var controlo_Check_Thread=true
+    var ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro4.txt")
+    var ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro5.txt")
     var controllo_barra=false
     var utente:Utente?=null
     lateinit var referenza_database:DatabaseReference
@@ -66,7 +71,7 @@ class Start_Activity : AppCompatActivity()
             {
                 if(!checkPermission())
                 {
-                    while (!checkPermission())
+                    while ((!checkPermission()))
                         sleep(1000)
                     sleep(500)
                     notify_message("")
@@ -117,17 +122,62 @@ class Start_Activity : AppCompatActivity()
         val checkThread=CheckThread(myHandler)
         val progressThread=ProgressBarThread(myHandler)
         progressThread.start()
-        checkThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         item_spinner=arrayOf("None","Male","Female")
         adapter_spinner=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,item_spinner)
         spinner=findViewById(R.id.spinner)as Spinner
         spinner?.adapter=adapter_spinner
+        switcher.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+            {
+                if(checkPermission()&&ricorda_file_username.exists()&&ricorda_file_password.exists())
+                {
+                    editText15.setText(ricorda_file_username.readText(Charsets.UTF_8))
+                    editText15.setSelection(editText15.text.lastIndex + 1)
+                    editText14.setText(ricorda_file_password.readText(Charsets.UTF_8))
+                    editText14.setSelection(editText14.text.lastIndex + 1)
+                    if(controllo_interno)
+                    {
+                        Toast.makeText(this, "I remember you c:", Toast.LENGTH_LONG).show()
+                        mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                        mediaplayer?.start()
+                    }
+                }
+                else
+                {
+                    switcher.setChecked(false)
+                    if(!checkPermission())
+                        requestPermission()
+                    else
+                    {
+                        if(controllo_interno)
+                        {
+                            Toast.makeText(this, "No username and password\nto remember!", Toast.LENGTH_LONG).show()
+                            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                            mediaplayer?.start()
+                        }
+                    }
+                }
+            }
+            else
+            {
+                editText15.setText("")
+                editText15.setSelection(editText15.text.lastIndex+1)
+                editText14.setText("")
+                editText14.setSelection(editText14.text.lastIndex+1)
+                if(controllo_interno)
+                {
+                    Toast.makeText(this, "I don't remember you :c", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+                    mediaplayer?.start()
+                }
+            }
+        }
         button24.setOnClickListener {settaggio(1);controllo=false}
         button25.setOnClickListener {settaggio(2);controllo=true}
         button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {if(checkPermission()){if(controllo==true){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;verifica_utente(this)}}else requestPermission()}
+        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(controllo==true){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;controllo_interno=false;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -190,6 +240,8 @@ class Start_Activity : AppCompatActivity()
                 button28.text = "Login"
                 editText14.setText("")
                 editText15.setText("")
+                ricordami.visibility=View.VISIBLE
+                switcher.visibility=View.VISIBLE
             } else
                 if (id == 2)
                 {
@@ -222,6 +274,10 @@ class Start_Activity : AppCompatActivity()
             textView49.visibility = View.INVISIBLE
             editText16.visibility = View.INVISIBLE
             spinner?.visibility = View.INVISIBLE
+            ricordami.visibility=View.INVISIBLE
+            switcher.visibility=View.INVISIBLE
+            if(switcher.isChecked)
+               switcher.setChecked(false)
         }
     }
     private fun aggiungi_utente()
@@ -298,7 +354,11 @@ class Start_Activity : AppCompatActivity()
                                         {
                                             controllo = false
                                             if (utente?.password == editText14.text.toString())
+                                            {
                                                 Id_Utente = utente?.chiave.toString()
+                                                ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
+                                                ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
+                                            }
                                         }
                                 }
                             }
@@ -401,6 +461,8 @@ class Start_Activity : AppCompatActivity()
                         controllo_generale5=false
                         controllo_generale6=false
                         referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
+                            ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
+                            ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
                             val next = Intent(contesto, MainActivity::class.java)
                             next.putExtra("Id_Utente", Id_Utente)
                             settaggio(0)
