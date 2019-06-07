@@ -53,7 +53,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     var istante_iniziale_registrazione:Long=0
     var istante_finale_registrazione:Long=0
     val prefisso3:String="Audio_Note_"
-    val prefisso_durata="Durata_Audio_Note_"
+    val prefisso_durata="Duration_Audio_Note_"
     var titolo3:String=""
     var file_parametro3:File?=null
     var duratafile:File?=null
@@ -71,10 +71,10 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         val recyclerView3=findViewById(R.id.recyclerView3)as RecyclerView
         recyclerView3.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         val users3= ArrayList<User3>()
-        output_parametro3=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro3.txt"
-        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Audio/"
-        output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Duration_Audio_Note/"
-        output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Audio_Note/"
+        output_parametro3=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Parameters/Parameter3.txt"
+        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Audio/"
+        output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Duration_Audio_Note/"
+        output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Audio_Note/"
         file_parametro3=File(output_parametro3)
         if(file_parametro3?.exists()==true)
             counter=file_parametro3?.readText(Charsets.UTF_8)?.toInt()?.plus(1)

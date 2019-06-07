@@ -26,12 +26,16 @@ var controllo_generale3:Boolean?=null
 var controllo_generale4:Boolean?=null
 var controllo_generale5:Boolean?=null
 var controllo_generale6:Boolean?=null
+var utente_loggato:String?=null
+val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/Subscribers_number.txt")
 class Start_Activity : AppCompatActivity()
 {
     var controllo_interno=true
     var controlo_Check_Thread=true
-    var ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro4.txt")
-    var ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Parametri/Parametro5.txt")
+    val main_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView")
+    val reflesh_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters")
+    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
+    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
     var controllo_barra=false
     var utente:Utente?=null
     lateinit var referenza_database:DatabaseReference
@@ -174,10 +178,10 @@ class Start_Activity : AppCompatActivity()
                 }
             }
         }
-        button24.setOnClickListener {settaggio(1);controllo=false}
-        button25.setOnClickListener {settaggio(2);controllo=true}
-        button27.setOnClickListener {settaggio(0)}
-        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(controllo==true){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;controllo_interno=false;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
+        button24.setOnClickListener {settaggio(1);controllo=false; mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}
+        button25.setOnClickListener {settaggio(2);controllo=true;avvertimento()}
+        button27.setOnClickListener {settaggio(0);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}
+        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(!main_directory.exists())main_directory.mkdir();if(!reflesh_directory.exists())reflesh_directory.mkdir();if((controllo==true)&&(controllo_numero_iscritti())){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;controllo_interno=false;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -358,6 +362,7 @@ class Start_Activity : AppCompatActivity()
                                                 Id_Utente = utente?.chiave.toString()
                                                 ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
                                                 ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
+                                                utente_loggato=utente?.username
                                             }
                                         }
                                 }
@@ -463,6 +468,8 @@ class Start_Activity : AppCompatActivity()
                         referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
                             ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
                             ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
+                            file_controllo_numero_iscritti.writeText((file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()+1).toString(),Charsets.UTF_8)
+                            utente_loggato=utente?.username
                             val next = Intent(contesto, MainActivity::class.java)
                             next.putExtra("Id_Utente", Id_Utente)
                             settaggio(0)
@@ -476,4 +483,57 @@ class Start_Activity : AppCompatActivity()
                 }
             })
         }
+    private fun controllo_numero_iscritti():Boolean
+    {
+        if(file_controllo_numero_iscritti.exists())
+        {
+            if(file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt() < 10)
+                return true
+            else
+            {
+                Toast.makeText(this, "Warning: It is forbidden\nadding other new users!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+                return false
+            }
+        }
+        else
+        {
+            file_controllo_numero_iscritti.writeText("0",Charsets.UTF_8)
+            return true
+        }
+    }
+    private fun avvertimento()
+    {
+        var messaggio:String?=null
+        var suono:Int?=null
+        val numero = file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()
+        if(!file_controllo_numero_iscritti.exists()||(file_controllo_numero_iscritti.exists()&&(numero==0)))
+        {
+            messaggio="It is possible adding\nnot more than 10 new users!"
+            suono=R.raw.move_sound
+        }
+        else
+        {
+            if(numero<7)
+            {
+                messaggio="It is possible adding\nother "+(10-numero).toString()+" new users!"
+                suono=R.raw.move_home_sound
+            }
+            else
+                if(numero<10)
+                {
+                    messaggio="Attention: It is possible adding only\nother "+(10-numero).toString()+" new users!"
+                    suono=R.raw.return_graph_sound
+                }
+                 else
+                {
+                    messaggio="Warning: It is not possible\nadding other new users!"
+                    suono=R.raw.error_sound
+                }
+        }
+        Toast.makeText(this,messaggio,Toast.LENGTH_LONG).show()
+        mediaplayer = MediaPlayer.create(this, suono)
+        mediaplayer?.start()
+    }
 }
