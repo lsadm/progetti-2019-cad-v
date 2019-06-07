@@ -461,11 +461,11 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         editText22.setSelection(editText22.text.lastIndex+1)
         editText21.setText(utente?.profession)
         editText21.setSelection(editText21.text.lastIndex+1)
-        if(utente?.gender=="Male")
-            imageView.setBackgroundResource(R.mipmap.imm12)
-        else
-            if(utente?.gender=="Female")
-               imageView.setBackgroundResource(R.mipmap.imm36)
+            if (utente?.gender == "Male")
+                imageView.setBackgroundResource(R.mipmap.imm12)
+            else
+                if (utente?.gender == "Female")
+                    imageView.setBackgroundResource(R.mipmap.imm36)
     }
     private fun modifica_utente()
     {

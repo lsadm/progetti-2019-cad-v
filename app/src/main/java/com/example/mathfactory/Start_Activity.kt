@@ -41,7 +41,7 @@ class Start_Activity : AppCompatActivity()
     lateinit var referenza_database:DatabaseReference
     var Id_Utente:String=""
     lateinit var item_spinner:Array<String>
-    lateinit var adapter_spinner:SpinnerAdapter
+    lateinit var adapter_spinner:ArrayAdapter<Any>
     val PERMISSION_REQUEST_CODE=0
     var spinner: Spinner?=null
     var selezione_spinner:String=""
@@ -507,8 +507,17 @@ class Start_Activity : AppCompatActivity()
     {
         var messaggio:String?=null
         var suono:Int?=null
-        val numero = file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()
-        if(!file_controllo_numero_iscritti.exists()||(file_controllo_numero_iscritti.exists()&&(numero==0)))
+        var numero:Int?=null
+        if(!main_directory.exists())
+            main_directory.mkdir()
+        if(!file_controllo_numero_iscritti.exists())
+        {
+            numero=0
+            file_controllo_numero_iscritti.writeText(numero.toString(), Charsets.UTF_8)
+        }
+        else
+            numero = file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()
+        if(numero==0)
         {
             messaggio="It is possible adding\nnot more than 10 new users!"
             suono=R.raw.move_sound
