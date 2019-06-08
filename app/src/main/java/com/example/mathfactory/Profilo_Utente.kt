@@ -59,10 +59,12 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     var controllo=true
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
+    val GALLERY_REQUEST_CODE=1
     var gestione_uscita_cancellazione:Boolean=true
     var uscita_cancellazione:Boolean?=null
     private var mediaplayer: MediaPlayer? = null
     var size:Long?=null
+    var controllo_cancellazione=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
@@ -193,11 +195,13 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
-        button23.setOnClickListener {size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage();modifica_utente()}
+        button23.setOnClickListener {if(controllo_cancellazione){Cancellazione_Immagini_FireBase_Storage();controllo_cancellazione=false}else{size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage()};modifica_utente()}
         button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;controllo_generale3=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
         imageView.setOnClickListener {val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
+        button56.setOnClickListener { controllo_cancellazione=true;imageView.setImageBitmap(null);if(editText18.text.toString()=="Male")imageView.setBackgroundResource(R.mipmap.imm12)else if(editText18.text.toString()=="Female")imageView.setBackgroundResource(R.mipmap.imm36); Toast.makeText(this, "The profile photo has been\nsuccessfully resetted!", Toast.LENGTH_LONG).show();mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound);mediaplayer?.start()}
+        button57.setOnClickListener { if(checkPermission2())go_to_gallery()else requestPermission2()}
         if(size!=0.toLong())
             Scaricamento_Immagini_FireBase_Storage()
         leggi_utente()
@@ -360,17 +364,29 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onActivityResult(requestCode, resultCode, data)
        when(requestCode)
        {
-           CAMERA_REQUEST_CODE->{
+           CAMERA_REQUEST_CODE,GALLERY_REQUEST_CODE->{
                if(resultCode==Activity.RESULT_OK&&data!=null)
                {
+                   if(requestCode==CAMERA_REQUEST_CODE)
+                      imm=data.extras.get("data")as Bitmap
+                   else
+                   {
+                       val imm_uri=data.data
+                       imm=MediaStore.Images.Media.getBitmap(contentResolver,imm_uri)
+                   }
                    outputStream= ByteArrayOutputStream()
-                   imm=data.extras.get("data")as Bitmap
                    imm?.compress(Bitmap.CompressFormat.JPEG,45,outputStream)
                    array_di_bytes=outputStream.toByteArray()
                    imageView.setBackgroundResource(0)
                    imageView.setImageBitmap(imm)
                    Toast.makeText(this, "The photo has been\nsuccessfully uploaded!", Toast.LENGTH_LONG).show()
                    mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                   mediaplayer?.start()
+               }
+               else
+               {
+                   Toast.makeText(this,"The image has not been acquired!",Toast.LENGTH_LONG).show()
+                   mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
                    mediaplayer?.start()
                }
            }
@@ -435,7 +451,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
     private fun leggi_utente()
     {
-        controllo_barra=true
+        if(size==0.toLong())
+            controllo_barra=true
         var controllo=true
         referenza_database = FirebaseDatabase.getInstance().getReference("Users")
         referenza_database.addValueEventListener(object: ValueEventListener{
@@ -456,7 +473,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                    }
                }
               }
-                controllo_barra=false
+                if(size==0.toLong())
+                    controllo_barra=false
             }
         })
     }
@@ -483,8 +501,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 if (utente?.gender == "Female")
                     imageView.setBackgroundResource(R.mipmap.imm36)
         }
-        else
-            imageView.setBackgroundResource(0)
     }
     private fun modifica_utente()
     {
@@ -494,6 +510,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             Toast.makeText(this, "Warning: Username or password\nmissing!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
             mediaplayer?.start()
+            if(size==0.toLong())
+                controllo_barra=false
             return
         }
         else
@@ -502,6 +520,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                 mediaplayer?.start()
+                if(size==0.toLong())
+                    controllo_barra=false
                 return
             }
             else
@@ -509,7 +529,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     val controllo_connessione= Check_Network()
                     if(controllo_connessione.Network_Disponibile(this))
                     {
-                        controllo_barra=true
+                        if(size==0.toLong())
+                            controllo_barra=true
                         val dati = arrayOf(editText20.text.toString(), editText26.text.toString(),editText25.text.toString(),editText24.text.toString(),editText18.text.toString(),editText22.text.toString(),editText21.text.toString())
                         referenza_database = FirebaseDatabase.getInstance().getReference("Users")
                         val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
@@ -522,12 +543,11 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                                     if (editText18.text.toString() == "Female")
                                         imageView.setBackgroundResource(R.mipmap.imm36)
                             }
-                            else
-                                imageView.setBackgroundResource(0)
                             Toast.makeText(this, "The profile has been\nsuccessfully modified!", Toast.LENGTH_LONG).show()
                             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                             mediaplayer?.start()
-                            controllo_barra=false
+                            if(size==0.toLong())
+                               controllo_barra=false
                         }
                         return
                     }
@@ -536,6 +556,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                         Toast.makeText(this, "Warning: The server is not reachable!", Toast.LENGTH_LONG).show()
                         mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                         mediaplayer?.start()
+                        if(size==0.toLong())
+                            controllo_barra=false
                         return
                     }
                 }
@@ -546,6 +568,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val controllo_connessione= Check_Network()
         if(controllo_connessione.Network_Disponibile(this))
         {
+            controllo_barra=true
+            Cancellazione_Immagini_FireBase_Storage()
             if(ricorda_file_username.exists()&&ricorda_file_password.exists()&&user_directory.exists())
             {
                 ricorda_file_username.delete()
@@ -569,21 +593,66 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
     private fun Caricamento_Immagini_FireBase_Storage()
     {
-        val referenza_storage=FirebaseStorage.getInstance().getReference("/Profile_Photos/"+ utente_loggato+"_Profile_Photo")
-        referenza_storage.putBytes(array_di_bytes!!)
-            .addOnSuccessListener {}
-            .addOnFailureListener {}
+        val controllo_connessione=Check_Network()
+        if(controllo_connessione.Network_Disponibile(this))
+        {
+            controllo_barra = true
+            val referenza_storage =
+                FirebaseStorage.getInstance().getReference("/Profile_Photos/" + utente_loggato + "_Profile_Photo")
+            referenza_storage.putBytes(array_di_bytes!!)
+                .addOnSuccessListener {
+                    imageView.setBackgroundResource(0)
+                    controllo_barra = false
+                }
+                .addOnFailureListener {
+                    imageView.setImageBitmap(null)
+                    imageView.setBackgroundResource(R.mipmap.imm37)
+                    Toast.makeText(this, "Warning: The profile photo has non been\nsuccessfully uploaded!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                    controllo_barra = false
+                }
+        }
     }
     private fun Scaricamento_Immagini_FireBase_Storage()
     {
-        val referenza_storage=FirebaseStorage.getInstance().getReference("/Profile_Photos/"+ utente_loggato+"_Profile_Photo")
+        controllo_barra = true
+        val referenza_storage = FirebaseStorage.getInstance().getReference("/Profile_Photos/" + utente_loggato + "_Profile_Photo")
         referenza_storage.getBytes(size!!)
-            .addOnSuccessListener {
-                array_di_bytes=it
-                inputStream= ByteArrayInputStream(array_di_bytes)
-                imm=BitmapFactory.decodeStream(inputStream)
-                imageView.setImageBitmap(imm)
-            }
-            .addOnFailureListener {}
+                .addOnSuccessListener {
+                    array_di_bytes = it
+                    inputStream = ByteArrayInputStream(array_di_bytes)
+                    imm = BitmapFactory.decodeStream(inputStream)
+                    imageView.setBackgroundResource(0)
+                    imageView.setImageBitmap(imm)
+                    controllo_barra = false
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Warning: The profile photo has non been\nsuccessfully downloaded!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                    controllo_barra = false
+                }
+    }
+    private fun Cancellazione_Immagini_FireBase_Storage()
+    {
+        val controllo_connessione=Check_Network()
+        if(controllo_connessione.Network_Disponibile(this))
+        {
+            controllo_barra = true
+            array_di_bytes = null
+            size = 0.toLong()
+            dimensione_array_di_byte.writeText(size.toString(), Charsets.UTF_8)
+            val referenza_storage =
+                FirebaseStorage.getInstance().getReference("/Profile_Photos/" + utente_loggato + "_Profile_Photo")
+            referenza_storage.delete()
+            controllo_barra = false
+        }
+    }
+    private fun go_to_gallery()
+    {
+        val intent=Intent(Intent.ACTION_PICK)
+        intent.type="image/*"
+        startActivityForResult(intent,GALLERY_REQUEST_CODE)
     }
 }

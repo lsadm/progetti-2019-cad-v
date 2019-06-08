@@ -31,14 +31,14 @@
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm38" android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@+id/editText18"
-            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/button50"/>
+            android:layout_marginTop="9dp" app:layout_constraintTop_toBottomOf="@+id/button50"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button29"
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm16" android:textAllCaps="false"
-            app:layout_constraintStart_toEndOf="@+id/button23"
-            app:layout_constraintTop_toTopOf="@+id/button23"/>
+            app:layout_constraintTop_toBottomOf="@+id/button23" app:layout_constraintStart_toEndOf="@+id/textView52"
+    />
     <TextView
             android:text="@string/genere"
             android:layout_width="112dp"
@@ -92,9 +92,8 @@
             android:textSize="24sp" android:textStyle="italic"
             android:textColor="@color/silver"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/button29"
-            android:layout_marginStart="27dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView38"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView38" app:layout_constraintStart_toEndOf="@+id/button56"
+            android:layout_marginStart="27dp"/>
     <TextView
             android:text="@string/nome_utente"
             android:layout_width="wrap_content"
@@ -190,8 +189,8 @@
             android:layout_height="50dp" android:id="@+id/button23"
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm14" android:textAllCaps="false"
-            app:layout_constraintStart_toEndOf="@+id/button26"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView34" app:layout_constraintStart_toEndOf="@+id/textView52"
+            android:layout_marginTop="25dp"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button26"
@@ -200,8 +199,8 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"/>
     <TextView
             android:text="@string/domanda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView52"
+            android:layout_width="62dp"
+            android:layout_height="34dp" android:id="@+id/textView52"
             android:textColor="@color/gold"
             android:textSize="12sp" android:textAlignment="center" android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/button51" app:layout_constraintStart_toEndOf="@+id/editText25"
@@ -214,7 +213,7 @@
             android:text="@string/si"
             android:background="@color/start2" android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/textView52" app:layout_constraintStart_toEndOf="@+id/button50"
-            android:layout_marginStart="11dp"/>
+            android:layout_marginStart="2dp"/>
     <Button
             android:layout_width="30dp"
             android:layout_height="30dp" android:id="@+id/button50"
@@ -224,14 +223,26 @@
             app:layout_constraintStart_toEndOf="@+id/editText25"
             app:layout_constraintTop_toBottomOf="@+id/textView52"/>
     <Button
-            android:text="@string/delete_account"
-            android:layout_width="70dp"
-            android:layout_height="36dp" android:id="@+id/button55"
-            android:layout_marginTop="36dp"
-            app:layout_constraintTop_toBottomOf="@+id/button54"
+            android:layout_width="50dp"
+            android:layout_height="50dp" android:id="@+id/button55"
             android:textColor="@color/red" android:textSize="14sp"
-            android:textAllCaps="false" android:background="@drawable/my_button1"
-            app:layout_constraintStart_toEndOf="@+id/editText21"/>
+            android:textAllCaps="false" android:background="@mipmap/imm44"
+            app:layout_constraintTop_toBottomOf="@+id/button29" app:layout_constraintStart_toEndOf="@+id/button49"
+    />
+    <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp" android:id="@+id/button56"
+            android:textColor="@color/red" android:textSize="14sp"
+            android:textAllCaps="false" android:background="@mipmap/imm43"
+            app:layout_constraintStart_toEndOf="@+id/button57"
+            app:layout_constraintTop_toTopOf="@+id/button57"/>
+    <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp" android:id="@+id/button57"
+            android:textColor="@color/red" android:textSize="14sp"
+            android:textAllCaps="false" android:background="@mipmap/imm42"
+            app:layout_constraintStart_toEndOf="@+id/button26"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
     <ProgressBar
             android:id="@+id/progress_access"
             android:layout_width="60dp"

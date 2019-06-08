@@ -185,7 +185,6 @@
     <string name="dieci">Text Note</string>
     <string name="undici">Audio Note</string>
     <string name="dodici">Image Note</string>
-    <string name="delete_account">Delete\nAccount</string>
     <string name="ricorda">Remember me</string>
 </resources>
 
