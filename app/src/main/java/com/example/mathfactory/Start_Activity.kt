@@ -181,7 +181,7 @@ class Start_Activity : AppCompatActivity()
         button24.setOnClickListener {settaggio(1);controllo=false; mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}
         button25.setOnClickListener {settaggio(2);controllo=true;avvertimento()}
         button27.setOnClickListener {settaggio(0);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}
-        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(!main_directory.exists())main_directory.mkdir();if(!reflesh_directory.exists())reflesh_directory.mkdir();if((controllo==true)&&(controllo_numero_iscritti())){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;controllo_interno=false;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
+        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(!main_directory.exists())main_directory.mkdir();if(!reflesh_directory.exists())reflesh_directory.mkdir();if((controllo==true)&&(controllo_numero_iscritti())){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -341,6 +341,7 @@ class Start_Activity : AppCompatActivity()
             val controllo_connessione = Check_Network()
             if (controllo_connessione.Network_Disponibile(this))
             {
+                switcher.setEnabled(false)
                 controllo_barra=true
                 var controllo=true
                 referenza_database = FirebaseDatabase.getInstance().getReference("Users")
@@ -370,6 +371,7 @@ class Start_Activity : AppCompatActivity()
                         }
                         if(esito(controllo)&&(controllo_generale2==true)&&(controllo_generale4==true)&&(controllo_generale6==true))
                         {
+                            controllo_interno=false
                             val next = Intent(contesto, MainActivity::class.java)
                             next.putExtra("Id_Utente",Id_Utente)
                             settaggio(0)
@@ -377,7 +379,11 @@ class Start_Activity : AppCompatActivity()
                             mediaplayer = MediaPlayer.create(contesto, R.raw.move_sound)
                             mediaplayer?.start()
                             controllo_barra=false
+                            switcher.setEnabled(true)
+                            controllo_interno=true
                         }
+                        else
+                            switcher.setEnabled(true)
                     }
                 })
             }

@@ -33,8 +33,8 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Text/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Text_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Text/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Text_Note/"
         var file_text: File?=null
         var file_data_text:File?=null
         val user:User=userList[p1]
@@ -81,8 +81,8 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Image/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Image_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Image/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Image_Note/"
         var file_image: File?=null
         var file_data_image:File?=null
         val user2:User2=userList[p1]
@@ -194,9 +194,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Audio/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Date_Audio_Note/"
-        val output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Duration_Audio_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Audio/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Audio_Note/"
+        val output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Duration_Audio_Note/"
         var file_audio: File?=null
         var file_data_audio:File?=null
         var file_durata_audio:File?=null

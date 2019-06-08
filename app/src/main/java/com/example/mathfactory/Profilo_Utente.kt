@@ -32,6 +32,7 @@ import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profilo__utente.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -45,9 +46,12 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     val user_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato)
     val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
     val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
+    val dimensione_array_di_byte=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+utente_loggato+"/MathView_Parameters/Parameter4.txt")
     var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
     lateinit var outputStream:ByteArrayOutputStream
+    lateinit var inputStream:ByteArrayInputStream
+    var imm:Bitmap?=null
     var array_di_bytes:ByteArray?=null
     var utente:Utente?=null
     var Id_Utente:String=""
@@ -58,10 +62,18 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     var gestione_uscita_cancellazione:Boolean=true
     var uscita_cancellazione:Boolean?=null
     private var mediaplayer: MediaPlayer? = null
+    var size:Long?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
+        if(dimensione_array_di_byte.exists())
+            size = dimensione_array_di_byte.readText(Charsets.UTF_8).toLong()
+        else
+        {
+            size = 0.toLong()
+            dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8)
+        }
         controllo_generale7=true
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         editText18.setEnabled(false)
@@ -177,15 +189,17 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         checkThread.start()
         connectionThread.start()
         progressBarThread.start()
-        button26.setOnClickListener{if(checkPermission())go_to_camera()else requestPermission()}
+        button26.setOnClickListener{if(checkPermission()&&checkPermission2())go_to_camera()else{if(!checkPermission())requestPermission();if(!checkPermission2())requestPermission2()}}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
-        button23.setOnClickListener {modifica_utente()}
+        button23.setOnClickListener {size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage();modifica_utente()}
         button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;controllo_generale3=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}
         imageView.setOnClickListener {val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
+        if(size!=0.toLong())
+            Scaricamento_Immagini_FireBase_Storage()
         leggi_utente()
     }
 
@@ -350,8 +364,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                if(resultCode==Activity.RESULT_OK&&data!=null)
                {
                    outputStream= ByteArrayOutputStream()
-                   val imm=data.extras.get("data")as Bitmap
-                   imm.compress(Bitmap.CompressFormat.JPEG,45,outputStream)
+                   imm=data.extras.get("data")as Bitmap
+                   imm?.compress(Bitmap.CompressFormat.JPEG,45,outputStream)
                    array_di_bytes=outputStream.toByteArray()
                    imageView.setBackgroundResource(0)
                    imageView.setImageBitmap(imm)
@@ -461,11 +475,16 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         editText22.setSelection(editText22.text.lastIndex+1)
         editText21.setText(utente?.profession)
         editText21.setSelection(editText21.text.lastIndex+1)
+        if(size==0.toLong())
+        {
             if (utente?.gender == "Male")
                 imageView.setBackgroundResource(R.mipmap.imm12)
             else
                 if (utente?.gender == "Female")
                     imageView.setBackgroundResource(R.mipmap.imm36)
+        }
+        else
+            imageView.setBackgroundResource(0)
     }
     private fun modifica_utente()
     {
@@ -495,11 +514,16 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                         referenza_database = FirebaseDatabase.getInstance().getReference("Users")
                         val utente =Utente(Id_Utente, dati[0], dati[1], dati[2], dati[3], dati[4], dati[5], dati[6])
                         referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
-                            if(editText18.text.toString()=="Male")
-                                imageView.setBackgroundResource(R.mipmap.imm12)
+                            if(size==0.toLong()&&array_di_bytes==null)
+                            {
+                                if (editText18.text.toString() == "Male")
+                                    imageView.setBackgroundResource(R.mipmap.imm12)
+                                else
+                                    if (editText18.text.toString() == "Female")
+                                        imageView.setBackgroundResource(R.mipmap.imm36)
+                            }
                             else
-                                if(editText18.text.toString()=="Female")
-                                    imageView.setBackgroundResource(R.mipmap.imm36)
+                                imageView.setBackgroundResource(0)
                             Toast.makeText(this, "The profile has been\nsuccessfully modified!", Toast.LENGTH_LONG).show()
                             mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
                             mediaplayer?.start()
@@ -542,5 +566,24 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             mediaplayer?.start()
             return false
         }
+    }
+    private fun Caricamento_Immagini_FireBase_Storage()
+    {
+        val referenza_storage=FirebaseStorage.getInstance().getReference("/Profile_Photos/"+ utente_loggato+"_Profile_Photo")
+        referenza_storage.putBytes(array_di_bytes!!)
+            .addOnSuccessListener {}
+            .addOnFailureListener {}
+    }
+    private fun Scaricamento_Immagini_FireBase_Storage()
+    {
+        val referenza_storage=FirebaseStorage.getInstance().getReference("/Profile_Photos/"+ utente_loggato+"_Profile_Photo")
+        referenza_storage.getBytes(size!!)
+            .addOnSuccessListener {
+                array_di_bytes=it
+                inputStream= ByteArrayInputStream(array_di_bytes)
+                imm=BitmapFactory.decodeStream(inputStream)
+                imageView.setImageBitmap(imm)
+            }
+            .addOnFailureListener {}
     }
 }
