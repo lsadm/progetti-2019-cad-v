@@ -367,15 +367,18 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
            CAMERA_REQUEST_CODE,GALLERY_REQUEST_CODE->{
                if(resultCode==Activity.RESULT_OK&&data!=null)
                {
+                   outputStream= ByteArrayOutputStream()
                    if(requestCode==CAMERA_REQUEST_CODE)
-                      imm=data.extras.get("data")as Bitmap
+                   {
+                       imm = data.extras.get("data") as Bitmap
+                       imm?.compress(Bitmap.CompressFormat.JPEG,100,outputStream)
+                   }
                    else
                    {
                        val imm_uri=data.data
                        imm=MediaStore.Images.Media.getBitmap(contentResolver,imm_uri)
+                       imm?.compress(Bitmap.CompressFormat.JPEG,60,outputStream)
                    }
-                   outputStream= ByteArrayOutputStream()
-                   imm?.compress(Bitmap.CompressFormat.JPEG,45,outputStream)
                    array_di_bytes=outputStream.toByteArray()
                    imageView.setBackgroundResource(0)
                    imageView.setImageBitmap(imm)
@@ -602,6 +605,9 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             referenza_storage.putBytes(array_di_bytes!!)
                 .addOnSuccessListener {
                     imageView.setBackgroundResource(0)
+                    Toast.makeText(this, "The profile photo has been\nsuccessfully uploaded!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                    mediaplayer?.start()
                     controllo_barra = false
                 }
                 .addOnFailureListener {
@@ -654,5 +660,8 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val intent=Intent(Intent.ACTION_PICK)
         intent.type="image/*"
         startActivityForResult(intent,GALLERY_REQUEST_CODE)
+        Toast.makeText(this, "The access to the archive has\nsuccessfully taken place!", Toast.LENGTH_LONG).show()
+        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+        mediaplayer?.start()
     }
 }

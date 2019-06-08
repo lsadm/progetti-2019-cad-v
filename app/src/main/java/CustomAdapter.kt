@@ -141,7 +141,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             controllo_barra=true
             val next=Intent(user2.contesto,call::class.java)
             val stream=ByteArrayOutputStream()
-            user2.immagine?.compress(Bitmap.CompressFormat.JPEG,45,stream)
+            user2.immagine?.compress(Bitmap.CompressFormat.JPEG,30,stream)
             val image=stream.toByteArray()
             next.putExtra("Id_Utente",user2.Id_Utente)
             next.putExtra("immagine",image)
