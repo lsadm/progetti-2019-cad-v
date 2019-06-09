@@ -32,11 +32,12 @@ val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory(
 class Start_Activity : AppCompatActivity()
 {
     var controllo_interno=true
-    var controlo_Check_Thread=true
     val main_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView")
     val reflesh_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters")
     val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
     val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
+    val ricorda_stato_switcher=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter3.txt")
+    var stato_switcher=false
     var controllo_barra=false
     var utente:Utente?=null
     lateinit var referenza_database:DatabaseReference
@@ -47,6 +48,9 @@ class Start_Activity : AppCompatActivity()
     var spinner: Spinner?=null
     var selezione_spinner:String=""
     var controllo:Boolean?=null
+    var controllo_Check_Thread=false
+    var controllo_switcher=false
+    var controllo_registrazione=false
     private var mediaplayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -56,19 +60,77 @@ class Start_Activity : AppCompatActivity()
         controllo_generale6=true
         controllo_generale7=false
         controllo_archivio=true
+        if(checkPermission()&&ricorda_stato_switcher.exists()&&(ricorda_stato_switcher.readText(Charsets.UTF_8)=="1")&&ricorda_file_username.exists()&&ricorda_file_password.exists())
+        {
+            stato_switcher=true
+            editText15.setText(ricorda_file_username.readText(Charsets.UTF_8))
+            editText15.setSelection(editText15.text.lastIndex+1)
+            editText14.setText(ricorda_file_password.readText(Charsets.UTF_8))
+            editText14.setSelection(editText14.text.lastIndex+1)
+            switcher.setChecked(true)
+        }
         class MyHandler: Handler()
         {
             override fun handleMessage(msg: Message)
             {
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
-                if(valore=="visible")
-                    progress_access.visibility=View.VISIBLE
-                    else
-                    if(valore=="invisible")
-                        progress_access.visibility=View.INVISIBLE
-                    else
-                        button28.performClick()
+                when(valore)
+                {
+                    "visible"->progress_access.visibility=View.VISIBLE
+                    "invisible"->progress_access.visibility=View.INVISIBLE
+                    "switch"->{controllo_switcher=false;mode_switcher_on()}
+                    "registration"->button25.performClick()
+                    "check"->button28.performClick()
+                }
+            }
+        }
+        class RegistrationThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                if(!checkPermission())
+                {
+                    while ((!checkPermission()))
+                        sleep(1000)
+                    if(controllo_registrazione)
+                    {
+                        sleep(500)
+                        notify_message("registration")
+                    }
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
+            }
+        }
+        class SwitchThread constructor(val handler:Handler):Thread()
+        {
+            override fun run()
+            {
+                if(!checkPermission())
+                {
+                    while ((!checkPermission()))
+                        sleep(1000)
+                    if(controllo_switcher)
+                    {
+                        sleep(500)
+                        notify_message("switch")
+                    }
+                }
+            }
+            fun notify_message(valore:String)
+            {
+                val messaggio=handler.obtainMessage()
+                val bundle=Bundle()
+                bundle.putString("reflesh",""+valore)
+                messaggio.setData(bundle)
+                handler.sendMessage(messaggio)
             }
         }
         class CheckThread constructor(val handler: Handler):Thread()
@@ -79,8 +141,11 @@ class Start_Activity : AppCompatActivity()
                 {
                     while ((!checkPermission()))
                         sleep(1000)
-                    sleep(500)
-                    notify_message("")
+                    if(controllo_Check_Thread)
+                    {
+                        sleep(500)
+                        notify_message("check")
+                    }
                 }
             }
             fun notify_message(valore:String)
@@ -127,7 +192,12 @@ class Start_Activity : AppCompatActivity()
         val myHandler=MyHandler()
         val checkThread=CheckThread(myHandler)
         val progressThread=ProgressBarThread(myHandler)
+        val switchThread=SwitchThread(myHandler)
+        val registrationThread=RegistrationThread(myHandler)
         progressThread.start()
+        checkThread.start()
+        registrationThread.start()
+        switchThread.start()
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
         item_spinner=arrayOf("None","Male","Female")
@@ -135,55 +205,30 @@ class Start_Activity : AppCompatActivity()
         spinner=findViewById(R.id.spinner)as Spinner
         spinner?.adapter=adapter_spinner
         switcher.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked)
+            controllo_registrazione=false
+            controllo_Check_Thread=false
+            controllo_switcher=true
+            if(checkPermission())
             {
-                if(checkPermission()&&ricorda_file_username.exists()&&ricorda_file_password.exists())
+                if (isChecked)
                 {
-                    editText15.setText(ricorda_file_username.readText(Charsets.UTF_8))
-                    editText15.setSelection(editText15.text.lastIndex + 1)
-                    editText14.setText(ricorda_file_password.readText(Charsets.UTF_8))
-                    editText14.setSelection(editText14.text.lastIndex + 1)
-                    if(controllo_interno)
-                    {
-                        Toast.makeText(this, "I remember you c:", Toast.LENGTH_LONG).show()
-                        mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
-                        mediaplayer?.start()
-                    }
+                    mode_switcher_on()
                 }
                 else
                 {
-                    switcher.setChecked(false)
-                    if(!checkPermission())
-                        requestPermission()
-                    else
-                    {
-                        if(controllo_interno)
-                        {
-                            Toast.makeText(this, "No username and password\nto remember!", Toast.LENGTH_LONG).show()
-                            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
-                            mediaplayer?.start()
-                        }
-                    }
+                    mode_switcher_off()
                 }
             }
             else
             {
-                editText15.setText("")
-                editText15.setSelection(editText15.text.lastIndex+1)
-                editText14.setText("")
-                editText14.setSelection(editText14.text.lastIndex+1)
-                if(controllo_interno)
-                {
-                    Toast.makeText(this, "I don't remember you :c", Toast.LENGTH_LONG).show()
-                    mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
-                    mediaplayer?.start()
-                }
+                switcher.setChecked(false)
+                requestPermission()
             }
         }
         button24.setOnClickListener {settaggio(1);controllo=false; mediaplayer = MediaPlayer.create(this, R.raw.move_sound);mediaplayer?.start()}
-        button25.setOnClickListener {settaggio(2);controllo=true;avvertimento()}
+        button25.setOnClickListener {controllo_switcher=false;controllo_Check_Thread=false;controllo_registrazione=true;if(checkPermission()){settaggio(2);controllo=true;avvertimento()}else requestPermission()}
         button27.setOnClickListener {settaggio(0);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}
-        button28.setOnClickListener {if(controlo_Check_Thread)checkThread.start();if(checkPermission()){if(!main_directory.exists())main_directory.mkdir();if(!reflesh_directory.exists())reflesh_directory.mkdir();if((controllo==true)&&(controllo_numero_iscritti())){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;verifica_utente(this)}}else {controlo_Check_Thread=false;requestPermission()}}
+        button28.setOnClickListener {controllo_switcher=false;controllo_registrazione=false;controllo_Check_Thread=true;if(checkPermission()){if(!main_directory.exists())main_directory.mkdir();if(!reflesh_directory.exists())reflesh_directory.mkdir();if((controllo==true)&&(controllo_numero_iscritti())){controllo_generale3=true;aggiungi_utente()}else if(controllo==false){controllo_generale2=true;controllo_generale4=true;verifica_utente(this)}}else ;requestPermission()}
         spinner?.onItemSelectedListener=object:AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
@@ -234,9 +279,6 @@ class Start_Activity : AppCompatActivity()
             textView48.visibility = View.VISIBLE
             button28.visibility = View.VISIBLE
             button27.visibility = View.VISIBLE
-            editText14.setText("")
-            editText15.setText("")
-            editText16.setText("")
             spinner?.adapter=adapter_spinner
             if (id == 1)
             {
@@ -244,11 +286,17 @@ class Start_Activity : AppCompatActivity()
                 editText14.hint="Password"
                 textView48.text = "Access"
                 button28.text = "Login"
-                editText14.setText("")
-                editText15.setText("")
                 ricordami.visibility=View.VISIBLE
                 switcher.visibility=View.VISIBLE
-            } else
+                if(stato_switcher)
+                {
+                    editText15.setText(ricorda_file_username.readText(Charsets.UTF_8))
+                    editText15.setSelection(editText15.text.lastIndex+1)
+                    editText14.setText(ricorda_file_password.readText(Charsets.UTF_8))
+                    editText14.setSelection(editText14.text.lastIndex+1)
+                }
+            }
+            else
                 if (id == 2)
                 {
                     editText15.hint="Choose username (Min 4 chars)"
@@ -282,8 +330,6 @@ class Start_Activity : AppCompatActivity()
             spinner?.visibility = View.INVISIBLE
             ricordami.visibility=View.INVISIBLE
             switcher.visibility=View.INVISIBLE
-            if(switcher.isChecked)
-               switcher.setChecked(false)
         }
     }
     private fun aggiungi_utente()
@@ -365,6 +411,10 @@ class Start_Activity : AppCompatActivity()
                                                 Id_Utente = utente?.chiave.toString()
                                                 ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
                                                 ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
+                                                if(stato_switcher)
+                                                    ricorda_stato_switcher.writeText("1",Charsets.UTF_8)
+                                                else
+                                                    ricorda_stato_switcher.writeText("0",Charsets.UTF_8)
                                                 utente_loggato=utente?.username
                                             }
                                         }
@@ -476,6 +526,10 @@ class Start_Activity : AppCompatActivity()
                         referenza_database.child(Id_Utente).setValue(utente).addOnCompleteListener {
                             ricorda_file_username.writeText(utente?.username.toString(),Charsets.UTF_8)
                             ricorda_file_password.writeText(utente?.password.toString(),Charsets.UTF_8)
+                            if(stato_switcher)
+                                ricorda_stato_switcher.writeText("1",Charsets.UTF_8)
+                            else
+                                ricorda_stato_switcher.writeText("0",Charsets.UTF_8)
                             file_controllo_numero_iscritti.writeText((file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()+1).toString(),Charsets.UTF_8)
                             utente_loggato=utente?.username
                             val next = Intent(contesto, MainActivity::class.java)
@@ -552,5 +606,49 @@ class Start_Activity : AppCompatActivity()
         Toast.makeText(this,messaggio,Toast.LENGTH_LONG).show()
         mediaplayer = MediaPlayer.create(this, suono)
         mediaplayer?.start()
+    }
+    private fun mode_switcher_on()
+    {
+        if(ricorda_file_username.exists()&&ricorda_file_password.exists())
+        {
+            editText15.setText(ricorda_file_username.readText(Charsets.UTF_8))
+            editText15.setSelection(editText15.text.lastIndex + 1)
+            editText14.setText(ricorda_file_password.readText(Charsets.UTF_8))
+            editText14.setSelection(editText14.text.lastIndex + 1)
+            if(controllo_interno)
+            {
+                Toast.makeText(this, "I remember you c:", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
+            }
+            stato_switcher=true
+            switcher.setChecked(true)
+        }
+        else
+        {
+            switcher.setChecked(false)
+            if(controllo_interno)
+                {
+                    Toast.makeText(this, "No username and password\nto remember!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+
+            stato_switcher=false
+        }
+    }
+    private fun mode_switcher_off()
+    {
+        editText15.setText("")
+        editText15.setSelection(editText15.text.lastIndex+1)
+        editText14.setText("")
+        editText14.setSelection(editText14.text.lastIndex+1)
+        if(controllo_interno)
+        {
+            Toast.makeText(this, "I don't remember you :c", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+            mediaplayer?.start()
+        }
+        stato_switcher=false
     }
 }
