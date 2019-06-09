@@ -37,6 +37,12 @@
                 android:layout_marginStart="8dp"/>
         <Button
                 android:layout_width="50dp"
+                android:layout_height="50dp" android:id="@+id/button58"
+                android:background="@mipmap/imm45_foreground"
+                app:layout_constraintStart_toEndOf="@+id/button53"
+                app:layout_constraintTop_toBottomOf="@+id/textView53"/>
+        <Button
+                android:layout_width="50dp"
                 android:layout_height="50dp" android:id="@+id/button52"
                 android:background="@mipmap/imm28_round"
                 android:layout_marginTop="8dp"
@@ -51,12 +57,12 @@
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
         <TextView
-                android:layout_width="245dp"
+                android:layout_width="195dp"
                 android:layout_height="50dp" android:id="@+id/textView55"
                 android:textColor="@color/red" android:textSize="20sp"
                 android:textAlignment="center"
-                app:layout_constraintStart_toEndOf="@+id/button53"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@color/start"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView53" android:background="@color/start"
+                app:layout_constraintStart_toEndOf="@+id/button58"/>
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

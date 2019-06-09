@@ -27,6 +27,7 @@ var controllo_generale4:Boolean?=null
 var controllo_generale5:Boolean?=null
 var controllo_generale6:Boolean?=null
 var utente_loggato:String?=null
+var controllo_archivio:Boolean?=null
 val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/Subscribers_number.txt")
 class Start_Activity : AppCompatActivity()
 {
@@ -54,6 +55,7 @@ class Start_Activity : AppCompatActivity()
         controllo_generale5=true
         controllo_generale6=true
         controllo_generale7=false
+        controllo_archivio=true
         class MyHandler: Handler()
         {
             override fun handleMessage(msg: Message)

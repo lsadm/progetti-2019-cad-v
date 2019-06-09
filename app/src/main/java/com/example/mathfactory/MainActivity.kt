@@ -42,12 +42,16 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
-        for(i in 0..8)
+        if(controllo_archivio==true)
         {
-            paths[i]=prefisso+suffissi[i]
-            directories[i]=File(paths[i])
-            if(directories[i]?.exists()==false)
-                directories[i]?.mkdir()
+            for (i in 0..8)
+            {
+                paths[i] = prefisso + suffissi[i]
+                directories[i] = File(paths[i])
+                if (directories[i]?.exists() == false)
+                    directories[i]?.mkdir()
+            }
+            controllo_archivio=false
         }
         class MyHandler: Handler()
         {

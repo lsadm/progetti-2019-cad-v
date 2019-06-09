@@ -28,6 +28,7 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_function9.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +37,7 @@ import kotlin.collections.ArrayList
 class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
+    val GALLERY_REQUEST_CODE=1
     private var mediaplayer: MediaPlayer?=null
     var adapter2:CustomAdapter2?=null
     val formato= SimpleDateFormat("HH:mm:ss_dd/MM/yyyy")
@@ -129,6 +131,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         val checkThread=CheckThread(myHandler)
         checkThread.start()
         button53.setOnClickListener { if(checkPermission())photoFile=go_to_camera()else requestPermission()}
+        button58.setOnClickListener {go_to_gallery()}
         button21.setOnClickListener{
             if(imm!=null)
             {
@@ -341,6 +344,32 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     mediaplayer?.start()
                 }
             }
+            GALLERY_REQUEST_CODE->
+            {
+                if(resultCode==Activity.RESULT_OK&&data!=null)
+                {
+                    if (users2.size == 0)
+                        counter = 1
+                    val imm_uri = data.data
+                    val outputStream=ByteArrayOutputStream()
+                    nome_image = prefisso2 + counter.toString() + ".jpg"
+                    photoFile = File(output, nome_image)
+                    imm = MediaStore.Images.Media.getBitmap(contentResolver, imm_uri)
+                    imm?.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                    photoFile?.writeBytes(outputStream.toByteArray())
+                    textView55.setTextColor(rgb(40, 114, 51))
+                    textView55.text = "The photo is ready to\nupload!"
+                    Toast.makeText(this, "The image has been acquired!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                }
+                else
+                {
+                    Toast.makeText(this,"The image has not been acquired!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                }
+            }
             else->
             {
                 Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
@@ -375,6 +404,15 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             mediaplayer?.start()
         }
         return photoFile
+    }
+    private fun go_to_gallery()
+    {
+        val callGalleryIntent=Intent(Intent.ACTION_PICK)
+        callGalleryIntent.type="image/*"
+        startActivityForResult(callGalleryIntent,GALLERY_REQUEST_CODE)
+        Toast.makeText(this, "The access to the archive has\nsuccessfully taken place!", Toast.LENGTH_LONG).show()
+        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+        mediaplayer?.start()
     }
     private fun cancellazione_image()
     {
