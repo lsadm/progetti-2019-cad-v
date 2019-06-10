@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
+var mediaplayer_CustomerAdapter3: MediaPlayer? = null
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
     var mediaplayer:MediaPlayer?=null
@@ -180,7 +181,8 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
 }
 class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomAdapter3.ViewHolder>()
 {
-    var mediaplayer: MediaPlayer? = null
+    var controllo_riproduzione=true
+    var posizione:Int?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
         val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout3,p0,false)
@@ -244,6 +246,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                          notify_message("Remaining: 0 s")
                         sleep(500)
                         notify_message(R.mipmap.imm34_foreground.toString())
+                        controllo_riproduzione=true
                     }
                     if(controllo)
                      notify_message("Duration: "+user3.scorri.toString()+" s")
@@ -264,11 +267,13 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         val handler=MyHandler()
         val timer=TimerThread(handler)
         p0.riproduci_ferma.setOnClickListener{
-            if(riproduci_pausa)
+            if(riproduci_pausa&&controllo_riproduzione)
             {
+                controllo_riproduzione=false
+                posizione=p0.getAdapterPosition()
                 p0.riproduci_ferma.setBackgroundResource(R.mipmap.imm35_foreground)
                 riproduci_pausa=false
-                mediaplayer=MediaPlayer().apply{
+                mediaplayer_CustomerAdapter3=MediaPlayer().apply{
                     try
                     {
                         setDataSource(user3.path)
@@ -285,10 +290,14 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             }
             else
             {
-                p0.riproduci_ferma.setBackgroundResource(R.mipmap.imm34_foreground)
-                riproduci_pausa=true
-                mediaplayer?.release()
-                mediaplayer=null
+                if (p0.getAdapterPosition() == posizione)
+                {
+                    p0.riproduci_ferma.setBackgroundResource(R.mipmap.imm34_foreground)
+                    riproduci_pausa = true
+                    mediaplayer_CustomerAdapter3?.release()
+                    mediaplayer_CustomerAdapter3 = null
+                    controllo_riproduzione = true
+                }
             }
         }
         p0.progress_audio.progress=0
@@ -298,9 +307,16 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
         p0.titolo3.text=user3.titolo3
         p0.cancella3.setOnClickListener {
+            if(!controllo_riproduzione)
+            {
+                riproduci_pausa = true
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3= null
+                controllo_riproduzione = true
+            }
             val path3=output+user3.titolo3+".mp3"
             val path_data3=output_data+"Date_"+user3.titolo3+".txt"
-            val path_durata=output_durata+"Durata_"+user3.titolo3+".txt"
+            val path_durata=output_durata+"Duration_"+user3.titolo3+".txt"
             file_audio=File(path3)
             file_data_audio=File(path_data3)
             file_durata_audio=File(path_durata)
@@ -308,8 +324,8 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             file_data_audio?.delete()
             file_durata_audio?.delete()
             Toast.makeText(user3.contesto, user3.titolo3+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
-            mediaplayer = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
-            mediaplayer?.start()
+            mediaplayer_CustomerAdapter3 = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
+            mediaplayer_CustomerAdapter3?.start()
             val position= p0.getAdapterPosition()
             userList.removeAt(position)
             notifyItemRemoved(position)
