@@ -127,6 +127,7 @@ class Function3 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button22.setOnClickListener {if(turno){set_color(22);if(input_output_bis())textView23.setTextColor(Color.RED)else textView23.setTextColor(Color.BLUE);if(identifier2!=0)turno=false} }
         button17.setOnClickListener {controllo_barra=true;val next= Intent(this,Grafici::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier);next.putExtra("A", A);next.putExtra("f", f);next.putExtra("p", p);next.putExtra("x", x);next.putExtra("titolo",titolo);next.putExtra("interpolat",interpolat);next.putExtra("controllo",controllo);next.putExtra("identifier2", identifier2);next.putExtra("A2", A2);next.putExtra("f2", f2);next.putExtra("p2", p2);next.putExtra("x2", x2);next.putExtra("titolo2",titolo2);next.putExtra("interpolat2",interpolat2);next.putExtra("controllo2",controllo2);reset();startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start();controllo_barra=false}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

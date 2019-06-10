@@ -104,6 +104,7 @@ class Function1 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button20.setOnClickListener { controllo=input_output(identifier);if(controllo){set_color(7);set_color(identifier)} }
         button17.setOnClickListener {if(controllo){controllo_barra=true;controllo_reset=true;parametri_fondamentali();val next=Intent(this,Grafici::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("passo", passo);next.putExtra("inf", inf);next.putExtra("sup", sup);next.putExtra("identifier", identifier+27);if((identifier==1)||(identifier==3)||(identifier==5)||(identifier==6)){next.putExtra("identifier2", identifier+27);next.putExtra("titolo2", titolo2)};next.putExtra("titolo", titolo);next.putExtra("primo", parametri[0]);next.putExtra("secondo", parametri[1]);next.putExtra("terzo", parametri[2]);next.putExtra("quarto", parametri[3]);reset();setta_elementi(false,0);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start();controllo_barra=false}}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

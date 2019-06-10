@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity()
         plot3.setOnClickListener {  val next = Intent(this, Function7::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()   }
         profilo.setOnClickListener {if(checkPermission()){val next = Intent(this, Profilo_Utente::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()}else requestPermission()}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application, menu)

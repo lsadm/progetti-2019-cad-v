@@ -41,7 +41,7 @@ class call : AppCompatActivity()
             Toast.makeText(this, titolo_immagine+" not\nfound for preview!", Toast.LENGTH_LONG).show()
         }
     }
-
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application3, menu)
         return true

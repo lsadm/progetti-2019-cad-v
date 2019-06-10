@@ -51,6 +51,7 @@ class Function6 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         calculate7.setOnClickListener {if(input1()){id=6;setta_colore();check2=false}}
         calculate2.setOnClickListener {if(check){check=false;textView17.setTextColor(Color.BLUE);textView22.setTextColor(Color.BLUE)};if(id!=0){if(input2()){elementare();if(id!=6)visualizza()else visualizza_bis();id=0;setta_colore()};editText.setText("");editText2.setText("");check2=true}else{if(input3()){visualizza()};editText.setText("");editText2.setText("")}}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

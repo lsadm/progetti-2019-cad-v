@@ -264,6 +264,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 }
         }
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application2, menu)
         return true

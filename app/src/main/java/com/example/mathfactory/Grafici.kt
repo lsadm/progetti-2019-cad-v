@@ -378,7 +378,7 @@ class Grafici: AppCompatActivity()
         if(identifier2!=0)
          graphview.addSeries(series2)
     }
-
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application3, menu)
         return true

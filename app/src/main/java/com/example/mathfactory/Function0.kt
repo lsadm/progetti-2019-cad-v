@@ -118,6 +118,7 @@ class Function0 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         button47.setOnClickListener {if(!controllo17){if(textView2.text==""){textView2.text="Warning: missing operand!";textView2.setTextColor(Color.RED)}; controllo16=false;if((controllo)&&(controllo5)&&(controllo8)&&(controllo21)){colore_bottoni(34);controllo15=false;if((controllo11)||(controllo12))generale=textView2.text.toString();controllo12=false; textView2.text="setttgh("+generale+")";val risposta=settoretangente_iperbolica(generale.toDouble());risultato=risposta;controllo9=false;controllo10=false ;controllo11=false}}else {controllo18=true;help(29);colore_bottoni(29)}}
         button48.setOnClickListener {if(!controllo17){if(textView2.text==""){textView2.text="Warning: missing operand!";textView2.setTextColor(Color.RED)}; controllo16=false;if((controllo)&&(controllo5)&&(controllo8)&&(controllo21)){colore_bottoni(35);controllo15=false;if((controllo11)||(controllo12))generale=textView2.text.toString(); controllo12=false;textView2.text="settctgh("+generale+")";val risposta=settorecotangente_iperbolica(generale.toDouble());risultato=risposta ;controllo9=false;controllo10=false;controllo11=false}}else{controllo18=true; help(30);colore_bottoni(30)}}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

@@ -36,6 +36,7 @@ class Function5 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         toogle.syncState()
         calculate.setOnClickListener { random();editText.setText("");editText2.setText("");editText3.setText("")}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

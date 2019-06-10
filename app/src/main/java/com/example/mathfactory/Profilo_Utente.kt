@@ -206,7 +206,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             Scaricamento_Immagini_FireBase_Storage()
         leggi_utente()
     }
-
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application2, menu)
         return true

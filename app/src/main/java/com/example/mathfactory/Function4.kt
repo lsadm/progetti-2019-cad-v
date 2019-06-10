@@ -36,6 +36,7 @@ class Function4 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         var obj=Equazioni()
         calculate.setOnClickListener {if(obj.controllo_differenziale){textView.setTextColor(Color.BLUE);obj.controllo_differenziale=false};obj.a=editText.text.toString();obj.b=editText2.text.toString();obj.c=editText3.text.toString();obj.risolvi();if(obj.controllo_differenziale)textView.setTextColor(Color.RED);textView.text=obj.soluzione_differenziale;editText.setText("");editText2.setText("");editText3.setText("")}
     }
+    override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
         menuInflater.inflate(R.menu.menu_application2, menu)

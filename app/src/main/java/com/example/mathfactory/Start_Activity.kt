@@ -21,6 +21,8 @@ import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_start_.*
 import java.io.File
+import kotlin.system.exitProcess
+
 var controllo_generale2:Boolean?=null
 var controllo_generale3:Boolean?=null
 var controllo_generale4:Boolean?=null
@@ -240,6 +242,11 @@ class Start_Activity : AppCompatActivity()
                 selezione_spinner="${parent?.getItemAtPosition(0).toString()}"
             }
         }
+    }
+    override fun onBackPressed()
+    {
+        moveTaskToBack(true)
+        exitProcess(-1)
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
