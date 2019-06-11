@@ -17,12 +17,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.example.mathfactory.com.example.mathfactory.Check_Network
+import com.example.mathfactory.com.example.mathfactory.Fragment_Quit_Application
 import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_start_.*
+import kotlinx.android.synthetic.main.fragment_quit_application.*
 import java.io.File
 import kotlin.system.exitProcess
-
 var controllo_generale2:Boolean?=null
 var controllo_generale3:Boolean?=null
 var controllo_generale4:Boolean?=null
@@ -30,6 +31,8 @@ var controllo_generale5:Boolean?=null
 var controllo_generale6:Boolean?=null
 var utente_loggato:String?=null
 var controllo_archivio:Boolean?=null
+var controllo_generale8:Boolean?=null
+var controllo_generale9=true
 val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/Subscribers_number.txt")
 class Start_Activity : AppCompatActivity()
 {
@@ -58,6 +61,26 @@ class Start_Activity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_)
+        if(controllo_generale8==true)
+        {
+            moveTaskToBack(true)
+            exitProcess(-1)
+        }
+        else
+            if(controllo_generale8==false)
+            {
+                button24.setEnabled(true)
+                button25.setEnabled(true)
+                button27.setEnabled(true)
+                button28.setEnabled(true)
+                editText15.setEnabled(true)
+                editText14.setEnabled(true)
+                editText16.setEnabled(true)
+                spinner?.setEnabled(true)
+                switcher.setEnabled(true)
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
+            }
         controllo_generale5=true
         controllo_generale6=true
         controllo_generale7=false
@@ -257,8 +280,8 @@ class Start_Activity : AppCompatActivity()
     }
     override fun onBackPressed()
     {
-        moveTaskToBack(true)
-        exitProcess(-1)
+        if(controllo_generale9)
+            Show_Exit_Message()
     }
     override fun onCreateOptionsMenu(menu: Menu):Boolean
     {
@@ -643,5 +666,25 @@ class Start_Activity : AppCompatActivity()
             stato_switcher=true
             switcher.setChecked(true)
         }
+    }
+    private fun Show_Exit_Message()
+    {
+        button24.setEnabled(false)
+        button25.setEnabled(false)
+        button27.setEnabled(false)
+        button28.setEnabled(false)
+        editText15.setEnabled(false)
+        editText14.setEnabled(false)
+        editText16.setEnabled(false)
+        spinner?.setEnabled(false)
+        switcher.setEnabled(false)
+        val manager=supportFragmentManager
+        val transaction=manager.beginTransaction()
+        val fragment=Fragment_Quit_Application()
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+        mediaplayer?.start()
     }
 }
