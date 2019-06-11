@@ -76,7 +76,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         val recyclerView3=findViewById(R.id.recyclerView3)as RecyclerView
         recyclerView3.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         val users3= ArrayList<User3>()
-        output_parametro3=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Parameters/Parameter3.txt"
+        output_parametro3=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/.MathView_Parameters/Parameter3.txt"
         output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Audio/"
         output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Duration_Audio_Note/"
         output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Audio_Note/"

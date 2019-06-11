@@ -44,9 +44,9 @@ import java.util.*
 var controllo_generale7:Boolean?=null
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val user_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato)
-    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
-    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
-    val dimensione_array_di_byte=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+utente_loggato+"/MathView_Parameters/Parameter4.txt")
+    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
+    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
+    val dimensione_array_di_byte=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+utente_loggato+"/.MathView_Parameters/Parameter4.txt")
     var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
     lateinit var outputStream:ByteArrayOutputStream
@@ -195,7 +195,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
         button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)}}
         button50.setOnClickListener {setta_uscita(false)}
-        button23.setOnClickListener {if(controllo_cancellazione){Cancellazione_Immagini_FireBase_Storage();controllo_cancellazione=false}else{size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage()};modifica_utente()}
+        button23.setOnClickListener {if(controllo_cancellazione){Cancellazione_Immagini_FireBase_Storage();controllo_cancellazione=false}else{if(array_di_bytes==null)size=0.toLong()else size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage()};modifica_utente()}
         button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;controllo_generale3=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
         button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))}}

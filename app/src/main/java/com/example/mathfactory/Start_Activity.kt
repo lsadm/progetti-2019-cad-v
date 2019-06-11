@@ -30,15 +30,15 @@ var controllo_generale5:Boolean?=null
 var controllo_generale6:Boolean?=null
 var utente_loggato:String?=null
 var controllo_archivio:Boolean?=null
-val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/Subscribers_number.txt")
+val file_controllo_numero_iscritti=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.Subscribers_number.txt")
 class Start_Activity : AppCompatActivity()
 {
     var controllo_interno=true
     val main_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView")
-    val reflesh_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters")
-    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
-    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
-    val ricorda_stato_switcher=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/MathView_Reflesh_Parameters/Reflesh_Parameter3.txt")
+    val reflesh_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters")
+    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
+    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
+    val ricorda_stato_switcher=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter3.txt")
     var stato_switcher=false
     var controllo_barra=false
     var utente:Utente?=null
