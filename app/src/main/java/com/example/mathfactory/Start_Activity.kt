@@ -214,11 +214,23 @@ class Start_Activity : AppCompatActivity()
             {
                 if (isChecked)
                 {
-                    mode_switcher_on()
+                    stato_switcher=true
+                    if(controllo_interno)
+                    {
+                        Toast.makeText(this, "I remember you c:", Toast.LENGTH_LONG).show()
+                        mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                        mediaplayer?.start()
+                    }
                 }
                 else
                 {
-                    mode_switcher_off()
+                    stato_switcher=false
+                    if(controllo_interno)
+                    {
+                        Toast.makeText(this, "I don't remember you :c", Toast.LENGTH_LONG).show()
+                        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+                        mediaplayer?.start()
+                    }
                 }
             }
             else
@@ -631,31 +643,5 @@ class Start_Activity : AppCompatActivity()
             stato_switcher=true
             switcher.setChecked(true)
         }
-        else
-        {
-            switcher.setChecked(false)
-            if(controllo_interno)
-                {
-                    Toast.makeText(this, "No username and password\nto remember!", Toast.LENGTH_LONG).show()
-                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
-                    mediaplayer?.start()
-                }
-
-            stato_switcher=false
-        }
-    }
-    private fun mode_switcher_off()
-    {
-        editText15.setText("")
-        editText15.setSelection(editText15.text.lastIndex+1)
-        editText14.setText("")
-        editText14.setSelection(editText14.text.lastIndex+1)
-        if(controllo_interno)
-        {
-            Toast.makeText(this, "I don't remember you :c", Toast.LENGTH_LONG).show()
-            mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
-            mediaplayer?.start()
-        }
-        stato_switcher=false
     }
 }
