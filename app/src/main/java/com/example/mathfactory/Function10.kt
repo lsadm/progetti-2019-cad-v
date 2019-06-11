@@ -1,11 +1,15 @@
 package com.example.mathfactory
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.media.VolumeShaper
 import android.os.*
 import android.support.v7.app.AppCompatActivity
 import android.support.annotation.RequiresApi
@@ -19,6 +23,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -171,13 +176,12 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
           if(checkPermission())
               if(registra_ferma)
               {
+                  lock_unlock_Device_Rotation(true)
                   if(users3.size==0)
                       counter=1
                   nome_audio=output+prefisso3+counter.toString()+".mp3"
                   controllo3=true
-                  mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
-                  mediaplayer?.start()
-                  startRecording()
+                  startRecording(this)
                   if(controllo3)
                   {
                       button53.setBackgroundResource(R.mipmap.imm33_foreground)
@@ -195,6 +199,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                      textView55.setTextColor(rgb(40, 114, 51))
                      textView55.text = "The audio is ready to\nupload!"
                      controllo = true
+                     lock_unlock_Device_Rotation(false)
                  }
               }
             else
@@ -287,13 +292,16 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             return true
         }
         if (id == R.id.action_home) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, MainActivity::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, MainActivity::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -301,119 +309,155 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.getItemId()
         if (id == R.id.action_four) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function1::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function1::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.note_audio) {
-            Toast.makeText(this, "You are already here!", Toast.LENGTH_LONG).show()
-            mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                Toast.makeText(this, "You are already here!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_six) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function3::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function3::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_seven) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function4::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function4::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_eight) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function5::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function5::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_nine) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function6::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function6::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_ten) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function7::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function7::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.note_testuali) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function8::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function8::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.note_immagini) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function9::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function9::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.action_five) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function2::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function2::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.Profile) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Profilo_Utente::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Profilo_Utente::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         if (id == R.id.calculator) {
-            mediaplayer_CustomerAdapter3?.release()
-            mediaplayer_CustomerAdapter3=null
-            val next = Intent(this, Function0::class.java)
-            next.putExtra("Id_Utente",Id_Utente)
-            startActivity(next)
-            mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
-            mediaplayer?.start()
+            if(registra_ferma)
+            {
+                mediaplayer_CustomerAdapter3?.release()
+                mediaplayer_CustomerAdapter3 = null
+                val next = Intent(this, Function0::class.java)
+                next.putExtra("Id_Utente", Id_Utente)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
             return true
         }
         return true
@@ -428,7 +472,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO),PERMISSION_REQUEST_CODE)
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun startRecording()
+    private fun startRecording(contesto:Context)
     {
             mediarecorder= MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -445,14 +489,19 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             }
                 if(controllo3)
                 {
+                    Toast.makeText(contesto, "The recorder has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(contesto, R.raw.move_graph_sound)
+                    mediaplayer?.start()
                     istante_iniziale_registrazione=System.currentTimeMillis()
                     start()
                 }
+                else
+                {
+                    Toast.makeText(contesto, "The recorder has some problems!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(contesto, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
             }
-        if(controllo3)
-            Toast.makeText(this, "The recorder has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this, "The recorder has some problems!", Toast.LENGTH_LONG).show()
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording()
@@ -463,8 +512,11 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             release()
         }
         mediarecorder=null
-        Toast.makeText(this, "The registration has been successfully acquired!", Toast.LENGTH_LONG).show()
-    }
+            Toast.makeText(this, "The registration has been successfully acquired!", Toast.LENGTH_LONG).show()
+            mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+            mediaplayer?.start()
+
+        }
     private fun cancellazione_audio()
     {
         indice=1
@@ -486,5 +538,24 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
         file_parametro3=File(output_parametro3)
         file_parametro3?.delete()
+    }
+    private fun lock_unlock_Device_Rotation(lock:Boolean)
+    {
+        if(lock)
+        {
+            val currentOrientation=getResources().getConfiguration().orientation
+            if(currentOrientation== Configuration.ORIENTATION_LANDSCAPE)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+            else
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+        }
+        else
+        {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR2)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER)
+            else
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR)
+        }
     }
 }
