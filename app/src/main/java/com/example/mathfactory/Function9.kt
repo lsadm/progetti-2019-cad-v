@@ -67,9 +67,9 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         val recyclerView2=findViewById(R.id.recyclerView2)as RecyclerView
         recyclerView2.layoutManager= LinearLayoutManager(this, LinearLayout.VERTICAL,false)
         users2= ArrayList<User2>()
-        output_parametro2=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/.MathView_Parameters/Parameter2.txt"
-        output=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Image/"
-        output_data=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Image_Note/"
+        output_parametro2=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Parameters/Parameter2.txt"
+        output=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Image/"
+        output_data=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Date_Image_Note/"
         file_parametro2=File(output_parametro2)
         if(file_parametro2?.exists()==true)
             counter=file_parametro2?.readText(Charsets.UTF_8)?.toInt()?.plus(1)

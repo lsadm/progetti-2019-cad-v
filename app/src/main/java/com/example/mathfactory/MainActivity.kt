@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity()
     private var mediaplayer:MediaPlayer?=null
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
-    val prefisso:String=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+utente_loggato
-    val suffissi=arrayOf<String>("","/.MathView_Parameters","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note")
+    val prefisso:String=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato
+    val suffissi=arrayOf<String>("","/MathView_Parameters","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note")
     var paths=arrayOf<String?>(null,null,null,null,null,null,null,null,null)
     var directories=arrayOf<File?>(null,null,null,null,null,null,null,null,null)
     override fun onCreate(savedInstanceState: Bundle?) {

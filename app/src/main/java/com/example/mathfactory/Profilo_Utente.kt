@@ -43,10 +43,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 var controllo_generale7:Boolean?=null
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val user_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato)
-    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
-    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/.MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
-    val dimensione_array_di_byte=File(Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+utente_loggato+"/.MathView_Parameters/Parameter4.txt")
+    val user_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato)
+    val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
+    val ricorda_file_password=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/MathView_Reflesh_Parameters/Reflesh_Parameter2.txt")
+    val dimensione_array_di_byte=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Parameters/Parameter4.txt")
     var controllo_barra=false
     lateinit var referenza_database:DatabaseReference
     lateinit var outputStream:ByteArrayOutputStream
