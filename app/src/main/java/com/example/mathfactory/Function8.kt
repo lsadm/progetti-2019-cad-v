@@ -306,12 +306,16 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     Toast.makeText(this, "The text has been\nsuccessfully shared!", Toast.LENGTH_LONG).show()
                     mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
                     mediaplayer?.start()
+                    controllo_generale10=true
+                    controllo_generale11=true
                 }
                 else
                 {
                     Toast.makeText(this,"The text has not been shared!",Toast.LENGTH_LONG).show()
                     mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                     mediaplayer?.start()
+                    controllo_generale10=false
+                    controllo_generale11=true
                 }
             }
             else->
@@ -319,6 +323,8 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                 mediaplayer?.start()
+                if(requestCode== SHARING_REQUEST_CODE)
+                    controllo_generale11=false
             }
         }
     }

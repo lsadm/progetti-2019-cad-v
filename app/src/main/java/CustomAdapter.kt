@@ -22,6 +22,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
+var controllo_generale10:Boolean?=null
+var controllo_generale11:Boolean?=null
 val SHARING_REQUEST_CODE=2
 var mediaplayer_CustomerAdapter3: MediaPlayer? = null
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
@@ -47,6 +49,24 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
         var file_text: File?=null
         var file_data_text:File?=null
         val user:User=userList[p1]
+        class MyHandler:Handler()
+        {
+            override fun handleMessage(msg: Message)
+            {
+                val bundle:Bundle=msg.getData()
+                val valore:String=bundle.getString("reflesh")
+                if(valore=="change")
+                    p0.share1.setBackgroundResource(R.mipmap.imm48_foreground)
+                else
+                    if(valore=="change2")
+                        p0.share1.setBackgroundResource(R.mipmap.imm49_foreground)
+                    else
+                        if(valore=="error_change")
+                            p0.share1.setBackgroundResource(R.mipmap.imm46_foreground)
+            }
+        }
+        val myHandler=MyHandler()
+        val changeColorThread=ChangeColorThread(myHandler)
         p0.textViewTesto.text=user.testo
         p0.textViewOrario_Data.text=user.orario_data
         p0.titolo1.setText(user.title1)
@@ -72,7 +92,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
         p0.share1.setOnClickListener {
             val path1=output+user.titolo1+".txt"
             file_text=File(path1)
-            share(file_title1?.readText(Charsets.UTF_8),file_text,1,user.contesto,null)
+            share(file_title1?.readText(Charsets.UTF_8),file_text,1,user.contesto,null,changeColorThread)
         }
         p0.modifica1.setOnClickListener {
             if(p0.titolo1.text.toString()!="")
@@ -137,6 +157,15 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
                 else
                     if(valore=="invisible")
                         p0.progress_immage.visibility=View.INVISIBLE
+                    else
+                        if(valore=="change")
+                            p0.share2.setBackgroundResource(R.mipmap.imm48_foreground)
+                        else
+                            if(valore=="change2")
+                                p0.share2.setBackgroundResource(R.mipmap.imm49_foreground)
+                            else
+                                if(valore=="error_change")
+                                    p0.share2.setBackgroundResource(R.mipmap.imm46_foreground)
             }
         }
         class ProgressBarThread constructor(val handler:Handler):Thread()
@@ -173,6 +202,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
         }
         val myHandler=MyHandler()
         val progressBarThread=ProgressBarThread(myHandler)
+        val changeColorThread=ChangeColorThread(myHandler)
         progressBarThread.start()
         p0.imageViewData.setImageBitmap(user2.immagine)
         p0.imageViewData.setOnClickListener{
@@ -214,7 +244,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
         p0.share2.setOnClickListener {
             val path2=output+user2.titolo2+".jpg"
             file_image=File(path2)
-            share(file_title2?.readText(Charsets.UTF_8),file_image,2,user2.contesto,null)
+            share(file_title2?.readText(Charsets.UTF_8),file_image,2,user2.contesto,null,changeColorThread)
         }
         p0.modifica2.setOnClickListener {
             if(p0.titolo2.text.toString()!="")
@@ -279,14 +309,23 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             {
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
-                if(valore!=R.mipmap.imm34_foreground.toString())
-                {
-                    if(valore=="The selected audio is not available!")
-                        p0.timer.setTextColor(rgb(155,17,30))
-                    p0.timer.text = valore
-                }
+                if(valore=="change")
+                    p0.share3.setBackgroundResource(R.mipmap.imm48_foreground)
                 else
-                    p0.riproduci_ferma.setBackgroundResource(valore.toInt())
+                    if(valore=="change2")
+                        p0.share3.setBackgroundResource(R.mipmap.imm49_foreground)
+                    else
+                        if(valore=="error_change")
+                            p0.share3.setBackgroundResource(R.mipmap.imm46_foreground)
+                        else
+                            if(valore!=R.mipmap.imm34_foreground.toString())
+                            {
+                                if(valore=="The selected audio is not available!")
+                                    p0.timer.setTextColor(rgb(155,17,30))
+                                p0.timer.text = valore
+                            }
+                            else
+                                p0.riproduci_ferma.setBackgroundResource(valore.toInt())
             }
         }
         class TimerThread constructor(val handler:Handler):Thread()
@@ -334,6 +373,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         }
         val handler=MyHandler()
         val timer=TimerThread(handler)
+        val changeColorThread=ChangeColorThread(handler)
         p0.riproduci_ferma.setOnClickListener{
             if(riproduci_pausa&&controllo_riproduzione)
             {
@@ -407,7 +447,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.share3.setOnClickListener {
             val path3=output+user3.titolo3+".mp3"
             file_audio=File(path3)
-            share(file_title3?.readText(Charsets.UTF_8),file_audio,3,user3.contesto,null)
+            share(file_title3?.readText(Charsets.UTF_8),file_audio,3,user3.contesto,null,changeColorThread)
         }
         p0.modifica3.setOnClickListener {
             if(p0.titolo3.text.toString()!="")
@@ -437,8 +477,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         val modifica3=itemView.findViewById(R.id.modifica3)as Button
     }
 }
-private fun share(title:String?,file:File?,tipo:Int,contesto:Context,opzioni:Bundle?)
+private fun share(title:String?,file:File?,tipo:Int,contesto:Context,opzioni:Bundle?,changeColorThread:ChangeColorThread)
 {
+    changeColorThread.start()
     var mediaplayer:MediaPlayer?=null
     var titolo:String?=null
     val shareIntent=Intent(Intent.ACTION_SEND)
@@ -468,4 +509,33 @@ private fun share(title:String?,file:File?,tipo:Int,contesto:Context,opzioni:Bun
     Toast.makeText(contesto,"The sharing box has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
     mediaplayer = MediaPlayer.create(contesto, R.raw.move_graph_sound)
     mediaplayer?.start()
+}
+class ChangeColorThread constructor(val handler: Handler):Thread()
+{
+    override fun run()
+    {
+        while((controllo_generale10==null)||(controllo_generale11==null))
+            sleep(500)
+        if(controllo_generale11==true)
+        {
+            if (controllo_generale10 == true)
+                notify_message("change")
+            else
+                if (controllo_generale10 == false)
+                    notify_message("change2")
+        }
+        else
+            if(controllo_generale11==false)
+                notify_message("error_change")
+        controllo_generale10=null
+        controllo_generale11=null
+    }
+    fun notify_message(valore:String)
+    {
+        val messaggio=handler.obtainMessage()
+        val bundle=Bundle()
+        bundle.putString("reflesh",""+valore)
+        messaggio.setData(bundle)
+        handler.sendMessage(messaggio)
+    }
 }
