@@ -59,6 +59,8 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var nome_data_image:String?=null
     var Id_Utente:String?=null
     lateinit var users2:ArrayList<User2>
+    val path_title=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Image_Note_Title/Image_Note_Title_"
+    var file_title:File?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function9)
@@ -85,7 +87,13 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 file_data=File(nome_data_image)
                 if((photoFile?.exists()==true)&&(file_data?.exists()==true))
                 {
-                    users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n" + file_data?.readText(Charsets.UTF_8), this, prefisso2 + indice?.toString(), Id_Utente))
+                    var title:String?=null
+                    file_title=File(path_title+indice.toString()+".txt")
+                    if(file_title?.exists()==true)
+                        title=file_title?.readText(Charsets.UTF_8)
+                    else
+                        title=prefisso2 + indice?.toString()
+                    users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n" + file_data?.readText(Charsets.UTF_8), this, prefisso2 + indice?.toString(), Id_Utente,title.toString()))
                 }
                 indice=indice?.plus(1)
             }
@@ -139,7 +147,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 titolo2=prefisso2+counter.toString()
                 nome_data_image=output_data+prefisso_data+counter?.toString()+".txt"
                 file_data=File(nome_data_image)
-                users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2,Id_Utente))
+                users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2,Id_Utente,titolo2))
                 file_data?.writeText(data,Charsets.UTF_8)
                 file_parametro2?.writeText(counter.toString(),Charsets.UTF_8)
                 counter=counter?.plus(1)
@@ -424,10 +432,12 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             photoFile = File(nome_image)
             nome_data_image=output_data+prefisso_data+indice?.toString()+".txt"
             file_data=File(nome_data_image)
-            if((photoFile?.exists()==true)&&(file_data?.exists()==true))
+            file_title=File(path_title+indice.toString()+".txt")
+            if((photoFile?.exists()==true)&&(file_data?.exists()==true)&&(file_title?.exists()==true))
             {
                 photoFile?.delete()
                 file_data?.delete()
+                file_title?.delete()
             }
             indice=indice?.plus(1)
         }

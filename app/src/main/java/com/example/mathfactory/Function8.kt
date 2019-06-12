@@ -51,6 +51,8 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     var counter:Int?=null
     var indice:Int?=1
     var Id_Utente:String?=null
+    val path_title=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Text_Note_Title/Text_Note_Title_"
+    var file_title:File?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -78,7 +80,13 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     file_data = File(nome_data_text)
                     if((textFile?.exists()==true)&&(file_data?.exists()==true))
                     {
-                        users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso1 + indice?.toString(),this))
+                        var title:String?=null
+                        file_title=File(path_title+indice.toString()+".txt")
+                        if(file_title?.exists()==true)
+                            title=file_title?.readText(Charsets.UTF_8)
+                        else
+                            title=prefisso1 + indice?.toString()
+                        users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8),prefisso1 + indice?.toString(),this,title.toString()))
                     }
                     indice = indice?.plus(1)
                 }
@@ -106,7 +114,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
                 text=textFile?.readText(Charsets.UTF_8)
                 titolo1=prefisso1+counter.toString()
-                users.add(User(text, "Upload time and date---> "+data,titolo1,this))
+                users.add(User(text, "Upload time and date---> "+data,titolo1,this,titolo1))
                 counter=counter?.plus(1)
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -294,10 +302,12 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             nome_data_text=output_data+prefisso_data+indice?.toString()+".txt"
             textFile = File(nome_text)
             file_data=File(nome_data_text)
-            if((textFile?.exists()==true)&&(file_data?.exists()==true))
+            file_title=File(path_title+indice.toString()+".txt")
+            if((textFile?.exists()==true)&&(file_data?.exists()==true)&&(file_title?.exists()==true))
             {
                 textFile?.delete()
                 file_data?.delete()
+                file_title?.delete()
             }
             indice=indice?.plus(1)
         }

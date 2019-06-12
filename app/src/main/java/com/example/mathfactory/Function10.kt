@@ -67,6 +67,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     val prefisso_data:String="Date_Audio_Note_"
     var nome_data_audio:String?=null
     var Id_Utente:String?=null
+    val path_title=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Audio_Note_Title/Audio_Note_Title_"
+    var file_title:File?=null
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +98,13 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 file_data=File(nome_data_audio)
                 if((file_data?.exists()==true)&&(duratafile?.exists()==true))
                 {
-                    users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso3 + indice?.toString(),this))
+                    var title:String?=null
+                    file_title=File(path_title+indice.toString()+".txt")
+                    if(file_title?.exists()==true)
+                        title=file_title?.readText(Charsets.UTF_8)
+                    else
+                        title=prefisso3 + indice?.toString()
+                    users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso3 + indice?.toString(),this,title.toString()))
                 }
                 indice=indice?.plus(1)
             }
@@ -221,7 +229,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 file_data=File(nome_data_audio)
                 file_data?.writeText(data,Charsets.UTF_8)
                 titolo3=prefisso3+counter.toString()
-                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3,this))
+                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3,this,titolo3))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 controllo=false
@@ -525,14 +533,16 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             nome_audio = output + prefisso3 + indice?.toString() + ".mp3"
             nome_durata=output_durata+prefisso_durata+indice?.toString()+".txt"
             nome_data_audio=output_data+prefisso_data+indice?.toString()+".txt"
+            file_title=File(path_title+indice.toString()+".txt")
             file_data=File(nome_data_audio)
             duratafile=File(nome_durata)
             audioFile = File(nome_audio)
-            if((file_data?.exists()==true)&&(duratafile?.exists()==true)&&(audioFile?.exists()==true))
+            if((file_data?.exists()==true)&&(duratafile?.exists()==true)&&(audioFile?.exists()==true)&&(file_title?.exists()==true))
             {
                 audioFile?.delete()
                 file_data?.delete()
                 duratafile?.delete()
+                file_title?.delete()
             }
             indice=indice?.plus(1)
         }

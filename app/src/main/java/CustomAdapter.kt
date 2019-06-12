@@ -21,6 +21,8 @@ var mediaplayer_CustomerAdapter3: MediaPlayer? = null
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
     var mediaplayer:MediaPlayer?=null
+    val path_title1=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Text_Note_Title/Text_Note_Title_"
+    var file_title1:File?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
       val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout,p0,false)
@@ -34,14 +36,18 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Text/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Text_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Text/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Date_Text_Note/"
         var file_text: File?=null
         var file_data_text:File?=null
         val user:User=userList[p1]
         p0.textViewTesto.text=user.testo
         p0.textViewOrario_Data.text=user.orario_data
-        p0.titolo1.text=user.titolo1
+        p0.titolo1.setText(user.title1)
+        p0.titolo1.setSelection(p0.titolo1.text.lastIndex+1)
+        val position_title=p0.getAdapterPosition()+1
+        file_title1=File(path_title1+position_title.toString()+".txt")
+        file_title1?.writeText(user.title1,Charsets.UTF_8)
         p0.cancella1.setOnClickListener {
             val path1=output+user.titolo1+".txt"
             val path_data1=output_data+"Date_"+user.titolo1+".txt"
@@ -49,6 +55,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
             file_data_text=File(path_data1)
             file_text?.delete()
             file_data_text?.delete()
+            file_title1?.delete()
             Toast.makeText(user.contesto, user.titolo1+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(user.contesto, R.raw.return_graph_sound)
             mediaplayer?.start()
@@ -56,19 +63,39 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
             userList.removeAt(position)
             notifyItemRemoved(position)
         }
+        p0.share1.setOnClickListener {  }
+        p0.modifica1.setOnClickListener {
+            if(p0.titolo1.text.toString()!="")
+            {
+                file_title1?.writeText(p0.titolo1.text.toString(),Charsets.UTF_8)
+                Toast.makeText(user.contesto,"The title: '"+p0.titolo1.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user.contesto, R.raw.return_graph_sound)
+                mediaplayer?.start()
+            }
+            else
+            {
+                Toast.makeText(user.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user.contesto, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
   {
       val textViewTesto=itemView.findViewById(R.id.textViewTesto)as TextView
       val textViewOrario_Data=itemView.findViewById(R.id.textViewOrario_Data)as TextView
-      val titolo1=itemView.findViewById(R.id.titolo1)as TextView
+      val titolo1=itemView.findViewById(R.id.titolo1)as EditText
       val cancella1=itemView.findViewById(R.id.cancella1)as Button
+      val share1=itemView.findViewById(R.id.share1)as Button
+      val modifica1=itemView.findViewById(R.id.modifica1)as Button
   }
 }
 class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomAdapter2.ViewHolder>()
 {
     var mediaplayer:MediaPlayer?=null
+    val path_title2=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Image_Note_Title/Image_Note_Title_"
+    var file_title2:File?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
         val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout2,p0,false)
@@ -82,8 +109,8 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Image/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Image_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Image/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Date_Image_Note/"
         var file_image: File?=null
         var file_data_image:File?=null
         val user2:User2=userList[p1]
@@ -153,7 +180,12 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             mediaplayer?.start()
             controllo_barra=false}
         p0.textViewOrario_Data2.text=user2.orario_data2
-        p0.titolo2.text=user2.titolo2
+        p0.titolo2.setText(user2.title2)
+        p0.titolo2.setSelection(p0.titolo2.text.lastIndex+1)
+        val position_title=p0.getAdapterPosition()+1
+        file_title2=File(path_title2+position_title.toString()+".txt")
+        file_title2?.writeText(user2.title2,Charsets.UTF_8)
+        p0.titolo2.setSelection(p0.titolo2.text.lastIndex+1)
         p0.cancella2.setOnClickListener {
             val path2=output+user2.titolo2+".jpg"
             val path_data2=output_data+"Date_"+user2.titolo2+".txt"
@@ -161,6 +193,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             file_data_image=File(path_data2)
             file_image?.delete()
             file_data_image?.delete()
+            file_title2?.delete()
             Toast.makeText(user2.contesto, user2.titolo2+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer = MediaPlayer.create(user2.contesto, R.raw.return_graph_sound)
             mediaplayer?.start()
@@ -168,21 +201,42 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             userList.removeAt(position)
             notifyItemRemoved(position)
         }
+        p0.share2.setOnClickListener {  }
+        p0.modifica2.setOnClickListener {
+            if(p0.titolo2.text.toString()!="")
+            {
+                file_title2?.writeText(p0.titolo2.text.toString(),Charsets.UTF_8)
+                Toast.makeText(user2.contesto,"The title: '"+p0.titolo2.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user2.contesto, R.raw.return_graph_sound)
+                mediaplayer?.start()
+            }
+            else
+            {
+                Toast.makeText(user2.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user2.contesto, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
     {
         val imageViewData=itemView.findViewById(R.id.imageViewData)as ImageView
         val textViewOrario_Data2=itemView.findViewById(R.id.textViewOrario_Data2)as TextView
-        val titolo2=itemView.findViewById(R.id.titolo2)as TextView
+        val titolo2=itemView.findViewById(R.id.titolo2)as EditText
         val cancella2=itemView.findViewById(R.id.cancella2)as Button
         val progress_immage=itemView.findViewById(R.id.progress_image)as ProgressBar
+        val share2=itemView.findViewById(R.id.share2)as Button
+        val modifica2=itemView.findViewById(R.id.modifica2)as Button
     }
 }
 class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomAdapter3.ViewHolder>()
 {
+    var mediaplayer:MediaPlayer?=null
     var controllo_riproduzione=true
     var posizione:Int?=null
+    val path_title3=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Audio_Note_Title/Audio_Note_Title_"
+    var file_title3:File?=null
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
         val v=LayoutInflater.from(p0.context).inflate(R.layout.list_layout3,p0,false)
@@ -196,9 +250,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int)
     {
-        val output= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Audio/"
-        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Date_Audio_Note/"
-        val output_durata=Environment.getExternalStorageDirectory().absolutePath+"/MathView/"+ utente_loggato+"/MathView_Duration_Audio_Note/"
+        val output= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Audio/"
+        val output_data= Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Date_Audio_Note/"
+        val output_durata=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato+"/MathView_Duration_Audio_Note/"
         var file_audio: File?=null
         var file_data_audio:File?=null
         var file_durata_audio:File?=null
@@ -305,7 +359,12 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.progress_audio.setOnTouchListener { v, event ->true  }
         p0.textViewOrario_Data3.text=user3.orario_data3
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
-        p0.titolo3.text=user3.titolo3
+        p0.titolo3.setText(user3.title3)
+        p0.titolo3.setSelection(p0.titolo3.text.lastIndex+1)
+        val position_title=p0.getAdapterPosition()+1
+        file_title3=File(path_title3+position_title.toString()+".txt")
+        file_title3?.writeText(user3.title3,Charsets.UTF_8)
+        p0.titolo3.setSelection(p0.titolo3.text.lastIndex+1)
         p0.cancella3.setOnClickListener {
             if(!controllo_riproduzione)
             {
@@ -323,12 +382,29 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             file_audio?.delete()
             file_data_audio?.delete()
             file_durata_audio?.delete()
+            file_title3?.delete()
             Toast.makeText(user3.contesto, user3.titolo3+" has been\nsuccessfully deleted!", Toast.LENGTH_LONG).show()
             mediaplayer_CustomerAdapter3 = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
             mediaplayer_CustomerAdapter3?.start()
             val position= p0.getAdapterPosition()
             userList.removeAt(position)
             notifyItemRemoved(position)
+        }
+        p0.share3.setOnClickListener {  }
+        p0.modifica3.setOnClickListener {
+            if(p0.titolo3.text.toString()!="")
+            {
+                file_title3?.writeText(p0.titolo3.text.toString(),Charsets.UTF_8)
+                Toast.makeText(user3.contesto,"The title: '"+p0.titolo3.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
+                mediaplayer?.start()
+            }
+            else
+            {
+                Toast.makeText(user3.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(user3.contesto, R.raw.error_sound)
+                mediaplayer?.start()
+            }
         }
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -337,7 +413,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         var progress_audio=itemView.findViewById(R.id.progress_audio)as SeekBar
         val textViewOrario_Data3=itemView.findViewById(R.id.textViewOrario_Data3)as TextView
         val timer=itemView.findViewById(R.id.timer)as TextView
-        val titolo3=itemView.findViewById(R.id.titolo3)as TextView
+        val titolo3=itemView.findViewById(R.id.titolo3)as EditText
         val cancella3=itemView.findViewById(R.id.cancella3)as Button
+        val share3=itemView.findViewById(R.id.share3)as Button
+        val modifica3=itemView.findViewById(R.id.modifica3)as Button
     }
 }

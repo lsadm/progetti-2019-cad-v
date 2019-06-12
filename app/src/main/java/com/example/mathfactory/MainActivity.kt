@@ -35,16 +35,16 @@ class MainActivity : AppCompatActivity()
     val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
     var data:String=""
     val prefisso:String=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato
-    val suffissi=arrayOf<String>("","/MathView_Parameters","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note")
-    var paths=arrayOf<String?>(null,null,null,null,null,null,null,null,null)
-    var directories=arrayOf<File?>(null,null,null,null,null,null,null,null,null)
+    val suffissi=arrayOf<String>("","/MathView_Parameters","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note","/MathView_Text_Note_Title","/MathView_Image_Note_Title","/MathView_Audio_Note_Title")
+    var paths=arrayOf<String?>(null,null,null,null,null,null,null,null,null,null,null,null)
+    var directories=arrayOf<File?>(null,null,null,null,null,null,null,null,null,null,null,null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         if(controllo_archivio==true)
         {
-            for (i in 0..8)
+            for (i in 0..11)
             {
                 paths[i] = prefisso + suffissi[i]
                 directories[i] = File(paths[i])
