@@ -1,8 +1,10 @@
 package com.example.mathfactory
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -63,7 +65,11 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
             userList.removeAt(position)
             notifyItemRemoved(position)
         }
-        p0.share1.setOnClickListener {  }
+        p0.share1.setOnClickListener {
+            val path1=output+user.titolo1+".txt"
+            file_text=File(path1)
+            share(file_title1?.readText(Charsets.UTF_8),file_text,1,user.contesto,null)
+        }
         p0.modifica1.setOnClickListener {
             if(p0.titolo1.text.toString()!="")
             {
@@ -74,7 +80,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
             }
             else
             {
-                Toast.makeText(user.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                Toast.makeText(user.contesto,"Warning: You can't set an empty title!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user.contesto, R.raw.error_sound)
                 mediaplayer?.start()
             }
@@ -201,7 +207,11 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             userList.removeAt(position)
             notifyItemRemoved(position)
         }
-        p0.share2.setOnClickListener {  }
+        p0.share2.setOnClickListener {
+            val path2=output+user2.titolo2+".jpg"
+            file_image=File(path2)
+            share(file_title2?.readText(Charsets.UTF_8),file_image,2,user2.contesto,null)
+        }
         p0.modifica2.setOnClickListener {
             if(p0.titolo2.text.toString()!="")
             {
@@ -212,7 +222,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             }
             else
             {
-                Toast.makeText(user2.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                Toast.makeText(user2.contesto,"Warning: You can't set an empty title!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user2.contesto, R.raw.error_sound)
                 mediaplayer?.start()
             }
@@ -390,7 +400,11 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             userList.removeAt(position)
             notifyItemRemoved(position)
         }
-        p0.share3.setOnClickListener {  }
+        p0.share3.setOnClickListener {
+            val path3=output+user3.titolo3+".mp3"
+            file_audio=File(path3)
+            share(file_title3?.readText(Charsets.UTF_8),file_audio,2,user3.contesto,null)
+        }
         p0.modifica3.setOnClickListener {
             if(p0.titolo3.text.toString()!="")
             {
@@ -401,7 +415,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             }
             else
             {
-                Toast.makeText(user3.contesto,"Wharning: You can't set an empty title!", Toast.LENGTH_LONG).show()
+                Toast.makeText(user3.contesto,"Warning: You can't set an empty title!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user3.contesto, R.raw.error_sound)
                 mediaplayer?.start()
             }
@@ -418,4 +432,36 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         val share3=itemView.findViewById(R.id.share3)as Button
         val modifica3=itemView.findViewById(R.id.modifica3)as Button
     }
+}
+private fun share(title:String?,file:File?,tipo:Int,contesto:Context,opzioni:Bundle?)
+{
+    var mediaplayer:MediaPlayer?=null
+    var titolo:String?=null
+    val shareIntent=Intent(Intent.ACTION_SEND)
+    when(tipo)
+    {
+        1->
+        {
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT,file?.readText(Charsets.UTF_8))
+            titolo="Share the Text_Note with..."
+        }
+        2->
+        {
+            shareIntent.type = "image/jpeg"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+            titolo="Share the Image_Note with..."
+        }
+        3->
+        {
+            shareIntent.type = "audio/mp3"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+            titolo="Share the Audio_Note with..."
+        }
+    }
+    shareIntent.putExtra(Intent.EXTRA_SUBJECT,title)
+    startActivity(contesto,Intent.createChooser(shareIntent,titolo),opzioni)
+    Toast.makeText(contesto,"The sharing box has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
+    mediaplayer = MediaPlayer.create(contesto, R.raw.move_graph_sound)
+    mediaplayer?.start()
 }
