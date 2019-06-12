@@ -403,7 +403,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.share3.setOnClickListener {
             val path3=output+user3.titolo3+".mp3"
             file_audio=File(path3)
-            share(file_title3?.readText(Charsets.UTF_8),file_audio,2,user3.contesto,null)
+            share(file_title3?.readText(Charsets.UTF_8),file_audio,3,user3.contesto,null)
         }
         p0.modifica3.setOnClickListener {
             if(p0.titolo3.text.toString()!="")
