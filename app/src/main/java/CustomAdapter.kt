@@ -62,7 +62,7 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
                         p0.share1.setBackgroundResource(R.mipmap.imm49_foreground)
                     else
                         if(valore=="error_change")
-                            p0.share1.setBackgroundResource(R.mipmap.imm46_foreground)
+                            p0.share1.setBackgroundResource(R.mipmap.imm50_foreground)
             }
         }
         val myHandler=MyHandler()
@@ -165,7 +165,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
                                 p0.share2.setBackgroundResource(R.mipmap.imm49_foreground)
                             else
                                 if(valore=="error_change")
-                                    p0.share2.setBackgroundResource(R.mipmap.imm46_foreground)
+                                    p0.share2.setBackgroundResource(R.mipmap.imm50_foreground)
             }
         }
         class ProgressBarThread constructor(val handler:Handler):Thread()
@@ -316,7 +316,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                         p0.share3.setBackgroundResource(R.mipmap.imm49_foreground)
                     else
                         if(valore=="error_change")
-                            p0.share3.setBackgroundResource(R.mipmap.imm46_foreground)
+                            p0.share3.setBackgroundResource(R.mipmap.imm50_foreground)
                         else
                             if(valore!=R.mipmap.imm34_foreground.toString())
                             {
