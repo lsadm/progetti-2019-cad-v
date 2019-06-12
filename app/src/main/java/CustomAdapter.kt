@@ -1,4 +1,5 @@
 package com.example.mathfactory
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,7 +10,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Message
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat.startActivity
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +22,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
+val SHARING_REQUEST_CODE=2
 var mediaplayer_CustomerAdapter3: MediaPlayer? = null
 class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAdapter.ViewHolder>()
 {
@@ -460,7 +464,7 @@ private fun share(title:String?,file:File?,tipo:Int,contesto:Context,opzioni:Bun
         }
     }
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,title)
-    startActivity(contesto,Intent.createChooser(shareIntent,titolo),opzioni)
+    startActivityForResult(contesto as Activity,Intent.createChooser(shareIntent,titolo), SHARING_REQUEST_CODE,null)
     Toast.makeText(contesto,"The sharing box has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
     mediaplayer = MediaPlayer.create(contesto, R.raw.move_graph_sound)
     mediaplayer?.start()

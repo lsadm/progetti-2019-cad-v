@@ -349,7 +349,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 else
                 {
                     Toast.makeText(this,"The image has not been acquired!",Toast.LENGTH_LONG).show()
-                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                     mediaplayer?.start()
                 }
             }
@@ -375,7 +375,22 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 else
                 {
                     Toast.makeText(this,"The image has not been acquired!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+            }
+            SHARING_REQUEST_CODE->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Toast.makeText(this, "The image has been\nsuccessfully shared!", Toast.LENGTH_LONG).show()
                     mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                }
+                else
+                {
+                    Toast.makeText(this,"The image has not been shared!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                     mediaplayer?.start()
                 }
             }

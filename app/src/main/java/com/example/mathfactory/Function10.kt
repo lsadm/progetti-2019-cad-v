@@ -1,5 +1,6 @@
 package com.example.mathfactory
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -469,6 +470,34 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             return true
         }
         return true
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode)
+        {
+            SHARING_REQUEST_CODE->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Toast.makeText(this, "The audio has been\nsuccessfully shared!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                }
+                else
+                {
+                    Toast.makeText(this,"The audio has not been shared!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+            }
+            else->
+            {
+                Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
     }
     private fun checkPermission():Boolean
     {

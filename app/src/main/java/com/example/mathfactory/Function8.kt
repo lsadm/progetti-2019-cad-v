@@ -1,6 +1,7 @@
 package com.example.mathfactory
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
@@ -292,6 +293,34 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             return true
         }
         return true
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode)
+        {
+            SHARING_REQUEST_CODE->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Toast.makeText(this, "The text has been\nsuccessfully shared!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                }
+                else
+                {
+                    Toast.makeText(this,"The text has not been shared!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                }
+            }
+            else->
+            {
+                Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+            }
+        }
     }
     private fun cancellazione_text()
     {
