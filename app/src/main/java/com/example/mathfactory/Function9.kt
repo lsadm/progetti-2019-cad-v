@@ -93,7 +93,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                         title=file_title?.readText(Charsets.UTF_8)
                     else
                         title=prefisso2 + indice?.toString()
-                    users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n" + file_data?.readText(Charsets.UTF_8), this, prefisso2 + indice?.toString(), Id_Utente,title.toString()))
+                    users2.add(User2(BitmapFactory.decodeFile(photoFile?.getAbsolutePath()), "Upload time and date:\n" + file_data?.readText(Charsets.UTF_8), this, prefisso2 + indice?.toString(), Id_Utente,title.toString(),indice!!))
                 }
                 indice=indice?.plus(1)
             }
@@ -147,7 +147,7 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 titolo2=prefisso2+counter.toString()
                 nome_data_image=output_data+prefisso_data+counter?.toString()+".txt"
                 file_data=File(nome_data_image)
-                users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2,Id_Utente,titolo2))
+                users2.add(User2(imm,"Upload time and date:\n"+data,this,titolo2,Id_Utente,titolo2,counter!!))
                 file_data?.writeText(data,Charsets.UTF_8)
                 file_parametro2?.writeText(counter.toString(),Charsets.UTF_8)
                 counter=counter?.plus(1)

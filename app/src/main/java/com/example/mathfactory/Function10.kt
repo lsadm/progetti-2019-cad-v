@@ -105,7 +105,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                         title=file_title?.readText(Charsets.UTF_8)
                     else
                         title=prefisso3 + indice?.toString()
-                    users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso3 + indice?.toString(),this,title.toString()))
+                    users3.add(User3(nome_audio, duratafile?.readText(Charsets.UTF_8)?.toInt(), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8), prefisso3 + indice?.toString(),this,title.toString(),indice!!))
                 }
                 indice=indice?.plus(1)
             }
@@ -230,7 +230,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 file_data=File(nome_data_audio)
                 file_data?.writeText(data,Charsets.UTF_8)
                 titolo3=prefisso3+counter.toString()
-                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3,this,titolo3))
+                users3.add(User3(nome_audio, durata_registrazione, "Upload time and date---> " + data,titolo3,this,titolo3,counter!!))
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
                 controllo=false

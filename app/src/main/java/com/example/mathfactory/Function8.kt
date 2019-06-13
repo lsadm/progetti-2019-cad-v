@@ -87,7 +87,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                             title=file_title?.readText(Charsets.UTF_8)
                         else
                             title=prefisso1 + indice?.toString()
-                        users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8),prefisso1 + indice?.toString(),this,title.toString()))
+                        users.add(User(textFile?.readText(Charsets.UTF_8), "Upload time and date---> " + file_data?.readText(Charsets.UTF_8),prefisso1 + indice?.toString(),this,title.toString(),indice!!))
                     }
                     indice = indice?.plus(1)
                 }
@@ -115,7 +115,7 @@ class Function8 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 file_parametro1?.writeText(counter.toString(),Charsets.UTF_8)
                 text=textFile?.readText(Charsets.UTF_8)
                 titolo1=prefisso1+counter.toString()
-                users.add(User(text, "Upload time and date---> "+data,titolo1,this,titolo1))
+                users.add(User(text, "Upload time and date---> "+data,titolo1,this,titolo1,counter!!))
                 counter=counter?.plus(1)
                 mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
                 mediaplayer?.start()
