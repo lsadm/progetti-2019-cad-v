@@ -21,6 +21,8 @@ import android.widget.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.lang.Math.ceil
+import java.lang.Math.floor
 import java.util.*
 var controllo_generale10:Boolean?=null
 var controllo_generale11:Boolean?=null
@@ -344,7 +346,10 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                         contatore++
                     }
                     sleep(1000)
-                    p0.progress_audio.incrementProgressBy(100 / user3.scorri.toString().toInt())
+                    if(p0.progress_audio.progress<95)
+                        p0.progress_audio.incrementProgressBy(ceil(100 / user3.scorri.toString().toDouble()).toInt())
+                    else
+                        p0.progress_audio.incrementProgressBy(floor(100 / user3.scorri.toString().toDouble()).toInt())
                 }
                 if ((p0.progress_audio.progress >= 100)||(riproduci_pausa))
                 {

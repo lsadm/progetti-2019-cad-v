@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_function10.*
 import kotlinx.android.synthetic.main.list_layout3.*
 import java.io.File
 import java.io.IOException
+import java.lang.Thread.sleep
 import java.sql.Time
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -524,6 +525,8 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setAudioEncodingBitRate(16)
+                setAudioSamplingRate(44100)
             setOutputFile(nome_audio)
             try
             {
@@ -538,6 +541,7 @@ class Function10 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                     Toast.makeText(contesto, "The recorder has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
                     mediaplayer = MediaPlayer.create(contesto, R.raw.move_graph_sound)
                     mediaplayer?.start()
+                    sleep(250)
                     istante_iniziale_registrazione=System.currentTimeMillis()
                     start()
                 }
