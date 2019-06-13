@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
-            android:id="@+id/prova"
+            android:id="@+id/messaggio"
             android:text="@string/quit_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_height="27dp"
             android:background="@color/start2"
             android:id="@+id/ritorno"
-            app:layout_constraintTop_toBottomOf="@+id/prova" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/messaggio" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:textSize="14sp" android:textColor="@color/red"
             android:textStyle="bold" android:layout_marginTop="2dp"/>
     <Button
@@ -31,7 +31,7 @@
             android:layout_height="27dp"
             android:id="@+id/esci"
             android:background="@color/start2"
-            app:layout_constraintTop_toBottomOf="@+id/prova"
+            app:layout_constraintTop_toBottomOf="@+id/messaggio"
             android:textSize="14sp" android:textColor="@color/smeraldo" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:textStyle="bold" android:layout_marginTop="2dp"/>
 </android.support.constraint.ConstraintLayout>

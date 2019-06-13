@@ -187,5 +187,6 @@
     <string name="dodici">Image Note</string>
     <string name="ricorda">Remember me</string>
     <string name="quit_message">Are you sure you\nwant to exit\nMathView?</string>
+    <string name="share_button">Share Button</string>
 </resources>
 

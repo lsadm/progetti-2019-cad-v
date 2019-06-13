@@ -18,6 +18,11 @@
             app:showAsAction="always"
             android:title="@string/action_three"/>
     <item
+            android:id="@+id/action_share"
+            android:icon="@mipmap/imm51_foreground"
+            app:showAsAction="always"
+            android:title="@string/share_button"/>
+    <item
             android:id="@+id/action_home"
             android:icon="@mipmap/icona7_round"
             app:showAsAction="always"

@@ -1,12 +1,23 @@
 package com.example.mathfactory
+import android.app.Activity
+import android.content.ClipData
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Color.*
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.Message
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.LegendRenderer
@@ -15,6 +26,8 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import kotlin.math.*
 import java.io.File
 import kotlinx.android.synthetic.main.activity_grafici.*
+import java.io.FileOutputStream
+
 var n=0
 var t=0.0
 var y=0.0
@@ -23,8 +36,10 @@ var x1=0.0
 var y1=0.0
 lateinit var series:LineGraphSeries<DataPoint>
 lateinit var series2:LineGraphSeries<DataPoint>
+var share:Menu?=null
 class Grafici: AppCompatActivity()
 {
+    val SHARING_REQUEST_CODE2=0
     private var mediaplayer:MediaPlayer?=null
     private var min:Double=0.0
     private var max:Double=1.0
@@ -60,6 +75,8 @@ class Grafici: AppCompatActivity()
     var vettore_correttivo=arrayOf(0.0,0.0,0.0)
     var vettore_correttivo2=arrayOf(0.0,0.0,0.0)
     var Id_Utente:String?=null
+    val myHandler=MyHandler(this)
+    val changeColorThread=com.example.mathfactory.ChangeColorThread(myHandler)
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -377,13 +394,77 @@ class Grafici: AppCompatActivity()
         graphview.addSeries(series)
         if(identifier2!=0)
          graphview.addSeries(series2)
+        graph.getViewport().setScalable(true)
+        graph.getViewport().setScalableY(true)
+    }
+    private fun share_graph(view: View,changeColorThread:ChangeColorThread)
+    {
+        val width=view.getWidth()
+        val height=view.getHeight()
+        val measuredWidth=View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY)
+        val measuredHeight=View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.EXACTLY)
+        view.measure(measuredWidth,measuredHeight)
+        view.layout(0,0,view.getMeasuredWidth(),view.getMeasuredHeight())
+        val bitmap=Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888)
+        val canvas=Canvas(bitmap)
+        view.draw(canvas)
+        val file=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato+"/MathView_Parameters/Parameter5.jpg")
+        val file_output_stream=FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50,file_output_stream)
+        file_output_stream.flush()
+        file_output_stream.close()
+        val shareIntent=Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+        shareIntent.type="image/jpeg"
+        intent.putExtra(Intent.EXTRA_SUBJECT,"Graph Image")
+        startActivityForResult(Intent.createChooser(shareIntent,"Share with..."), SHARING_REQUEST_CODE2)
+        Toast.makeText(this,"The sharing box has been\nsuccessfully activated!", Toast.LENGTH_LONG).show()
+        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+        mediaplayer?.start()
+        changeColorThread.start()
     }
     override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_application3, menu)
+        share=menu
         return true
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode)
+        {
+            SHARING_REQUEST_CODE2->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Toast.makeText(this, "The graph has been\nsuccessfully shared!", Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound)
+                    mediaplayer?.start()
+                    controllo_generale10=true
+                    controllo_generale11=true
+                }
+                else
+                {
+                    Toast.makeText(this,"The graph has not been shared!",Toast.LENGTH_LONG).show()
+                    mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                    mediaplayer?.start()
+                    controllo_generale10=false
+                    controllo_generale11=true
+                }
+            }
+            else->
+            {
+                Toast.makeText(this,"Ops... Something is gone wrong!",Toast.LENGTH_LONG).show()
+                mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
+                mediaplayer?.start()
+                if(requestCode== SHARING_REQUEST_CODE2)
+                {
+                    controllo_generale10 = true
+                    controllo_generale11 = false
+                }
+            }
+        }
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.getItemId()
         if (id == R.id.action_one) {
@@ -396,6 +477,11 @@ class Grafici: AppCompatActivity()
         }
         if (id == R.id.action_three) {
             Toast.makeText(this, "Created by:\nRaffaele Maddaloni\nand\nGiuseppe Barbato ®", Toast.LENGTH_LONG).show()
+            return true
+        }
+        if(id==R.id.action_share)
+        {
+            share_graph(graph as View,changeColorThread)
             return true
         }
         if (id == R.id.action_home) {
@@ -496,6 +582,22 @@ class Grafici: AppCompatActivity()
                     vettore_correttivo2[1]=y1
                     vettore_correttivo2[2]=y1
                 }
+    }
+    class MyHandler constructor(val contesto:Context):Handler()
+    {
+        override fun handleMessage(msg: Message)
+        {
+            val bundle:Bundle=msg.getData()
+            val valore:String=bundle.getString("reflesh")
+            if(valore=="change")
+                share?.getItem(3)?.setIcon(ContextCompat.getDrawable(contesto,R.mipmap.imm52_foreground))
+            else
+                if(valore=="change2")
+                    share?.getItem(3)?.setIcon(ContextCompat.getDrawable(contesto,R.mipmap.imm53_foreground))
+                else
+                    if(valore=="error_change")
+                        share?.getItem(3)?.setIcon(ContextCompat.getDrawable(contesto,R.mipmap.imm54_foreground))
+        }
     }
 }
 

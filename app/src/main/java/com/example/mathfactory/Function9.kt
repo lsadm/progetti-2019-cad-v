@@ -404,7 +404,10 @@ class Function9 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
                 mediaplayer?.start()
                 if(requestCode== SHARING_REQUEST_CODE)
-                    controllo_generale11=false
+                {
+                    controllo_generale10 = true
+                    controllo_generale11 = false
+                }
             }
         }
     }
