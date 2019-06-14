@@ -338,9 +338,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             override fun run()
             {
                 contatore=0
-                val scostamento=(100/user3.scorri!!).toDouble()
-                val cambio=100*(floor(100*scostamento)/100-floor(scostamento)).toInt()
-                while((p0.progress_audio.progress<100)&&(!riproduci_pausa))
+                while((p0.progress_audio.progress<user3.scorri!!)&&(!riproduci_pausa))
                 {
                     if(controllo)
                     {
@@ -348,12 +346,9 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                         contatore++
                     }
                     sleep(1000)
-                    if(p0.progress_audio.progress<cambio)
-                        p0.progress_audio.incrementProgressBy(ceil(scostamento).toInt())
-                    else
-                        p0.progress_audio.incrementProgressBy(floor(scostamento).toInt())
+                        p0.progress_audio.incrementProgressBy(1)
                 }
-                if ((p0.progress_audio.progress >= 100)||(riproduci_pausa))
+                if ((p0.progress_audio.progress >= user3.scorri!!)||(riproduci_pausa))
                 {
                     if(!riproduci_pausa)
                     {
@@ -418,7 +413,7 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             }
         }
         p0.progress_audio.progress=0
-        p0.progress_audio.setMax(100)
+        p0.progress_audio.setMax(user3.scorri!!)
         p0.progress_audio.setOnTouchListener { v, event ->true  }
         p0.textViewOrario_Data3.text=user3.orario_data3
         p0.timer.text="Duration: "+user3.scorri.toString()+" s"
