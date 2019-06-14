@@ -21,6 +21,8 @@ import android.view.WindowManager
 import android.widget.Toast
 import android.widget.Toolbar
 import com.example.mathfactory.com.example.mathfactory.Fragment_Clock
+import com.example.mathfactory.com.example.mathfactory.contesto_Fragment_Clock
+import com.example.mathfactory.com.example.mathfactory.regolatore_clock
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_clock.*
 import java.io.File
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        contesto_Fragment_Clock=this
         Id_Utente=getIntent().getExtras().getString("Id_Utente")
         if(controllo_archivio==true)
         {
@@ -180,6 +183,7 @@ class MainActivity : AppCompatActivity()
         transaction.replace(R.id.fragment_holder, fragment)
         if(controllo_clock)
         {
+            regolatore_clock=true
             lock_unlock_Device_Rotation(true)
             profilo.setEnabled(false)
             calcolatrice.setEnabled(false)
@@ -244,6 +248,7 @@ class MainActivity : AppCompatActivity()
                 plot3.visibility=View.VISIBLE
                 storia.visibility=View.VISIBLE
             }
+            regolatore_clock=false
             transaction.remove(fragment)
             transaction.commit()
         }
