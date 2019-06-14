@@ -36,15 +36,6 @@
                 android:layout_marginStart="46dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"/>
-        <TextView
-                android:layout_width="464dp"
-                android:layout_height="31dp" android:id="@+id/textView31"
-                android:textSize="18sp"
-                android:textStyle="italic"
-                android:layout_marginStart="64dp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@+id/textView72"/>
         <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp" android:id="@+id/storia"
@@ -218,6 +209,14 @@
                 android:layout_marginTop="163dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:visibility="invisible"/>
+        <FrameLayout
+                android:id="@+id/fragment_holder"
+                android:layout_width="188dp"
+                android:layout_height="200dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="201dp"
+                android:layout_marginTop="115dp">
+        </FrameLayout>
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

@@ -223,6 +223,14 @@
                 android:layout_marginTop="296dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:visibility="invisible"/>
+        <FrameLayout
+                android:id="@+id/fragment_holder"
+                android:layout_width="248dp"
+                android:layout_height="198dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="60dp"
+                android:layout_marginTop="248dp">
+        </FrameLayout>
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

@@ -17,5 +17,8 @@
     <color name="start2">#2E2F44</color>
     <color name="electric_blue">#003399</color>
     <color name="sky_blue">#87CEEB</color>
+    <color name="sky_blue_lite">#98DFFC</color>
+    <color name="sky_blue_dark">#76BDDA</color>
+    <color name="orange">#FF8C00</color>
 </resources>
 

@@ -1,6 +1,8 @@
 package com.example.mathfactory
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Color.rgb
 import android.media.MediaPlayer
@@ -15,9 +17,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import android.widget.Toolbar
+import com.example.mathfactory.com.example.mathfactory.Fragment_Clock
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_clock.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -28,12 +33,11 @@ import kotlin.math.*
 var controllo_generale:Int=0
 class MainActivity : AppCompatActivity()
 {
+    var controllo_clock=true
     var controllo_barra=false
     var Id_Utente:String=""
     val PERMISSION_REQUEST_CODE=0
     private var mediaplayer:MediaPlayer?=null
-    val formato=SimpleDateFormat("              HH:mm\n         dd/MM/yyyy")
-    var data:String=""
     val prefisso:String=Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+utente_loggato
     val suffissi=arrayOf<String>("","/MathView_Parameters","/MathView_Text","/MathView_Date_Text_Note","/MathView_Image","/MathView_Date_Image_Note","/MathView_Audio","/MathView_Duration_Audio_Note","/MathView_Date_Audio_Note","/MathView_Text_Note_Title","/MathView_Image_Note_Title","/MathView_Audio_Note_Title")
     var paths=arrayOf<String?>(null,null,null,null,null,null,null,null,null,null,null,null)
@@ -57,6 +61,10 @@ class MainActivity : AppCompatActivity()
         {
             override fun handleMessage(msg: Message)
             {
+                val formato1=SimpleDateFormat("HH:mm:ss")
+                val formato2=SimpleDateFormat("dd/MM/yyyy")
+                var ora:String=""
+                var data:String=""
                 val bundle:Bundle=msg.getData()
                 val valore:String=bundle.getString("reflesh")
                 if(valore=="visible")
@@ -64,6 +72,14 @@ class MainActivity : AppCompatActivity()
                 else
                     if(valore=="invisible")
                         progress_access.visibility=View.INVISIBLE
+                    else
+                        if(valore=="setTime")
+                        {
+                            ora=formato1.format(Date()).toString()
+                            data=formato2.format(Date()).toString()
+                            timerView.text=ora
+                            dateView.text=data
+                        }
             }
         }
         class ProgressBarThread constructor(val handler:Handler):Thread()
@@ -107,7 +123,7 @@ class MainActivity : AppCompatActivity()
         val toogle=ActionBarDrawerToggle(this,drawer,toolbar,0,0)
         drawer.addDrawerListener(toogle)
         toogle.syncState()
-        storia.setOnClickListener {if(checkPermission()){ controllo_barra=true;val next = Intent(this, Function8::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
+        storia.setOnClickListener {if(checkPermission()){controllo_barra=true;val next = Intent(this, Function8::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
         storia_per_immagini.setOnClickListener{if(checkPermission()) {controllo_barra=true; val next = Intent(this, Function9::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
         storia_vocale.setOnClickListener {if(checkPermission()){controllo_barra=true; val next = Intent(this, Function10::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start();controllo_barra=false}else requestPermission()}
         calcolatrice.setOnClickListener {  val next = Intent(this, Function0::class.java);next.putExtra("Id_Utente",Id_Utente);startActivity(next);mediaplayer=MediaPlayer.create(this,R.raw.move_sound);mediaplayer?.start()  }
@@ -141,8 +157,7 @@ class MainActivity : AppCompatActivity()
             return true
         }
         if (id == R.id.action_clock) {
-            data=formato.format(Date()).toString()
-            Toast.makeText(this,"Current Time and Day:\n"+data, Toast.LENGTH_LONG).show()
+            Access_Timer()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -155,5 +170,102 @@ class MainActivity : AppCompatActivity()
     private fun requestPermission()
     {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_REQUEST_CODE)
+    }
+    private fun Access_Timer()
+    {
+        val currentOrientation=getResources().getConfiguration().orientation
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        val fragment = Fragment_Clock()
+        transaction.replace(R.id.fragment_holder, fragment)
+        if(controllo_clock)
+        {
+            lock_unlock_Device_Rotation(true)
+            profilo.setEnabled(false)
+            calcolatrice.setEnabled(false)
+            numeri_casuali.setEnabled(false)
+            equazioni_lineari.setEnabled(false)
+            equanzioni_differenziali.setEnabled(false)
+            numeri_complessi.setEnabled(false)
+            plot1.setEnabled(false)
+            plot2.setEnabled(false)
+            plot3.setEnabled(false)
+            storia.setEnabled(false)
+            storia_per_immagini.setEnabled(false)
+            storia_vocale.setEnabled(false)
+            if(currentOrientation== Configuration.ORIENTATION_PORTRAIT)
+            {
+                equazioni_lineari.visibility=View.INVISIBLE
+                equanzioni_differenziali.visibility=View.INVISIBLE
+                numeri_complessi.visibility=View.INVISIBLE
+                plot1.visibility=View.INVISIBLE
+                plot2.visibility=View.INVISIBLE
+                plot3.visibility=View.INVISIBLE
+            }
+            else
+            {
+                numeri_casuali.visibility=View.INVISIBLE
+                equazioni_lineari.visibility=View.INVISIBLE
+                plot3.visibility=View.INVISIBLE
+                storia.visibility=View.INVISIBLE
+            }
+            transaction.addToBackStack(null)
+            transaction.commit()
+            Toast.makeText(this,"Tap again the clock to\nhide the Clock_Window!",Toast.LENGTH_LONG).show()
+        }
+        else
+        {
+            lock_unlock_Device_Rotation(false)
+            profilo.setEnabled(true)
+            calcolatrice.setEnabled(true)
+            numeri_casuali.setEnabled(true)
+            equazioni_lineari.setEnabled(true)
+            equanzioni_differenziali.setEnabled(true)
+            numeri_complessi.setEnabled(true)
+            plot1.setEnabled(true)
+            plot2.setEnabled(true)
+            plot3.setEnabled(true)
+            storia.setEnabled(true)
+            storia_per_immagini.setEnabled(true)
+            storia_vocale.setEnabled(true)
+            if(currentOrientation== Configuration.ORIENTATION_PORTRAIT)
+            {
+                equazioni_lineari.visibility=View.VISIBLE
+                equanzioni_differenziali.visibility=View.VISIBLE
+                numeri_complessi.visibility=View.VISIBLE
+                plot1.visibility=View.VISIBLE
+                plot2.visibility=View.VISIBLE
+                plot3.visibility=View.VISIBLE
+            }
+            else
+            {
+                numeri_casuali.visibility=View.VISIBLE
+                equazioni_lineari.visibility=View.VISIBLE
+                plot3.visibility=View.VISIBLE
+                storia.visibility=View.VISIBLE
+            }
+            transaction.remove(fragment)
+            transaction.commit()
+        }
+        controllo_clock=!controllo_clock
+    }
+    private fun lock_unlock_Device_Rotation(lock:Boolean)
+    {
+        if(lock)
+        {
+            val currentOrientation=getResources().getConfiguration().orientation
+            if(currentOrientation== Configuration.ORIENTATION_LANDSCAPE)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+            else
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+        }
+        else
+        {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR2)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER)
+            else
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR)
+        }
     }
 }
