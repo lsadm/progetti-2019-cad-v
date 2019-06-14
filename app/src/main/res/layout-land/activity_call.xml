@@ -15,11 +15,11 @@
             android:id="@+id/photoView"
             android:textSize="36dp"
 
-            android:layout_width="100dp"
+            android:layout_width="108dp"
             android:layout_height="276dp"
-            android:text="@string/photoViewLand" android:textAlignment="center"
+            android:text="@string/imageViewLand" android:textAlignment="center"
             android:textColor="@color/gold"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="6dp"
             android:background="@color/start2" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     <ImageView
@@ -28,5 +28,5 @@
             android:layout_height="276dp"
             app:layout_constraintStart_toEndOf="@+id/photoView"
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="4dp"/>
 </android.support.constraint.ConstraintLayout>

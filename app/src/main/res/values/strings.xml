@@ -167,8 +167,8 @@
     <string name="presentazione8">Text Note</string>
     <string name="presentazione9">Image Note</string>
     <string name="presentazione10">Audio Note</string>
-    <string name="photoView">PhotoView</string>
-    <string name="photoViewLand">\n\nPhotoView</string>
+    <string name="imageView">ImageView</string>
+    <string name="imageViewLand">\n\nImageView</string>
     <string name="note">Note Functions</string>
     <string name="note_testuali">Text Note</string>
     <string name="note_immagini">Image Note</string>

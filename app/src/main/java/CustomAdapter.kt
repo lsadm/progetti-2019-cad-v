@@ -338,6 +338,8 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
             override fun run()
             {
                 contatore=0
+                val scostamento=(100/user3.scorri!!).toDouble()
+                val cambio=100*(floor(100*scostamento)/100-floor(scostamento)).toInt()
                 while((p0.progress_audio.progress<100)&&(!riproduci_pausa))
                 {
                     if(controllo)
@@ -346,10 +348,10 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
                         contatore++
                     }
                     sleep(1000)
-                    if(p0.progress_audio.progress<95)
-                        p0.progress_audio.incrementProgressBy(ceil(100 / user3.scorri.toString().toDouble()).toInt())
+                    if(p0.progress_audio.progress<cambio)
+                        p0.progress_audio.incrementProgressBy(ceil(scostamento).toInt())
                     else
-                        p0.progress_audio.incrementProgressBy(floor(100 / user3.scorri.toString().toDouble()).toInt())
+                        p0.progress_audio.incrementProgressBy(floor(scostamento).toInt())
                 }
                 if ((p0.progress_audio.progress >= 100)||(riproduci_pausa))
                 {

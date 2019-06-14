@@ -17,7 +17,7 @@
 
             android:layout_width="318dp"
             android:layout_height="50dp"
-            android:text="@string/photoView" android:textAlignment="center"
+            android:text="@string/imageView" android:textAlignment="center"
             android:textColor="@color/gold" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="21dp" android:background="@color/start2"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" android:layout_marginTop="8dp"/>
