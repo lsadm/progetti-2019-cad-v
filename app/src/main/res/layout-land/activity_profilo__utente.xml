@@ -31,14 +31,14 @@
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm38" android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@+id/editText18"
-            android:layout_marginTop="9dp" app:layout_constraintTop_toBottomOf="@+id/button50"/>
+            android:layout_marginTop="72dp" app:layout_constraintTop_toBottomOf="@+id/button51"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button29"
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm16" android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@+id/button23" app:layout_constraintStart_toEndOf="@+id/textView52"
-    />
+            app:layout_constraintTop_toBottomOf="@+id/button23"
+            app:layout_constraintStart_toEndOf="@+id/button51" android:layout_marginStart="26dp"/>
     <TextView
             android:text="@string/genere"
             android:layout_width="112dp"
@@ -189,46 +189,22 @@
             android:layout_height="50dp" android:id="@+id/button23"
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm14" android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@+id/textView34" app:layout_constraintStart_toEndOf="@+id/textView52"
-            android:layout_marginTop="25dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView34"
+            android:layout_marginTop="25dp" app:layout_constraintStart_toEndOf="@+id/button51"
+            android:layout_marginStart="26dp"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button26"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="31dp"
             app:layout_constraintTop_toBottomOf="@+id/imageView"/>
-    <TextView
-            android:text="@string/domanda"
-            android:layout_width="62dp"
-            android:layout_height="34dp" android:id="@+id/textView52"
-            android:textColor="@color/gold"
-            android:textSize="12sp" android:textAlignment="center" android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/button51" app:layout_constraintStart_toEndOf="@+id/editText25"
-    />
-    <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp" android:id="@+id/button49"
-            android:textSize="12sp" android:textAlignment="center"
-            android:textColor="@color/smeraldo" android:textAllCaps="false"
-            android:text="@string/si"
-            android:background="@color/start2" android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/textView52" app:layout_constraintStart_toEndOf="@+id/button50"
-            android:layout_marginStart="2dp"/>
-    <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp" android:id="@+id/button50"
-            android:textSize="12sp" android:textAlignment="center"
-            android:textColor="@color/red" android:textAllCaps="false"
-            android:text="@string/no" android:background="@color/start2" android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/editText25"
-            app:layout_constraintTop_toBottomOf="@+id/textView52"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button55"
             android:textColor="@color/red" android:textSize="14sp"
             android:textAllCaps="false" android:background="@mipmap/imm44"
-            app:layout_constraintTop_toBottomOf="@+id/button29" app:layout_constraintStart_toEndOf="@+id/button49"
-    />
+            app:layout_constraintTop_toBottomOf="@+id/button29"
+            app:layout_constraintStart_toEndOf="@+id/button54" android:layout_marginStart="26dp"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button56"
@@ -255,6 +231,14 @@
             android:layout_marginTop="164dp"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible"/>
+    <FrameLayout
+            android:id="@+id/fragment_holder"
+            android:layout_width="150dp"
+            android:layout_height="108dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="250dp"
+            android:layout_marginTop="156dp">
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

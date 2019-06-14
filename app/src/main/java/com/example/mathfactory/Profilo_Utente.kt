@@ -28,6 +28,7 @@ import android.text.InputType
 import android.view.*
 import android.widget.*
 import com.example.mathfactory.com.example.mathfactory.Check_Network
+import com.example.mathfactory.com.example.mathfactory.Fragment_Quit_Application
 import com.example.mathfactory.com.example.mathfactory.Utente
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -39,9 +40,12 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
+import java.lang.Thread.sleep
 import java.text.SimpleDateFormat
 import java.util.*
 var controllo_generale7:Boolean?=null
+var ricorda_username_utente_cancellato:String?=null
+lateinit var context_for_fragment:Context
 class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val user_directory=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/"+ utente_loggato)
     val ricorda_file_username=File(Environment.getExternalStorageDirectory().absolutePath+"/.MathView/MathView_Reflesh_Parameters/Reflesh_Parameter1.txt")
@@ -60,8 +64,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     val PERMISSION_REQUEST_CODE= 101
     val CAMERA_REQUEST_CODE=0
     val GALLERY_REQUEST_CODE=1
-    var gestione_uscita_cancellazione:Boolean=true
-    var uscita_cancellazione:Boolean?=null
     private var mediaplayer: MediaPlayer? = null
     var size:Long?=null
     var controllo_cancellazione=false
@@ -69,6 +71,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profilo__utente)
         nav_view_PU.setNavigationItemSelectedListener(this)
+        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         if(dimensione_array_di_byte.exists())
             size = dimensione_array_di_byte.readText(Charsets.UTF_8).toLong()
         else
@@ -77,7 +80,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8)
         }
         controllo_generale7=true
-        Id_Utente=getIntent().getExtras().getString("Id_Utente")
         editText18.setEnabled(false)
         val toolbar=findViewById(R.id.toolbar)as android.support.v7.widget.Toolbar
         setSupportActionBar(toolbar)
@@ -130,6 +132,11 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             val controllo_connessione = Check_Network()
             override fun run()
             {
+                if(controllo_generale8==true)
+                    sleep(5000)
+                else
+                    if(controllo_generale8==false)
+                        sleep(500)
                 while(controllo_generale7==true)
                 {
                     if(!controllo_connessione.Network_Disponibile(contesto)) {
@@ -189,22 +196,65 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val connectionThread=ConnectionThread(myHandler,this)
         val progressBarThread=ProgressBarThread(myHandler)
         checkThread.start()
-        connectionThread.start()
+        if(controllo_generale8==null)
+            connectionThread.start()
         progressBarThread.start()
         button26.setOnClickListener{if(checkPermission()&&checkPermission2())go_to_camera()else{if(!checkPermission())requestPermission();if(!checkPermission2())requestPermission2()}}
         button51.setOnClickListener {if(controllo){editText26.inputType=InputType.TYPE_CLASS_TEXT;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm18);controllo=false}else{editText26.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;editText26.setSelection(editText26.text.lastIndex+1);button51.setBackgroundResource(R.mipmap.imm17);controllo=true}}
-        button29.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=false;button29.setBackgroundResource(R.mipmap.imm39)};mediaplayer=MediaPlayer.create(this, R.raw.move_graph_sound);mediaplayer?.start()}
-        button50.setOnClickListener {setta_uscita(false)}
+        button29.setOnClickListener {Show_Exit_Message(2);button29.setBackgroundResource(R.mipmap.imm39);mediaplayer=MediaPlayer.create(this, R.raw.move_graph_sound);mediaplayer?.start()}
         button23.setOnClickListener {if(controllo_cancellazione){Cancellazione_Immagini_FireBase_Storage();controllo_cancellazione=false}else{if(array_di_bytes==null)size=0.toLong()else size=array_di_bytes?.size?.toLong();dimensione_array_di_byte.writeText(size.toString(),Charsets.UTF_8);if(size!=0.toLong())Caricamento_Immagini_FireBase_Storage()};modifica_utente()}
-        button49.setOnClickListener {if(((uscita_cancellazione==true)&&(delete_account()))||(uscita_cancellazione==false)){controllo_generale8=null;val next = Intent(this, Start_Activity::class.java);controllo_generale2=false;controllo_generale3=false;startActivity(next);mediaplayer = MediaPlayer.create(this, R.raw.move_home_sound);mediaplayer?.start()}}
         button54.setOnClickListener {if(editText18.text.toString()=="Male")editText18.setText("Female")else if(editText18.text.toString()=="Female")editText18.setText("Male")}
-        button55.setOnClickListener {if(gestione_uscita_cancellazione){setta_uscita(true);uscita_cancellazione=true;button55.setTextColor(rgb(40,114,51))};mediaplayer=MediaPlayer.create(this, R.raw.move_graph_sound);mediaplayer?.start()}
+        button55.setOnClickListener {Show_Exit_Message(3);mediaplayer=MediaPlayer.create(this, R.raw.move_graph_sound);mediaplayer?.start()}
         imageView.setOnClickListener {val next=Intent(this,call::class.java);next.putExtra("Id_Utente",Id_Utente);next.putExtra("immagine",array_di_bytes);next.putExtra("titolo_immagine",utente?.username+"'s\nprofile photo");next.putExtra("controllo",false);startActivity(next);mediaplayer= MediaPlayer.create(this,R.raw.move_graph_sound);mediaplayer?.start()}
         button56.setOnClickListener { controllo_cancellazione=true;imageView.setImageBitmap(null);if(editText18.text.toString()=="Male")imageView.setBackgroundResource(R.mipmap.imm12)else if(editText18.text.toString()=="Female")imageView.setBackgroundResource(R.mipmap.imm36); Toast.makeText(this, "The profile photo has been\nsuccessfully resetted!", Toast.LENGTH_LONG).show();mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound);mediaplayer?.start()}
         button57.setOnClickListener { if(checkPermission2())go_to_gallery()else requestPermission2()}
-        if(size!=0.toLong())
-            Scaricamento_Immagini_FireBase_Storage()
-        leggi_utente()
+        if(controllo_generale8!=true)
+        {
+            if (size != 0.toLong())
+                Scaricamento_Immagini_FireBase_Storage()
+            leggi_utente()
+        }
+        if(controllo_generale8==true)
+        {
+            val verifica=delete_account()
+            if(verifica)
+            {
+                controllo_generale8=null
+                val next=Intent(this,Start_Activity::class.java)
+                startActivity(next)
+                mediaplayer = MediaPlayer.create(this, R.raw.move_sound)
+                mediaplayer?.start()
+            }
+            else
+            {
+                if (size != 0.toLong())
+                    Scaricamento_Immagini_FireBase_Storage()
+                leggi_utente()
+                connectionThread.start()
+            }
+        }
+        else
+            if(controllo_generale8==false)
+            {
+                button23.setEnabled(true)
+                button29.setEnabled(true)
+                button55.setEnabled(true)
+                button26.setEnabled(true)
+                button57.setEnabled(true)
+                button56.setEnabled(true)
+                button51.setEnabled(true)
+                button54.setEnabled(true)
+                editText20.setEnabled(true)
+                editText26.setEnabled(true)
+                editText25.setEnabled(true)
+                editText24.setEnabled(true)
+                editText22.setEnabled(true)
+                editText21.setEnabled(true)
+                imageView.setEnabled(true)
+                mediaplayer = MediaPlayer.create(this, R.raw.return_graph_sound)
+                mediaplayer?.start()
+                connectionThread.start()
+            }
     }
     override fun onBackPressed() {}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -420,29 +470,6 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             mediaplayer?.start()
         }
     }
-    private fun setta_uscita(controllo:Boolean)
-    {
-        if(controllo)
-        {
-            textView52.visibility=View.VISIBLE
-            button50.visibility=View.VISIBLE
-            button49.visibility=View.VISIBLE
-            gestione_uscita_cancellazione=false
-        }
-        else
-        {
-            textView52.visibility=View.INVISIBLE
-            button50.visibility=View.INVISIBLE
-            button49.visibility=View.INVISIBLE
-            gestione_uscita_cancellazione=true
-            if(uscita_cancellazione==true)
-                button55.setTextColor(rgb(155,17,30))
-            else
-                if(uscita_cancellazione==false)
-                    button29.setBackgroundResource(R.mipmap.imm16)
-            uscita_cancellazione=null
-        }
-    }
     private fun checkPermission2():Boolean
     {
         val permesso= ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
@@ -470,6 +497,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                        utente = record.getValue(Utente::class.java)
                        if(utente?.chiave==Id_Utente)
                        {
+                           ricorda_username_utente_cancellato=utente?.username
                            setta_parametri(utente)
                            controllo=false
                        }
@@ -582,7 +610,7 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             file_controllo_numero_iscritti.writeText((file_controllo_numero_iscritti.readText(Charsets.UTF_8).toInt()-1).toString(),Charsets.UTF_8)
             referenza_database = FirebaseDatabase.getInstance().getReference("Users")
             referenza_database.child(Id_Utente).removeValue()
-            Toast.makeText(this, utente?.username + "\nhas been successfully deleted!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, ricorda_username_utente_cancellato + "\nhas been successfully deleted!", Toast.LENGTH_LONG).show()
             controllo_barra=false
             return true
         }
@@ -661,6 +689,38 @@ class Profilo_Utente : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         intent.type="image/*"
         startActivityForResult(intent,GALLERY_REQUEST_CODE)
         Toast.makeText(this, "The access to the archive has\nsuccessfully taken place!", Toast.LENGTH_LONG).show()
+        mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
+        mediaplayer?.start()
+    }
+    private fun Show_Exit_Message(tipo:Int)
+    {
+        button23.setEnabled(false)
+        button29.setEnabled(false)
+        button55.setEnabled(false)
+        button26.setEnabled(false)
+        button57.setEnabled(false)
+        button56.setEnabled(false)
+        button51.setEnabled(false)
+        button54.setEnabled(false)
+        editText20.setEnabled(false)
+        editText26.setEnabled(false)
+        editText25.setEnabled(false)
+        editText24.setEnabled(false)
+        editText22.setEnabled(false)
+        editText21.setEnabled(false)
+        imageView.setEnabled(false)
+        controllo_generale7=false
+        val bundle=Bundle()
+        bundle.putInt("tipo",tipo)
+        bundle.putString("Id_Utente",Id_Utente)
+        context_for_fragment=this
+        val manager=supportFragmentManager
+        val transaction=manager.beginTransaction()
+        val fragment= Fragment_Quit_Application()
+        fragment.setArguments(bundle)
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
         mediaplayer = MediaPlayer.create(this, R.raw.move_graph_sound)
         mediaplayer?.start()
     }

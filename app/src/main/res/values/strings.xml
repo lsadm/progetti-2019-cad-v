@@ -161,7 +161,6 @@
     <string name="accesso">Access</string>
     <string name="registrazione">Registration</string>
     <string name="back">Go Back</string>
-    <string name="domanda">Are you sure?</string>
     <string name="si">Yes</string>
     <string name="no">No</string>
     <string name="presentazione8">Text Note</string>
@@ -186,7 +185,6 @@
     <string name="undici">Audio Note</string>
     <string name="dodici">Image Note</string>
     <string name="ricorda">Remember me</string>
-    <string name="quit_message">Are you sure you\nwant to exit\nMathView?</string>
     <string name="share_button">Share Button</string>
 </resources>
 

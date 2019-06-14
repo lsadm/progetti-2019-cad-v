@@ -31,25 +31,7 @@
             android:textSize="18sp" android:textAlignment="center" android:textStyle="italic"
             android:textColor="@color/smeraldo" android:background="@mipmap/imm38" android:textAllCaps="false"
             app:layout_constraintStart_toEndOf="@+id/editText18"
-            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/button50"/>
-    <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp" android:id="@+id/button49"
-            android:textSize="12sp" android:textAlignment="center"
-            android:textColor="@color/smeraldo" android:textAllCaps="false"
-            android:text="@string/si"
-            android:background="@color/start2" android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/button50"
-            android:layout_marginStart="11dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView52"/>
-    <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp" android:id="@+id/button50"
-            android:textSize="12sp" android:textAlignment="center"
-            android:textColor="@color/red" android:textAllCaps="false"
-            android:text="@string/no" android:background="@color/start2" android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/editText25"
-            app:layout_constraintTop_toBottomOf="@+id/textView52"/>
+            android:layout_marginTop="72dp" app:layout_constraintTop_toBottomOf="@+id/button51"/>
     <TextView
             android:text="@string/genere"
             android:layout_width="112dp"
@@ -211,18 +193,10 @@
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/imageView"
             android:layout_marginTop="25dp"/>
-    <TextView
-            android:text="@string/domanda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView52"
-            android:textColor="@color/gold"
-            android:textSize="12sp" android:textAlignment="center" android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/editText25"
-            app:layout_constraintTop_toBottomOf="@+id/button51"/>
     <Button
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/button55"
-            android:textColor="@color/red" android:textSize="14sp"
+            android:textSize="14sp"
             android:textAllCaps="false" android:background="@mipmap/imm44"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -253,6 +227,14 @@
             android:layout_marginTop="312dp"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible"/>
+    <FrameLayout
+            android:id="@+id/fragment_holder"
+            android:layout_width="150dp"
+            android:layout_height="108dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="115dp"
+            android:layout_marginTop="320dp">
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
             android:layout_width="match_parent"

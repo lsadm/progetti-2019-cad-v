@@ -383,7 +383,7 @@ class Start_Activity : AppCompatActivity()
           mediaplayer?.start()
       }
         else
-          if((editText14.text.toString().length<8)||(editText14.text.toString()==""))
+          if((editText14.text.toString().length<8)||(editText15.text.toString().length<4))
           {
               Toast.makeText(this, "Warning: Username or password\ntoo short!", Toast.LENGTH_LONG).show()
               mediaplayer = MediaPlayer.create(this, R.raw.error_sound)
@@ -678,9 +678,12 @@ class Start_Activity : AppCompatActivity()
         editText16.setEnabled(false)
         spinner?.setEnabled(false)
         switcher.setEnabled(false)
+        val bundle=Bundle()
+        bundle.putInt("tipo",1)
         val manager=supportFragmentManager
         val transaction=manager.beginTransaction()
         val fragment=Fragment_Quit_Application()
+        fragment.setArguments(bundle)
         transaction.replace(R.id.fragment_holder,fragment)
         transaction.addToBackStack(null)
         transaction.commit()
