@@ -98,7 +98,8 @@ class CustomAdapter(val userList:ArrayList<User>):RecyclerView.Adapter<CustomAda
         p0.modifica1.setOnClickListener {
             if(p0.titolo1.text.toString()!="")
             {
-                file_title1.writeText(p0.titolo1.text.toString(),Charsets.UTF_8)
+                user.title1=p0.titolo1.text.toString()
+                file_title1.writeText(user.title1,Charsets.UTF_8)
                 Toast.makeText(user.contesto,"The title: '"+p0.titolo1.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user.contesto, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -216,7 +217,7 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
             val image=stream.toByteArray()
             next.putExtra("Id_Utente",user2.Id_Utente)
             next.putExtra("immagine",image)
-            next.putExtra("titolo_immagine",user2.titolo2)
+            next.putExtra("titolo_immagine",user2.title2)
             next.putExtra("controllo",true)
             startActivity(user2.contesto,next,opzioni)
             mediaplayer= MediaPlayer.create(user2.contesto,R.raw.move_graph_sound)
@@ -251,7 +252,8 @@ class CustomAdapter2(val userList:ArrayList<User2>):RecyclerView.Adapter<CustomA
         p0.modifica2.setOnClickListener {
             if(p0.titolo2.text.toString()!="")
             {
-                file_title2.writeText(p0.titolo2.text.toString(),Charsets.UTF_8)
+                user2.title2=p0.titolo2.text.toString()
+                file_title2.writeText(user2.title2,Charsets.UTF_8)
                 Toast.makeText(user2.contesto,"The title: '"+p0.titolo2.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user2.contesto, R.raw.return_graph_sound)
                 mediaplayer?.start()
@@ -455,7 +457,8 @@ class CustomAdapter3(val userList:ArrayList<User3>):RecyclerView.Adapter<CustomA
         p0.modifica3.setOnClickListener {
             if(p0.titolo3.text.toString()!="")
             {
-                file_title3.writeText(p0.titolo3.text.toString(),Charsets.UTF_8)
+                user3.title3=p0.titolo3.text.toString()
+                file_title3.writeText(user3.title3,Charsets.UTF_8)
                 Toast.makeText(user3.contesto,"The title: '"+p0.titolo3.text.toString()+"'\nhas been successfully setted!", Toast.LENGTH_LONG).show()
                 mediaplayer = MediaPlayer.create(user3.contesto, R.raw.return_graph_sound)
                 mediaplayer?.start()
